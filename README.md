@@ -54,11 +54,3 @@ Capstone project, B.Tech CSE (Software Engineering), School of Computer Science 
 ## Dataset
 
 HAM10000 (Tschandl et al., 2018) is **not** included. Download it from the ISIC Archive or Harvard Dataverse and follow [DATASETS.md](DATASETS.md).
-
-## Team
-
-- Hari Prasath M (23BCE8999)
-- Kodela Kailash Nadh (23BCE7748)
-- Dharun Raj B (23BCE9271)
-
-**Guide:** Dr. B V Gokulnath, SCOPE, VIT-AP University
