@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "_macros.html" import photo_picker %}
+{% block title %}Upload & Analyze{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Upload &amp; analyze</h1>
+  <p class="muted">Choose the patient, upload a dermoscopic or close-up photo of the lesion, then analyze.</p></div></div>
+{% if model.is_dummy %}<div class="alert warn"><b>Test mode:</b> untrained dummy model — results are meaningless.</div>{% endif %}
+{% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+{% if not patients %}
+<div class="card empty">You have no patients yet. <a href="/patients/new">Add a patient first</a>.</div>
+{% else %}
+<form method="post" action="/analyze" enctype="multipart/form-data" class="grid grid-2 upload-form" style="align-items:start">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <div class="card">
+    <h2>1. Patient</h2>
+    <div class="field"><label for="patient_code">Patient</label>
+      <select id="patient_code" name="patient_code" required>
+        {% for p in patients %}<option value="{{ p.patient_code }}" {{ 'selected' if p.patient_code == selected }}>{{ p.patient_code }} — {{ p.name }}</option>{% endfor %}
+      </select>
+      <div class="hint">Not in the list? <a href="/patients/new">Add a new patient</a>.</div></div>
+    <div class="field"><label for="body_site">Body site of the lesion</label>
+      <select id="body_site" name="body_site">{% for s in sites %}<option value="{{ s }}">{{ s|capitalize }}</option>{% endfor %}</select>
+      {% if model.uses_metadata %}<div class="hint">The current model uses age, gender and body site together with the image.</div>{% endif %}</div>
+    <p class="small muted" style="margin:0">A dermoscope image works best. Avoid hair, ink marks and rulers covering the lesion.</p>
+  </div>
+  <div class="card">
+    <h2>2. Image</h2>
+    {{ photo_picker(max_mb) }}
+    <button class="btn block big submit-btn" type="submit" style="margin-top:16px">Analyze image</button>
+    <p class="hint" style="text-align:center">The result, heat-map and explanation are saved to the patient's record automatically.</p>
+  </div>
+</form>
+{% endif %}
+{% endblock %}

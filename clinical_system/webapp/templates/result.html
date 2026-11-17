@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% from "_macros.html" import prob_bars, quality_notice, explain_details %}
+{% block title %}Result · {{ scan.patient.patient_code }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><p class="small muted" style="margin:0"><a href="/patients/{{ scan.patient.patient_code }}">{{ scan.patient.patient_code }} · {{ scan.patient.name }}</a> / Scan #{{ scan.id }}</p>
+    <h1>Analysis result {% if scan.patient.is_demo %}<span class="badge demo">DEMO</span>{% endif %}</h1>
+    <p class="muted small">{{ scan.created_at.strftime('%d %b %Y, %H:%M') }} · body site: {{ scan.body_site }} · by {{ scan.doctor.full_name }}</p></div>
+  <div class="no-print" style="display:flex;gap:10px;flex-wrap:wrap">
+    <a class="btn" href="/scans/{{ scan.id }}/report.pdf">Download Report (PDF)</a>
+    <a class="btn secondary" href="/analyze?patient={{ scan.patient.patient_code }}">New scan</a>
+  </div>
+</div>
+
+<div class="result-banner {{ 'disease' if scan.is_disease else 'normal' }}">
+  <div>
+    <div class="status">{{ scan.meaning.split('.')[0] }}</div>
+    <div class="dx">{{ scan.predicted_name }} ({{ scan.predicted_class }})</div>
+  </div>
+  <div class="conf">Confidence<b>{{ '%.1f'|format(100*scan.confidence) }}%</b><span class="badge {{ scan.confidence_level }}" style="background:#fff">{{ scan.confidence_level }} confidence</span></div>
+</div>
+{% if scan.warning %}
+<div class="alert {{ 'error' if scan.confidence_level == 'Low' else 'warn' }}" style="margin-top:14px"><b>⚠ Warning:</b> {{ scan.warning }}</div>
+{% endif %}
+{% if scan.quality %}<div style="margin-top:14px">{{ quality_notice(scan.quality, '/analyze?patient=' ~ scan.patient.patient_code) }}</div>
+{% if scan.quality.ok %}<p class="small muted" style="margin:10px 0 0">✓ Photo quality check passed (sharpness, brightness, size, spot found near the centre, skin-like colours).</p>{% endif %}{% endif %}
+
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>Image and explanations</h2></div>
+  <div class="tabs mobile-only" role="tablist" data-swipe="#r-swipe">
+    <button role="tab" class="tab active" data-i="0">Image</button>
+    <button role="tab" class="tab" data-i="1">Grad-CAM</button>
+    <button role="tab" class="tab" data-i="2">LIME</button>
+  </div>
+  <div class="grid grid-3 swipe swipe-3" id="r-swipe">
+    <figure class="figure"><img src="/media/{{ scan.id }}/original" alt="Uploaded image"><figcaption>Uploaded image</figcaption></figure>
+    <figure class="figure"><img src="/media/{{ scan.id }}/gradcam" alt="Grad-CAM heat-map">
+      <figcaption>Grad-CAM: where the model looked</figcaption>
+      <div class="legend">low <span class="scale"></span> high</div></figure>
+    <figure class="figure">
+      {% if scan.lime_status == 'done' %}<img src="/media/{{ scan.id }}/lime" alt="LIME explanation">
+      {% elif scan.lime_status == 'failed' %}<div class="lime-wait">LIME explanation could not be computed for this image.</div>
+      {% elif scan.lime_status == 'skipped' %}<div class="lime-wait">LIME was not computed for this scan.</div>
+      {% else %}<div class="lime-wait" data-lime-url="/scans/{{ scan.id }}/lime"><div><div class="spinner"></div>Computing LIME explanation…<br>(usually under a minute)</div></div>{% endif %}
+      <figcaption>LIME: regions that supported the answer</figcaption></figure>
+  </div>
+</div>
+
+<div class="grid grid-2" style="margin-top:18px;align-items:start">
+  <div class="card explain">
+    <h2>Why the model gave this result</h2>
+    <p>{{ scan.explanation }}</p>
+    <p class="small muted" id="lime-summary" {{ 'hidden' if not scan.lime_summary }}>{{ scan.lime_summary }}</p>
+    {% if scan.features_json %}{{ explain_details(x, 'doctor') }}{% else %}
+    <h3 style="margin-top:16px">Top 3 possible classes</h3>
+    <ol class="top3-list">{% for c in x.top3 %}<li>{{ c.name }} ({{ c.abbr }}) – {{ '%.1f'|format(100*c.prob) }}%</li>{% endfor %}</ol>
+    <p class="small muted">Measurements are not available for scans made before this feature was added.</p>{% endif %}
+    <h3 style="margin-top:16px">What this means</h3>
+    <div class="note">{{ scan.meaning }}</div>
+    <h3 style="margin-top:16px">Recommendation</h3>
+    <div class="note rec"><b>{{ scan.recommendation }}</b></div>
+  </div>
+  <div class="card">
+    <h2>Probabilities of all {{ x.rows|length }} classes</h2>
+    {% if not scan.probs %}<p class="small muted">This scan was made before all probabilities were stored; only the top 3 are shown.</p>{% endif %}
+    {{ prob_bars(x.rows, 'doctor') }}
+    <p style="margin:12px 0 0">Confidence level: <span class="badge {{ scan.confidence_level }}">{{ scan.confidence_level }}</span>
+      <span class="small muted">({{ '%.1f'|format(100*scan.confidence) }}% for the top class)</span></p>
+    <p class="small muted" style="margin-top:14px">Confidence levels: High &gt; {{ '%.0f'|format(100*conf_high) }}%, Medium {{ '%.0f'|format(100*conf_medium) }}–{{ '%.0f'|format(100*conf_high) }}%, Low &lt; {{ '%.0f'|format(100*conf_medium) }}%.
+      {% if 'prior correction' in scan.model_name %}Probabilities include prior correction (adjusted for how common each lesion type is).{% else %}Probabilities are calibrated on validation data.{% endif %}</p>
+    <p class="small muted">Model: {{ scan.model_name }}</p>
+    {% if scan.time_predict_ms is not none %}
+    <p class="small muted" id="timings">Analysis time: prediction {{ '%.2f'|format(scan.time_predict_ms/1000) }} s ·
+      Grad-CAM {{ '%.2f'|format(scan.time_gradcam_ms/1000) }} s ·
+      LIME {% if scan.time_lime_ms is not none %}{{ '%.1f'|format(scan.time_lime_ms/1000) }} s{% else %}{{ 'running…' if scan.lime_status == 'pending' else '–' }}{% endif %}</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card no-print" id="feedback" style="margin-top:18px">
+  <div class="card-title"><h2>Doctor feedback</h2>
+    {% if my_fb and my_fb.updated_at is defined and my_fb.updated_at %}<span class="small muted">Saved {{ my_fb.updated_at.strftime('%d %b %Y, %H:%M') }} · you can change it</span>{% endif %}</div>
+  <p class="small muted" style="margin-top:-6px">Your assessment is used for a clinician evaluation of this research tool. It does not change the patient's record.</p>
+  {% if fb_error %}<div class="alert error">{{ fb_error }}</div>{% endif %}
+  <form method="post" action="/scans/{{ scan.id }}/feedback" class="fb-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="field">
+      <label>Do you agree with the AI result ({{ scan.predicted_name }})?</label>
+      <div class="segmented" role="radiogroup">
+        {% for val, lab in [('agree', 'Agree'), ('disagree', 'Disagree'), ('unsure', 'Unsure')] %}
+        <label class="seg seg-{{ val }}"><input type="radio" name="agreement" value="{{ val }}" required
+          {{ 'checked' if my_fb and my_fb.agreement == val }}><span>{{ lab }}</span></label>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="field" id="correct-wrap" {{ '' if my_fb and my_fb.agreement == 'disagree' else 'hidden' }}>
+      <label for="correct_class">What is the correct diagnosis?</label>
+      <select id="correct_class" name="correct_class">
+        <option value="">Choose…</option>
+        {% for code, name in dx_options if code != scan.predicted_class %}
+        <option value="{{ code }}" {{ 'selected' if my_fb and my_fb.correct_class == code }}>{{ name }}{{ ' (' ~ code ~ ')' if code != 'OTHER' }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label>How useful was the explanation (heat-map, LIME and text)?</label>
+      <div class="stars" role="radiogroup" aria-label="Usefulness, 1 to 5 stars">
+        {% for k in [5, 4, 3, 2, 1] %}
+        <input type="radio" id="star{{ k }}" name="usefulness" value="{{ k }}" required {{ 'checked' if my_fb and my_fb.usefulness == k }}>
+        <label for="star{{ k }}" title="{{ k }} star{{ 's' if k > 1 }}">★</label>
+        {% endfor %}
+      </div>
+      <div class="hint">1 = not useful at all · 5 = very useful</div>
+    </div>
+    <div class="field"><label for="comment">Comment <span class="muted">(optional)</span></label>
+      <textarea id="comment" name="comment" rows="3" maxlength="2000" placeholder="e.g. heat-map focused on the ruler; I would biopsy this lesion">{{ my_fb.comment if my_fb else '' }}</textarea></div>
+    <button class="btn" type="submit">{{ 'Update feedback' if my_fb and my_fb.updated_at is defined else 'Save feedback' }}</button>
+  </form>
+  {% set others = scan.feedback|rejectattr('doctor_id', 'equalto', user.id)|list %}
+  {% if user.is_admin and others %}
+  <h3 style="margin-top:18px">Feedback from other staff</h3>
+  <ul class="small" style="padding-left:18px;margin:0">
+    {% for f in others %}<li>{{ f.doctor.full_name }}: <b>{{ f.agreement }}</b>{% if f.correct_class %} → {{ f.correct_class }}{% endif %}, {{ f.usefulness }}★{% if f.comment %} – “{{ f.comment }}”{% endif %}</li>{% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

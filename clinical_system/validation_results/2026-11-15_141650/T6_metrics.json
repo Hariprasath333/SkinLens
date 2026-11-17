@@ -1,0 +1,48 @@
+{
+  "groups": {
+    "blurred": {
+      "n": 50,
+      "correct": 49,
+      "warned": 50,
+      "rate": 0.98
+    },
+    "dark": {
+      "n": 50,
+      "correct": 50,
+      "warned": 50,
+      "rate": 1.0
+    },
+    "tiny": {
+      "n": 50,
+      "correct": 50,
+      "warned": 50,
+      "rate": 1.0
+    },
+    "non_skin": {
+      "n": 50,
+      "correct": 40,
+      "warned": 40,
+      "rate": 0.8
+    },
+    "original": {
+      "n": 50,
+      "correct": 47,
+      "warned": 3,
+      "rate": 0.94
+    }
+  },
+  "expected_warning": {
+    "blurred": "blurry",
+    "dark": "dark",
+    "tiny": "small",
+    "non_skin": "not_skin"
+  },
+  "verdict": "FAIL",
+  "verdict_text": "blurred 49/50, dark 50/50, tiny 50/50, non_skin 40/50; unchanged test images without a warning 47/50",
+  "settings": {
+    "t6_images": 50,
+    "t6_blur_sigma": 3.0,
+    "t6_dark_factor": 0.25,
+    "t6_tiny_side": 200
+  }
+}

@@ -1,0 +1,1028 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>SkinLens – Installation and User Guide</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>@page { size: A4; margin: 0; }
+:root {
+  --blue: #0077B6; --blue-d: #005f92; --teal: #00B4D8; --light: #F5FAFD; --green: #2A9D8F; --red: #E63946;
+  --amber: #c27c0e; --text: #1d2b36; --muted: #5f7383; --line: #e3edf3;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family: "Inter", "Segoe UI", system-ui, sans-serif; color: var(--text); font-size: 10.2pt; line-height: 1.5;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #ccd; }
+.page { width: 210mm; height: 297mm; position: relative; overflow: hidden; background: #fff; page-break-after: always;
+  break-after: page; margin: 0 auto; }
+.pb { position: absolute; top: 33mm; left: 15mm; right: 15mm; bottom: 15mm; overflow: hidden; }
+.pb.nb { top: 14mm; }
+p { margin: 0 0 2.4mm; }
+h3.hd { font-size: 13pt; color: var(--blue); margin: 3mm 0 2mm; display: flex; align-items: center; gap: 2mm; }
+h3.hd::before { content: ""; width: 4px; height: 13pt; background: var(--teal); border-radius: 2px; }
+h4 { margin: 0 0 1.5mm; font-size: 10.8pt; }
+.lead { font-size: 10.8pt; color: #33475a; }
+.small, small { font-size: 8.4pt; color: var(--muted); }
+.center { text-align: center; }
+.center .ill { margin: 0 auto; }
+ul { margin: 0 0 2mm; padding-left: 5mm; }
+li { margin-bottom: 1mm; }
+.url { font-family: "Cascadia Mono", Consolas, monospace; font-size: 8.8pt; background: #eef5f9; color: var(--blue-d);
+  padding: .2mm 1.2mm; border-radius: 1.2mm; white-space: nowrap; }
+.key { display: inline-block; border: 1px solid #b9c7d2; border-bottom-width: 2px; border-radius: 1.3mm; padding: 0 1.6mm;
+  font-size: 8.8pt; font-weight: 700; background: #fff; }
+.ic { flex: none; vertical-align: -0.2em; }
+
+/* header band */
+.band { position: absolute; top: 0; left: 0; right: 0; height: 26mm; display: flex; align-items: center; gap: 4mm;
+  padding: 0 15mm; color: #fff; background: linear-gradient(110deg, var(--blue) 0%, #0790c9 60%, var(--teal) 100%); }
+.band::after { content: ""; position: absolute; right: -14mm; top: -22mm; width: 64mm; height: 64mm; border-radius: 50%;
+  background: rgba(255, 255, 255, .09); }
+.band-i { width: 13mm; height: 13mm; border-radius: 3.5mm; background: rgba(255, 255, 255, .18); display: grid; place-items: center; }
+.band-n { font-size: 8.4pt; font-weight: 700; letter-spacing: .14em; opacity: .85; text-transform: uppercase; }
+.band-n:not(:empty)::before { content: "Section "; }
+.band h1 { margin: 0; font-size: 19pt; font-weight: 800; letter-spacing: -.01em; }
+
+/* footer */
+.pf { position: absolute; left: 15mm; right: 15mm; bottom: 6mm; display: flex; justify-content: space-between;
+  border-top: 1px solid var(--line); padding-top: 2mm; font-size: 7.6pt; color: var(--muted); }
+.pn { font-weight: 700; color: var(--blue); }
+
+/* cover */
+.cover { background: linear-gradient(180deg, #ffffff 0%, var(--light) 60%, #e3f3fb 100%); }
+.cv-top { position: absolute; top: 15mm; left: 18mm; display: flex; align-items: center; gap: 3mm; }
+.cv-logo svg { width: 13mm; height: 13mm; }
+.cv-brand { font-size: 17pt; font-weight: 800; color: var(--blue); }
+.cv-hero { position: absolute; top: 30mm; left: 10mm; right: 10mm; }
+.cv-hero svg { width: 100%; height: auto; }
+.cv-title { position: absolute; top: 160mm; left: 18mm; right: 18mm; margin: 0; font-size: 26pt; line-height: 1.15;
+  font-weight: 800; color: var(--text); letter-spacing: -.02em; }
+.cv-sub { position: absolute; top: 185mm; left: 18mm; right: 18mm; font-size: 13pt; color: var(--blue); font-weight: 600; }
+.cv-meta { position: absolute; top: 202mm; left: 18mm; right: 18mm; display: grid; grid-template-columns: 1fr 1.25fr; gap: 8mm;
+  background: #fff; border-radius: 5mm; padding: 6mm 7mm; box-shadow: 0 2mm 7mm rgba(11, 58, 91, .10); font-size: 10.2pt; }
+.cv-meta span { color: var(--muted); font-size: 9pt; }
+.cv-k { font-size: 7.8pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-bottom: 1mm; }
+.cv-foot { position: absolute; bottom: 9mm; left: 18mm; right: 18mm; font-size: 8pt; color: var(--muted); text-align: center; }
+
+/* contents */
+.toc { margin-top: 2mm; }
+.toc-r { display: flex; align-items: baseline; gap: 3mm; padding: 2.6mm 0; border-bottom: 1px dashed #d6e3ec; font-size: 11.5pt; }
+.toc-n { width: 9mm; height: 9mm; border-radius: 50%; background: var(--blue); color: #fff; display: inline-grid; place-items: center;
+  font-weight: 700; font-size: 9.5pt; flex: none; align-self: center; }
+.toc-t { font-weight: 600; }
+.toc-d { flex: 1; }
+.toc-p { font-weight: 700; color: var(--blue); }
+.toc-ill { margin-top: 8mm; opacity: .95; }
+
+/* steps, boxes, commands */
+.step { display: flex; gap: 3.5mm; background: #fff; border: 1px solid var(--line); border-radius: 3.5mm; padding: 3.2mm 4mm;
+  margin-bottom: 3mm; box-shadow: 0 1mm 3mm rgba(11, 58, 91, .05); }
+.sn { width: 9mm; height: 9mm; flex: none; border-radius: 50%; background: var(--blue); color: #fff; font-weight: 800;
+  display: grid; place-items: center; font-size: 11pt; box-shadow: 0 1mm 2mm rgba(0, 119, 182, .3); }
+.sb { flex: 1; min-width: 0; }
+.sb h4 { margin-top: 1.5mm; }
+.qs .step { padding: 4mm 5mm; border-left: 4px solid var(--teal); }
+.box { display: flex; gap: 3mm; border-radius: 3mm; padding: 2.8mm 4mm; margin: 2.5mm 0; font-size: 9.4pt; border: 1px solid; }
+.bx-i { flex: none; margin-top: .3mm; }
+.box.tip { background: #e7f5f3; border-color: #c9e9e4; color: #1d5f56; }
+.box.note { background: #e6f3fa; border-color: #cde6f4; color: #0a4f78; }
+.box.warn { background: #fdecee; border-color: #f7cdd1; color: #8f1d27; }
+.box.ok { background: #e7f5f3; border-color: #bfe3dc; color: #1d5f56; }
+.box .cmd { margin: 2mm 0 0; }
+.cmd { background: #0f1b24; color: #d7e6f0; border-radius: 2.6mm; margin: 2mm 0 2.5mm; font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 8.3pt; line-height: 1.55; overflow: hidden; }
+.cmd-h { background: #1d2b36; color: #8fa6b6; font-family: "Inter", sans-serif; font-size: 7pt; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; padding: 1mm 3mm; }
+.cl { padding: 0 3mm; white-space: pre-wrap; word-break: break-all; }
+.cl:first-of-type { padding-top: 1.6mm; }
+.cl:last-child { padding-bottom: 1.6mm; }
+.cl .pr { color: var(--teal); margin-right: 1.6mm; }
+.cl.cm { color: #7f97a8; }
+.cmd.out { background: #f3f7fa; color: #33475a; border: 1px solid var(--line); }
+.cmd.out .cmd-h { background: #e6eef3; color: var(--muted); }
+.cmd.out pre { margin: 0; padding: 1.6mm 3mm; white-space: pre-wrap; word-break: break-all; font: inherit; }
+
+/* layout helpers */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+.two-60 { display: grid; grid-template-columns: 1.15fr 1fr; gap: 6mm; align-items: start; }
+.mini { display: flex; gap: 3mm; background: var(--light); border-radius: 3.5mm; padding: 4mm; color: var(--blue); }
+.mini div { color: var(--text); }
+.intro-ill { display: flex; align-items: center; gap: 6mm; margin-bottom: 2mm; }
+.intro-ill .ill { flex: none; }
+.ill svg { width: 100%; height: auto; display: block; }
+.side-wrap { display: grid; grid-template-columns: 1fr 52mm; gap: 5mm; }
+.main-col { min-width: 0; }
+.side { background: var(--light); border: 1px dashed #b9d7e8; border-radius: 3.5mm; padding: 4mm; font-size: 9pt; align-self: start; }
+.side h4 { color: var(--blue); display: flex; gap: 2mm; align-items: center; }
+.cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 3mm 0; }
+.rq { background: #fff; border: 1px solid var(--line); border-radius: 4mm; padding: 5mm; box-shadow: 0 1.5mm 4mm rgba(11, 58, 91, .06); }
+.rq .ic { color: var(--blue); background: #e6f3fa; border-radius: 3mm; padding: 2mm; width: 12mm; height: 12mm; margin-bottom: 2mm; }
+.rq:last-child .ic { color: var(--green); background: #e7f5f3; }
+.rq h4 { margin-bottom: 1mm; }
+.rq p { font-size: 9.4pt; margin: 0; }
+.cards4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 4mm 0 2mm; }
+.ok-c { background: #e7f5f3; border-radius: 3.5mm; padding: 3.5mm; color: var(--green); }
+.ok-c b { display: block; color: var(--text); margin: 1mm 0; }
+.ok-c p { color: #33475a; font-size: 8.8pt; margin: 0; }
+
+/* tree */
+.tree { background: #fff; border: 1px solid var(--line); border-radius: 4mm; padding: 3mm 4mm; margin: 3mm 0; }
+.tr { display: flex; gap: 4mm; padding: 1.3mm 0; border-bottom: 1px solid #f0f5f8; align-items: baseline; position: relative; }
+.tr:last-child { border-bottom: 0; }
+.tn { font-family: "Cascadia Mono", Consolas, monospace; font-size: 8.8pt; white-space: nowrap; color: var(--text); }
+.tn .ic { color: var(--muted); }
+.tn.dir { color: var(--blue); font-weight: 700; }
+.tn.dir .ic { color: var(--teal); }
+.td { font-size: 8.8pt; color: var(--muted); }
+
+/* screenshots in frames */
+figure { margin: 0 auto 3mm; }
+figcaption { text-align: center; font-size: 8.2pt; color: var(--muted); margin-top: 1.6mm; }
+.shot { position: relative; line-height: 0; }
+.shot img { width: 100%; display: block; }
+.laptop .lp-screen { background: #1d2b36; border-radius: 3.2mm 3.2mm 0 0; padding: 2.6mm 2.6mm 2.6mm; position: relative;
+  box-shadow: 0 2.5mm 7mm rgba(11, 58, 91, .22); }
+.laptop .lp-cam { position: absolute; top: .9mm; left: 50%; width: 1.1mm; height: 1.1mm; margin-left: -.55mm; border-radius: 50%; background: #3a4b58; }
+.laptop .shot img { border-radius: .8mm; }
+.laptop .lp-base { height: 3.6mm; margin: 0 -6%; background: linear-gradient(180deg, #d5dee5, #aebdc8); border-radius: 0 0 4mm 4mm;
+  position: relative; box-shadow: 0 2mm 4mm rgba(11, 58, 91, .14); }
+.laptop .lp-base::before { content: ""; position: absolute; left: 50%; top: 0; width: 16%; height: 1.1mm; margin-left: -8%;
+  background: #9fb0bd; border-radius: 0 0 1.5mm 1.5mm; }
+.phone .ph-body { background: #1d2b36; border-radius: 7mm; padding: 2.6mm; position: relative; box-shadow: 0 2.5mm 7mm rgba(11, 58, 91, .25); }
+.phone .ph-notch { position: absolute; top: 3.3mm; left: 50%; width: 14mm; height: 2.2mm; margin-left: -7mm; background: #1d2b36;
+  border-radius: 0 0 2mm 2mm; z-index: 2; }
+.phone .shot img { border-radius: 5mm; }
+.phones3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; align-items: start; margin-top: 2mm; }
+.phones3 figure { margin: 0; }
+.plainshot.framed .shot { border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; box-shadow: 0 2mm 6mm rgba(11, 58, 91, .12); }
+.plainshot.paper .shot { border: 1px solid #d6e3ec; box-shadow: 0 2.5mm 7mm rgba(11, 58, 91, .18); background: #fff; }
+
+/* click markers */
+.mk { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 1.2mm; z-index: 5; line-height: 1; }
+.mk-n { width: 6.4mm; height: 6.4mm; border-radius: 50%; background: var(--red); color: #fff; font-weight: 800; font-size: 9pt;
+  display: grid; place-items: center; border: .6mm solid #fff; box-shadow: 0 .6mm 1.8mm rgba(0, 0, 0, .35); flex: none; }
+.mk-l { background: var(--red); color: #fff; font-size: 7.6pt; font-weight: 700; padding: 1.1mm 2mm; border-radius: 1.6mm; white-space: nowrap;
+  box-shadow: 0 .6mm 1.8mm rgba(0, 0, 0, .25); }
+.mk.right { transform: translate(-3.2mm, -50%); }
+.mk.left { flex-direction: row-reverse; transform: translate(calc(-100% + 3.2mm), -50%); }
+
+/* tables */
+table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 2mm 0 3mm; }
+th { background: var(--blue); color: #fff; text-align: left; padding: 2mm 3mm; font-size: 8.4pt; letter-spacing: .02em; }
+td { padding: 2mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:nth-child(even) td { background: #f8fbfd; }
+.bdg { display: inline-block; padding: .6mm 2.4mm; border-radius: 3mm; font-weight: 700; font-size: 8.4pt; }
+.bdg.hi { background: #e7f5f3; color: var(--green); }
+.bdg.me { background: #fdf4e3; color: var(--amber); }
+.bdg.lo { background: #fdecee; color: var(--red); }
+table.ts td { font-size: 8.5pt; padding: 1.7mm 2.6mm; }
+.tsp .ic { color: var(--red); margin-right: 1.2mm; }
+.tsp .small { margin-top: .6mm; }
+.tested { display: inline-block; background: #e7f5f3; color: var(--green); font-size: 7pt; font-weight: 800; letter-spacing: .05em;
+  text-transform: uppercase; padding: .3mm 1.6mm; border-radius: 1.4mm; }
+
+/* results */
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 4mm 0; }
+.metrics div { background: linear-gradient(135deg, #e6f3fa, #e0f7fb); border-radius: 4mm; padding: 4mm; }
+.metrics b { display: block; font-size: 19pt; color: var(--blue); font-weight: 800; }
+.metrics span { font-size: 8.8pt; color: #33475a; }
+.figs { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.fig img { width: 100%; border: 1px solid var(--line); border-radius: 2mm; }
+.fig { margin: 0; }
+
+/* safety, quick ref */
+.safe { list-style: none; padding: 0; }
+.safe li { display: flex; gap: 3mm; margin-bottom: 3.5mm; }
+.safe .ic { color: var(--blue); margin-top: .5mm; }
+.qr { display: grid; grid-template-columns: 1.25fr 1fr; gap: 6mm; }
+.qr h4 { display: flex; align-items: center; gap: 2mm; color: var(--blue); margin: 3mm 0 1mm; }
+.qr h4:first-child { margin-top: 0; }
+.qr .cmd { font-size: 7.6pt; margin: 1mm 0 2mm; }
+table.qt td { padding: 1.4mm 2.4mm; font-size: 8.8pt; }
+table.lv td { font-size: 9pt; }
+.mk.below { flex-direction: column; transform: translate(-50%, -3.2mm); }
+.mk.above { flex-direction: column-reverse; transform: translate(-50%, calc(-100% + 3.2mm)); }
+.cv-sub { top: 180mm; }
+</style></head><body>
+<section class="page cover">
+  <div class="cv-top"><div class="cv-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="36" height="36" role="img" aria-label="SkinLens Clinical">
+  <rect width="40" height="40" rx="11" fill="#0077B6"/>
+  <circle cx="18" cy="18" r="8.5" fill="none" stroke="#fff" stroke-width="2.6"/>
+  <path d="M24.2 24.2 L30 30" stroke="#00B4D8" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M18 13.5v9M13.5 18h9" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+</svg>
+</div><div class="cv-brand">SkinLens</div></div>
+  <div class="cv-hero"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-label="A friendly doctor with a tablet showing a skin heat-map, next to a laptop and a phone with the SkinLens logo">
+  <defs>
+    <filter id="a1-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+    <radialGradient id="a1-heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E63946"/><stop offset=".35" stop-color="#f4a261"/><stop offset=".6" stop-color="#ffe66d" stop-opacity=".85"/><stop offset=".8" stop-color="#00B4D8" stop-opacity=".5"/><stop offset="1" stop-color="#00B4D8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="a1-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3f3fb"/><stop offset="1" stop-color="#d4f1f7"/></linearGradient>
+  </defs>
+  <!-- background blobs -->
+  <path d="M120 300c-40-120 60-230 200-240s230 10 300 80 110 180 40 260-230 90-330 70S150 390 120 300z" fill="url(#a1-bg)"/>
+  <circle cx="680" cy="110" r="46" fill="#00B4D8" opacity=".12"/>
+  <circle cx="90" cy="150" r="30" fill="#0077B6" opacity=".10"/>
+  <ellipse cx="400" cy="478" rx="330" ry="18" fill="#0b3a5b" opacity=".08"/>
+
+  <!-- laptop (right, back) -->
+  <g filter="url(#a1-sh)">
+    <rect x="470" y="200" width="250" height="160" rx="12" fill="#1d2b36"/>
+    <rect x="482" y="212" width="226" height="136" rx="6" fill="#F5FAFD"/>
+    <rect x="482" y="212" width="226" height="22" rx="6" fill="#0077B6"/>
+    <circle cx="496" cy="223" r="4" fill="#fff" opacity=".7"/><circle cx="508" cy="223" r="4" fill="#fff" opacity=".5"/>
+    <rect x="496" y="246" width="96" height="90" rx="8" fill="#fff" stroke="#e3edf3"/>
+    <circle cx="544" cy="291" r="30" fill="#e8b49a"/><circle cx="544" cy="291" r="28" fill="url(#a1-heat)" opacity=".9"/>
+    <rect x="604" y="248" width="92" height="12" rx="6" fill="#2A9D8F" opacity=".85"/>
+    <rect x="604" y="270" width="80" height="8" rx="4" fill="#cfe3ef"/><rect x="604" y="286" width="62" height="8" rx="4" fill="#cfe3ef"/>
+    <rect x="604" y="302" width="86" height="8" rx="4" fill="#cfe3ef"/><rect x="604" y="318" width="50" height="8" rx="4" fill="#cfe3ef"/>
+    <path d="M440 360h310l-18 26H458z" fill="#c9d6df"/><rect x="560" y="360" width="70" height="7" rx="3" fill="#aebdc8"/>
+  </g>
+
+  <!-- phone (front right) -->
+  <g filter="url(#a1-sh)" transform="rotate(8 650 380)">
+    <rect x="600" y="300" width="104" height="190" rx="18" fill="#1d2b36"/>
+    <rect x="608" y="312" width="88" height="166" rx="12" fill="#F5FAFD"/>
+    <rect x="636" y="332" width="32" height="32" rx="9" fill="#0077B6"/>
+    <circle cx="650" cy="346" r="8" fill="none" stroke="#fff" stroke-width="3"/><path d="M656 352l6 6" stroke="#00B4D8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M650 342v8M646 346h8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+    <rect x="620" y="376" width="64" height="8" rx="4" fill="#0077B6" opacity=".8"/>
+    <rect x="620" y="392" width="64" height="40" rx="8" fill="#e7f5f3"/>
+    <path d="M630 412l8 8 16-16" stroke="#2A9D8F" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="620" y="442" width="64" height="18" rx="9" fill="#0077B6"/>
+  </g>
+
+  <!-- doctor -->
+  <g filter="url(#a1-sh)">
+    <!-- legs -->
+    <rect x="232" y="380" width="30" height="88" rx="12" fill="#1d4e6b"/><rect x="272" y="380" width="30" height="88" rx="12" fill="#1d4e6b"/>
+    <ellipse cx="246" cy="470" rx="22" ry="9" fill="#1d2b36"/><ellipse cx="288" cy="470" rx="22" ry="9" fill="#1d2b36"/>
+    <!-- coat -->
+    <path d="M200 250c0-36 30-62 67-62s67 26 67 62v150c0 8-6 14-14 14H214c-8 0-14-6-14-14z" fill="#ffffff"/>
+    <path d="M247 192l20 46 20-46" fill="#00B4D8"/>
+    <path d="M247 192l-14 60 34-14zM287 192l14 60-34-14z" fill="#eef5f9"/>
+    <path d="M267 238v170" stroke="#e3edf3" stroke-width="3"/>
+    <circle cx="267" cy="300" r="3.5" fill="#cfe3ef"/><circle cx="267" cy="330" r="3.5" fill="#cfe3ef"/>
+    <rect x="292" y="262" width="26" height="30" rx="4" fill="#e6f3fa"/><rect x="298" y="256" width="4" height="14" rx="2" fill="#0077B6"/>
+    <!-- stethoscope -->
+    <path d="M240 205c-12 40-8 70 12 82s34-10 30-30" fill="none" stroke="#2A9D8F" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="282" cy="254" r="8" fill="#2A9D8F"/><circle cx="282" cy="254" r="3.5" fill="#bfe8e2"/>
+    <!-- head -->
+    <rect x="256" y="168" width="22" height="26" rx="8" fill="#d99a6c"/>
+    <circle cx="267" cy="146" r="38" fill="#e5a97c"/>
+    <path d="M229 144c-2-30 18-50 40-50 26 0 42 18 40 44-8-16-22-22-34-20-14 2-28 2-46 26z" fill="#2b2f3a"/>
+    <circle cx="254" cy="150" r="4" fill="#1d2b36"/><circle cx="282" cy="150" r="4" fill="#1d2b36"/>
+    <path d="M256 166c7 7 17 7 24 0" stroke="#1d2b36" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="246" cy="162" r="6" fill="#f08c8c" opacity=".35"/><circle cx="290" cy="162" r="6" fill="#f08c8c" opacity=".35"/>
+    <!-- arms holding the tablet -->
+    <path d="M208 240c-24 40-20 80 10 92l60-6" stroke="#ffffff" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M330 240c20 34 18 66-6 84" stroke="#ffffff" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <!-- tablet -->
+    <g transform="rotate(-8 300 320)">
+      <rect x="240" y="262" width="126" height="92" rx="12" fill="#1d2b36"/>
+      <rect x="248" y="270" width="110" height="76" rx="7" fill="#fff"/>
+      <rect x="254" y="276" width="56" height="64" rx="6" fill="#e8b49a"/>
+      <ellipse cx="282" cy="308" rx="26" ry="24" fill="url(#a1-heat)"/>
+      <circle cx="283" cy="309" r="7" fill="#7a3f2a" opacity=".55"/>
+      <rect x="316" y="280" width="36" height="8" rx="4" fill="#0077B6"/>
+      <rect x="316" y="296" width="30" height="6" rx="3" fill="#cfe3ef"/><rect x="316" y="308" width="24" height="6" rx="3" fill="#cfe3ef"/>
+      <rect x="316" y="322" width="36" height="12" rx="6" fill="#2A9D8F"/>
+    </g>
+    <circle cx="232" cy="330" r="13" fill="#e5a97c"/><circle cx="326" cy="320" r="13" fill="#e5a97c"/>
+  </g>
+
+  <!-- floating icons -->
+  <g filter="url(#a1-sh)">
+    <circle cx="130" cy="230" r="34" fill="#fff"/>
+    <path d="M130 208l20 8v14c0 14-9 24-20 28-11-4-20-14-20-28v-14z" fill="#2A9D8F"/>
+    <path d="M121 232l7 7 12-13" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g filter="url(#a1-sh)">
+    <circle cx="420" cy="110" r="30" fill="#fff"/>
+    <path d="M420 128c-14-9-22-17-22-27 0-7 5-12 11-12 5 0 9 3 11 7 2-4 6-7 11-7 6 0 11 5 11 12 0 10-8 18-22 27z" fill="#E63946"/>
+  </g>
+  <g filter="url(#a1-sh)">
+    <circle cx="560" cy="120" r="32" fill="#fff"/>
+    <circle cx="555" cy="115" r="12" fill="none" stroke="#0077B6" stroke-width="5"/>
+    <path d="M564 124l11 11" stroke="#00B4D8" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#a1-sh)">
+    <circle cx="150" cy="380" r="30" fill="#fff"/>
+    <rect x="136" y="366" width="28" height="28" rx="6" fill="#00B4D8"/>
+    <rect x="143" y="373" width="14" height="14" rx="3" fill="#fff"/>
+    <path d="M140 362v4M150 362v4M160 362v4M140 394v4M150 394v4M160 394v4M132 370h4M132 380h4M132 390h4M164 370h4M164 380h4M164 390h4" stroke="#00B4D8" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="150" y="384" font-family="Inter,Segoe UI,sans-serif" font-size="9" font-weight="700" text-anchor="middle" fill="#0077B6">AI</text>
+  </g>
+  <!-- sparkles -->
+  <path d="M370 60v14M363 67h14" stroke="#00B4D8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M720 250v12M714 256h12" stroke="#0077B6" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+  <path d="M60 300v10M55 305h10" stroke="#2A9D8F" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+</svg>
+</div>
+  <h1 class="cv-title">SkinLens – Installation and User Guide</h1>
+  <p class="cv-sub">Explainable skin lesion analysis on web and mobile</p>
+  <div class="cv-meta">
+    <div><div class="cv-k">Team</div>
+      <div>Hari Prasath M <span>(23BCE8999)</span></div>
+      <div>Kodela Kailash Nadh <span>(23BCE7748)</span></div>
+      <div>Dharun Raj B <span>(23BCE9271)</span></div></div>
+    <div><div class="cv-k">Guide</div><div>Dr. B V Gokulnath</div>
+      <div class="cv-k" style="margin-top:4mm">Institution</div>
+      <div>School of Computer Science and Engineering (SCOPE)</div><div>VIT-AP University</div>
+      <div class="cv-k" style="margin-top:4mm">Date</div><div>November 2026</div></div>
+  </div>
+  <div class="cv-foot">SkinLens – For research and decision-support only. Not a medical diagnosis.</div>
+</section><section class="page"><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="band-n"></div><h1>Contents</h1></div></div><div class="pb"><div class="toc"><div class="toc-r"><span class="toc-n">1</span><span class="toc-t">What SkinLens is</span><span class="toc-d"></span><span class="toc-p">3</span></div><div class="toc-r"><span class="toc-n">2</span><span class="toc-t">Quick start</span><span class="toc-d"></span><span class="toc-p">4</span></div><div class="toc-r"><span class="toc-n">3</span><span class="toc-t">Requirements</span><span class="toc-d"></span><span class="toc-p">5</span></div><div class="toc-r"><span class="toc-n">4</span><span class="toc-t">Folder structure</span><span class="toc-d"></span><span class="toc-p">6</span></div><div class="toc-r"><span class="toc-n">5</span><span class="toc-t">Installation (Windows)</span><span class="toc-d"></span><span class="toc-p">7</span></div><div class="toc-r"><span class="toc-n">6</span><span class="toc-t">Running the website</span><span class="toc-d"></span><span class="toc-p">9</span></div><div class="toc-r"><span class="toc-n">7</span><span class="toc-t">Using Doctor mode</span><span class="toc-d"></span><span class="toc-p">11</span></div><div class="toc-r"><span class="toc-n">8</span><span class="toc-t">Using the mobile app</span><span class="toc-d"></span><span class="toc-p">19</span></div><div class="toc-r"><span class="toc-n">9</span><span class="toc-t">Taking a good photo</span><span class="toc-d"></span><span class="toc-p">24</span></div><div class="toc-r"><span class="toc-n">10</span><span class="toc-t">Troubleshooting</span><span class="toc-d"></span><span class="toc-p">25</span></div><div class="toc-r"><span class="toc-n">11</span><span class="toc-t">Model and results</span><span class="toc-d"></span><span class="toc-p">27</span></div><div class="toc-r"><span class="toc-n">12</span><span class="toc-t">Safety and privacy</span><span class="toc-d"></span><span class="toc-p">28</span></div><div class="toc-r"><span class="toc-n">13</span><span class="toc-t">Quick-reference card</span><span class="toc-d"></span><span class="toc-p">29</span></div></div><div class="toc-ill"><div class="ill " style="width:82%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" role="img" aria-label="How SkinLens works: phone or laptop, server, AI model, result with heat-map">
+  <defs>
+    <filter id="a2-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0b3a5b" flood-opacity=".15"/></filter>
+    <radialGradient id="a2-heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E63946"/><stop offset=".4" stop-color="#f4a261"/><stop offset=".65" stop-color="#ffe66d" stop-opacity=".8"/><stop offset="1" stop-color="#00B4D8" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="a2-ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#00B4D8"/></marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="300" rx="24" fill="#F5FAFD"/>
+  <g font-family="Inter,Segoe UI,sans-serif" text-anchor="middle" fill="#1d2b36">
+    <!-- 1 devices -->
+    <g filter="url(#a2-sh)">
+      <rect x="40" y="88" width="150" height="100" rx="10" fill="#1d2b36"/>
+      <rect x="49" y="97" width="132" height="82" rx="5" fill="#fff"/>
+      <rect x="58" y="106" width="50" height="62" rx="5" fill="#e8b49a"/><circle cx="83" cy="137" r="10" fill="#7a3f2a" opacity=".55"/>
+      <rect x="116" y="108" width="56" height="8" rx="4" fill="#0077B6"/><rect x="116" y="124" width="44" height="6" rx="3" fill="#cfe3ef"/>
+      <rect x="116" y="150" width="56" height="16" rx="8" fill="#0077B6"/>
+      <path d="M26 188h178l-12 16H38z" fill="#c9d6df"/>
+      <rect x="160" y="140" width="50" height="86" rx="10" fill="#1d2b36"/>
+      <rect x="165" y="147" width="40" height="72" rx="6" fill="#F5FAFD"/>
+      <rect x="171" y="156" width="28" height="28" rx="6" fill="#e8b49a"/><circle cx="185" cy="170" r="6" fill="#7a3f2a" opacity=".55"/>
+      <rect x="171" y="194" width="28" height="10" rx="5" fill="#0077B6"/>
+    </g>
+    <text x="120" y="252" font-size="17" font-weight="700">1. Take or choose a photo</text>
+    <text x="120" y="274" font-size="13" fill="#5f7383">phone or laptop browser</text>
+    <path d="M222 150h50" stroke="#00B4D8" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 10" marker-end="url(#a2-ar)"/>
+
+    <!-- 2 server -->
+    <g filter="url(#a2-sh)">
+      <rect x="300" y="78" width="120" height="132" rx="16" fill="#0077B6"/>
+      <rect x="314" y="94" width="92" height="26" rx="7" fill="#2a8fc6"/><rect x="314" y="128" width="92" height="26" rx="7" fill="#2a8fc6"/><rect x="314" y="162" width="92" height="26" rx="7" fill="#2a8fc6"/>
+      <circle cx="328" cy="107" r="5" fill="#7ee0f2"/><circle cx="328" cy="141" r="5" fill="#7ee0f2"/><circle cx="328" cy="175" r="5" fill="#2A9D8F"/>
+      <rect x="344" y="104" width="50" height="6" rx="3" fill="#cfe9f7"/><rect x="344" y="138" width="40" height="6" rx="3" fill="#cfe9f7"/><rect x="344" y="172" width="46" height="6" rx="3" fill="#cfe9f7"/>
+      <circle cx="350" cy="74" r="20" fill="#fff"/><circle cx="343" cy="71" r="2.6" fill="#1d2b36"/><circle cx="357" cy="71" r="2.6" fill="#1d2b36"/>
+      <path d="M344 79c4 4 8 4 12 0" stroke="#1d2b36" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+    <text x="360" y="252" font-size="17" font-weight="700">2. Web server</text>
+    <text x="360" y="274" font-size="13" fill="#5f7383">FastAPI on your computer</text>
+    <path d="M444 150h50" stroke="#00B4D8" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 10" marker-end="url(#a2-ar)"/>
+
+    <!-- 3 AI brain -->
+    <g filter="url(#a2-sh)">
+      <circle cx="580" cy="146" r="72" fill="#fff"/>
+      <path d="M548 112c-18 0-28 14-26 28-12 6-14 26-2 34 0 18 18 28 32 22 6 12 28 14 36 2V114c-8-12-30-14-40-2z" fill="#00B4D8"/>
+      <path d="M612 112c18 0 28 14 26 28 12 6 14 26 2 34 0 18-18 28-32 22-6 12-28 14-36 2" fill="#0077B6"/>
+      <path d="M580 114v94" stroke="#fff" stroke-width="3"/>
+      <path d="M552 138c8 0 12 6 12 12M556 172c6-6 14-6 18 0M608 138c-8 0-12 6-12 12M604 172c-6-6-14-6-18 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="580" cy="76" r="9" fill="#2A9D8F"/><circle cx="580" cy="216" r="9" fill="#2A9D8F"/>
+    </g>
+    <text x="580" y="252" font-size="17" font-weight="700">3. AI model</text>
+    <text x="580" y="274" font-size="13" fill="#5f7383">EfficientNetV2 + Swin V2</text>
+    <path d="M664 150h50" stroke="#00B4D8" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 10" marker-end="url(#a2-ar)"/>
+
+    <!-- 4 result card -->
+    <g filter="url(#a2-sh)">
+      <rect x="736" y="62" width="184" height="168" rx="16" fill="#fff"/>
+      <rect x="736" y="62" width="184" height="36" rx="16" fill="#2A9D8F"/><rect x="736" y="82" width="184" height="16" fill="#2A9D8F"/>
+      <text x="828" y="86" font-size="13" font-weight="700" fill="#fff">Result: likely benign</text>
+      <rect x="750" y="110" width="70" height="70" rx="8" fill="#e8b49a"/>
+      <ellipse cx="785" cy="145" rx="32" ry="30" fill="url(#a2-heat)"/>
+      <rect x="830" y="114" width="76" height="9" rx="4.5" fill="#0077B6"/>
+      <rect x="830" y="132" width="60" height="9" rx="4.5" fill="#00B4D8"/>
+      <rect x="830" y="150" width="34" height="9" rx="4.5" fill="#00B4D8" opacity=".6"/>
+      <rect x="830" y="168" width="20" height="9" rx="4.5" fill="#00B4D8" opacity=".35"/>
+      <rect x="750" y="194" width="100" height="22" rx="11" fill="#e7f5f3"/><text x="800" y="209" font-size="11" font-weight="700" fill="#2A9D8F">High confidence</text>
+    </g>
+    <text x="828" y="252" font-size="17" font-weight="700">4. Result + explanation</text>
+    <text x="828" y="274" font-size="13" fill="#5f7383">heat-map, top 3, advice</text>
+  </g>
+</svg>
+</div></div></div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></div><div><div class="band-n">1</div><h1>What SkinLens is</h1></div></div><div class="pb">
+<p class="lead">SkinLens looks at a photo of a skin spot (lesion) and suggests which of seven common lesion types it
+looks most like. It also shows <b>where</b> it looked (a heat-map), <b>how sure</b> it is (High / Medium / Low) and a
+short written explanation. It runs as a website on your own computer, which you can also open and install on a phone.</p>
+<div class="two">
+  <div class="mini"><svg class="ic " width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5a4 4 0 0 0 8 0V3M10 12v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="11" r="2"/></svg><div><b>Doctor mode</b><br>Log in, keep patient records and scan history, read the
+  full result (Grad-CAM, LIME, top 3), give feedback and download a PDF report.</div></div>
+  <div class="mini"><svg class="ic " width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg><div><b>Patient mode</b><br>No login. Take a photo, get a calm, plain-language result
+  and advice. <b>Nothing is stored.</b></div></div>
+</div>
+<h3 class="hd">How it works</h3>
+<div class="ill " style="width:100%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" role="img" aria-label="How SkinLens works: phone or laptop, server, AI model, result with heat-map">
+  <defs>
+    <filter id="a2-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0b3a5b" flood-opacity=".15"/></filter>
+    <radialGradient id="a2-heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E63946"/><stop offset=".4" stop-color="#f4a261"/><stop offset=".65" stop-color="#ffe66d" stop-opacity=".8"/><stop offset="1" stop-color="#00B4D8" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="a2-ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0l10 5-10 5z" fill="#00B4D8"/></marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="300" rx="24" fill="#F5FAFD"/>
+  <g font-family="Inter,Segoe UI,sans-serif" text-anchor="middle" fill="#1d2b36">
+    <!-- 1 devices -->
+    <g filter="url(#a2-sh)">
+      <rect x="40" y="88" width="150" height="100" rx="10" fill="#1d2b36"/>
+      <rect x="49" y="97" width="132" height="82" rx="5" fill="#fff"/>
+      <rect x="58" y="106" width="50" height="62" rx="5" fill="#e8b49a"/><circle cx="83" cy="137" r="10" fill="#7a3f2a" opacity=".55"/>
+      <rect x="116" y="108" width="56" height="8" rx="4" fill="#0077B6"/><rect x="116" y="124" width="44" height="6" rx="3" fill="#cfe3ef"/>
+      <rect x="116" y="150" width="56" height="16" rx="8" fill="#0077B6"/>
+      <path d="M26 188h178l-12 16H38z" fill="#c9d6df"/>
+      <rect x="160" y="140" width="50" height="86" rx="10" fill="#1d2b36"/>
+      <rect x="165" y="147" width="40" height="72" rx="6" fill="#F5FAFD"/>
+      <rect x="171" y="156" width="28" height="28" rx="6" fill="#e8b49a"/><circle cx="185" cy="170" r="6" fill="#7a3f2a" opacity=".55"/>
+      <rect x="171" y="194" width="28" height="10" rx="5" fill="#0077B6"/>
+    </g>
+    <text x="120" y="252" font-size="17" font-weight="700">1. Take or choose a photo</text>
+    <text x="120" y="274" font-size="13" fill="#5f7383">phone or laptop browser</text>
+    <path d="M222 150h50" stroke="#00B4D8" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 10" marker-end="url(#a2-ar)"/>
+
+    <!-- 2 server -->
+    <g filter="url(#a2-sh)">
+      <rect x="300" y="78" width="120" height="132" rx="16" fill="#0077B6"/>
+      <rect x="314" y="94" width="92" height="26" rx="7" fill="#2a8fc6"/><rect x="314" y="128" width="92" height="26" rx="7" fill="#2a8fc6"/><rect x="314" y="162" width="92" height="26" rx="7" fill="#2a8fc6"/>
+      <circle cx="328" cy="107" r="5" fill="#7ee0f2"/><circle cx="328" cy="141" r="5" fill="#7ee0f2"/><circle cx="328" cy="175" r="5" fill="#2A9D8F"/>
+      <rect x="344" y="104" width="50" height="6" rx="3" fill="#cfe9f7"/><rect x="344" y="138" width="40" height="6" rx="3" fill="#cfe9f7"/><rect x="344" y="172" width="46" height="6" rx="3" fill="#cfe9f7"/>
+      <circle cx="350" cy="74" r="20" fill="#fff"/><circle cx="343" cy="71" r="2.6" fill="#1d2b36"/><circle cx="357" cy="71" r="2.6" fill="#1d2b36"/>
+      <path d="M344 79c4 4 8 4 12 0" stroke="#1d2b36" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </g>
+    <text x="360" y="252" font-size="17" font-weight="700">2. Web server</text>
+    <text x="360" y="274" font-size="13" fill="#5f7383">FastAPI on your computer</text>
+    <path d="M444 150h50" stroke="#00B4D8" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 10" marker-end="url(#a2-ar)"/>
+
+    <!-- 3 AI brain -->
+    <g filter="url(#a2-sh)">
+      <circle cx="580" cy="146" r="72" fill="#fff"/>
+      <path d="M548 112c-18 0-28 14-26 28-12 6-14 26-2 34 0 18 18 28 32 22 6 12 28 14 36 2V114c-8-12-30-14-40-2z" fill="#00B4D8"/>
+      <path d="M612 112c18 0 28 14 26 28 12 6 14 26 2 34 0 18-18 28-32 22-6 12-28 14-36 2" fill="#0077B6"/>
+      <path d="M580 114v94" stroke="#fff" stroke-width="3"/>
+      <path d="M552 138c8 0 12 6 12 12M556 172c6-6 14-6 18 0M608 138c-8 0-12 6-12 12M604 172c-6-6-14-6-18 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="580" cy="76" r="9" fill="#2A9D8F"/><circle cx="580" cy="216" r="9" fill="#2A9D8F"/>
+    </g>
+    <text x="580" y="252" font-size="17" font-weight="700">3. AI model</text>
+    <text x="580" y="274" font-size="13" fill="#5f7383">EfficientNetV2 + Swin V2</text>
+    <path d="M664 150h50" stroke="#00B4D8" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 10" marker-end="url(#a2-ar)"/>
+
+    <!-- 4 result card -->
+    <g filter="url(#a2-sh)">
+      <rect x="736" y="62" width="184" height="168" rx="16" fill="#fff"/>
+      <rect x="736" y="62" width="184" height="36" rx="16" fill="#2A9D8F"/><rect x="736" y="82" width="184" height="16" fill="#2A9D8F"/>
+      <text x="828" y="86" font-size="13" font-weight="700" fill="#fff">Result: likely benign</text>
+      <rect x="750" y="110" width="70" height="70" rx="8" fill="#e8b49a"/>
+      <ellipse cx="785" cy="145" rx="32" ry="30" fill="url(#a2-heat)"/>
+      <rect x="830" y="114" width="76" height="9" rx="4.5" fill="#0077B6"/>
+      <rect x="830" y="132" width="60" height="9" rx="4.5" fill="#00B4D8"/>
+      <rect x="830" y="150" width="34" height="9" rx="4.5" fill="#00B4D8" opacity=".6"/>
+      <rect x="830" y="168" width="20" height="9" rx="4.5" fill="#00B4D8" opacity=".35"/>
+      <rect x="750" y="194" width="100" height="22" rx="11" fill="#e7f5f3"/><text x="800" y="209" font-size="11" font-weight="700" fill="#2A9D8F">High confidence</text>
+    </g>
+    <text x="828" y="252" font-size="17" font-weight="700">4. Result + explanation</text>
+    <text x="828" y="274" font-size="13" fill="#5f7383">heat-map, top 3, advice</text>
+  </g>
+</svg>
+</div>
+<div class="two" style="margin-top:4mm">
+  <div><h4>The AI model</h4><p>A hybrid network: <b>EfficientNetV2-S</b> (good at fine texture) + <b>Swin Transformer V2</b>
+  (good at overall shape) + a small network for age, sex and body site. Trained on HAM10000 (10,015 images).</p></div>
+  <div><h4>The explanation</h4><p><b>Grad-CAM</b> colours the areas the model used most. <b>LIME</b> (doctor mode) is a
+  second, independent check. The text describes border, colour and where the model looked.</p></div>
+</div>
+<div class="box warn"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg></div><div><b>Important:</b> SkinLens is a research project for decision support. It is <b>not</b> a medical diagnosis and not a certified medical device.</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div><div><div class="band-n">2</div><h1>Quick start</h1></div></div><div class="pb">
+<p class="lead">Already have Python 3.12 and the project folder? These five steps get you from zero to the start screen.
+Each step is explained in detail later in this guide.</p>
+<div class="qs">
+  <div class="step"><div class="sn">1</div><div class="sb"><h4>Open PowerShell in the project folder</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>cd C:\Users\&lt;you&gt;\Desktop\SkinClass\clinical_system</div></div></div></div>
+  <div class="step"><div class="sn">2</div><div class="sb"><h4>Create a virtual environment</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>py -3.12 -m venv .venv</div></div></div></div>
+  <div class="step"><div class="sn">3</div><div class="sb"><h4>Install PyTorch (CPU version) and the requirements</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install -r requirements.txt</div></div></div></div>
+  <div class="step"><div class="sn">4</div><div class="sb"><h4>Start the server</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m uvicorn webapp.main:app --host 0.0.0.0 --port 8080</div></div></div></div>
+  <div class="step"><div class="sn">5</div><div class="sb"><h4>Open the app and create the first account</h4><p>Open <span class="url">http://127.0.0.1:8080</span> in a browser, choose <b>I&#39;m a doctor / clinic staff</b> &rarr; <b>Create an account</b>. The first account becomes the <b>Admin</b>.</p></div></div>
+</div>
+<div class="box tip"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div><div><b>Timing on our test laptop:</b> installation took about 10 minutes on home broadband; the first start (loading the model) took about 21 s; one analysis took about 8 s (LIME adds about 70 s in the background).</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></div><div><div class="band-n">3</div><h1>Requirements</h1></div></div><div class="pb"><p class="lead">What you need on the computer that runs SkinLens (the &ldquo;server&rdquo;). Phones only need a modern browser (Chrome on Android, Safari on iPhone).</p><div class="cards3"><div class="rq"><svg class="ic " width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><h4>Operating system</h4><p>Windows 10 or 11, 64-bit.<br><small>Tested on Windows 11. macOS / Linux: see the side box in section 5 (not tested).</small></p></div><div class="rq"><svg class="ic " width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h6a3 3 0 0 1 3 3v4H9a3 3 0 0 0-3 3v2H5a2 2 0 0 1-2-2v-3a3 3 0 0 1 3-3h1V6a3 3 0 0 1 1-3z"/><path d="M16 21h-6a3 3 0 0 1-3-3v-4h8a3 3 0 0 0 3-3V9h1a2 2 0 0 1 2 2v3a3 3 0 0 1-3 3h-1v1a3 3 0 0 1-1 3z"/></svg><h4>Python 3.12</h4><p>64-bit, from python.org.<br><small>Tested with Python 3.12.6.</small></p></div><div class="rq"><svg class="ic " width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><h4>Disk space</h4><p>about 2 GB free<br><small>virtual environment 1.25 GB + model file 0.41 GB + project.</small></p></div><div class="rq"><svg class="ic " width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 17v3M10 17v3M14 17v3M18 17v3M6 11h2M11 11h2M16 11h2"/></svg><h4>Memory (RAM)</h4><p>8 GB recommended<br><small>The running server used about 1.3 GB on our laptop.</small></p></div><div class="rq"><svg class="ic " width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><h4>Internet</h4><p>only for the first installation<br><small>about 770 MB of downloads; fonts and charts also load from the internet.</small></p></div><div class="rq"><svg class="ic " width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11h4M3 3l18 18"/></svg><h4>GPU NOT needed</h4><p>Everything runs on a normal CPU.<br><small>A GPU is only needed to <i>train</i> new models (Kaggle).</small></p></div></div><div class="box note"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><div><b>Short folder path:</b> keep the project in a short path such as <span class="url">C:\Users\&lt;you&gt;\Desktop\SkinClass</span>. In a very deep folder, installing PyTorch fails on Windows with <i>[WinError 206] The filename or extension is too long</i> (this happened in our test).</div></div><div class="center" style="margin-top:6mm"><div class="ill " style="width:70%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-label="A laptop with a terminal window and an open box labelled Python 3.12">
+  <defs>
+    <filter id="a3-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+  </defs>
+  <path d="M60 220c-10-110 90-180 240-180s290 60 290 170-120 150-280 150S68 320 60 220z" fill="#e3f3fb"/>
+  <ellipse cx="320" cy="352" rx="260" ry="14" fill="#0b3a5b" opacity=".08"/>
+  <!-- laptop with terminal -->
+  <g filter="url(#a3-sh)">
+    <rect x="80" y="70" width="300" height="200" rx="14" fill="#1d2b36"/>
+    <rect x="94" y="84" width="272" height="172" rx="7" fill="#0f1b24"/>
+    <rect x="94" y="84" width="272" height="22" rx="7" fill="#22313d"/>
+    <circle cx="108" cy="95" r="4.5" fill="#E63946"/><circle cx="122" cy="95" r="4.5" fill="#f4c542"/><circle cx="136" cy="95" r="4.5" fill="#2A9D8F"/>
+    <g font-family="Consolas,Menlo,monospace" font-size="12.5">
+      <text x="106" y="128" fill="#7ee0f2">&gt; py -3.12 -m venv .venv</text>
+      <text x="106" y="150" fill="#7ee0f2">&gt; pip install -r requirements.txt</text>
+      <text x="106" y="172" fill="#9fb3c2">  Installing torch, fastapi ...</text>
+      <rect x="106" y="184" width="200" height="10" rx="5" fill="#22313d"/><rect x="106" y="184" width="150" height="10" rx="5" fill="#2A9D8F"/>
+      <text x="106" y="216" fill="#6fd3a6">  Successfully installed</text>
+      <rect x="106" y="230" width="9" height="15" fill="#7ee0f2"/>
+    </g>
+    <path d="M50 270h360l-22 28H72z" fill="#c9d6df"/><rect x="190" y="270" width="80" height="8" rx="4" fill="#aebdc8"/>
+  </g>
+  <!-- open box -->
+  <g filter="url(#a3-sh)">
+    <path d="M430 220l90-30 90 30-90 30z" fill="#00B4D8"/>
+    <path d="M430 220v90l90 34v-94z" fill="#0077B6"/>
+    <path d="M610 220v90l-90 34v-94z" fill="#0a8ad0"/>
+    <path d="M430 220l-26-34 90-28 26 32z" fill="#2a8fc6"/>
+    <path d="M610 220l26-34-90-28-26 32z" fill="#4fb3e0"/>
+    <text x="474" y="292" font-family="Inter,Segoe UI,sans-serif" font-size="16" font-weight="800" fill="#fff" transform="rotate(20 474 292)">Python</text>
+    <text x="474" y="312" font-family="Inter,Segoe UI,sans-serif" font-size="13" font-weight="700" fill="#cfe9f7" transform="rotate(20 474 312)">3.12</text>
+  </g>
+  <!-- items flying out -->
+  <g filter="url(#a3-sh)">
+    <rect x="482" y="96" width="38" height="38" rx="7" fill="#fff"/><path d="M490 108h22M490 116h16M490 124h20" stroke="#0077B6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="566" cy="104" r="22" fill="#fff"/>
+    <path d="M566 90l3 6 7-1 1 7 6 3-4 6 4 6-6 3-1 7-7-1-3 6-3-6-7 1-1-7-6-3 4-6-4-6 6-3 1-7 7 1z" fill="#2A9D8F"/><circle cx="566" cy="111" r="6" fill="#fff"/>
+    <rect x="532" y="140" width="32" height="32" rx="7" fill="#fff"/><path d="M540 150l8-4 8 4v10l-8 4-8-4z" fill="#00B4D8"/>
+  </g>
+  <path d="M500 150c4-10 6-16 6-24M548 170c2-8 0-14-4-22M560 150c4-6 6-10 6-18" stroke="#00B4D8" stroke-width="2.5" stroke-dasharray="3 6" fill="none" stroke-linecap="round"/>
+  <path d="M600 60v12M594 66h12" stroke="#0077B6" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+</svg>
+</div></div></div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div><div class="band-n">4</div><h1>Folder structure</h1></div></div><div class="pb"><p class="lead">Only the important folders and files. The app itself is in <b>clinical_system</b>, but it also needs
+the model files in <b>backend/model</b> and <b>backup/original_model</b>, so keep the whole <b>SkinClass</b> folder together.</p>
+<div class="tree"><div class="tr" style="padding-left:2mm"><span class="tn dir"><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> SkinClass/</span><span class="td">project root</span></div><div class="tr" style="padding-left:10mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> backend/model/architecture.py</span><span class="td">the network design – the app loads it from here</span></div><div class="tr" style="padding-left:10mm"><span class="tn dir"><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> backup/original_model/</span><span class="td"><b>the trained model</b></span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> best_skinlens_hybrid.pt</span><span class="td">model weights (414 MB) – must be here</span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> temperature.json</span><span class="td">calibration value</span></div><div class="tr" style="padding-left:10mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> references/test_images/sample.jpg</span><span class="td">sample dermoscopic image (used by seed_demo.py)</span></div><div class="tr" style="padding-left:10mm"><span class="tn dir"><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> clinical_system/</span><span class="td"><b>the app – run all commands in this folder</b></span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> requirements.txt</span><span class="td">Python packages to install</span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> seed_demo.py</span><span class="td">adds or removes DEMO patients for practice</span></div><div class="tr" style="padding-left:18mm"><span class="tn dir"><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> webapp/</span><span class="td">the website: main.py (pages), ml/ (model, Grad-CAM, LIME)</span></div><div class="tr" style="padding-left:26mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> model_settings.json</span><span class="td">prior correction and High/Medium/Low limits</span></div><div class="tr" style="padding-left:26mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> model_info.json</span><span class="td">text of the Model Info page</span></div><div class="tr" style="padding-left:26mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> static/  templates/</span><span class="td">design, icons, app files (manifest, service worker)</span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> instance/</span><span class="td">created on first start: app.db (database) + storage/ (images)</span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> paper_figures/</span><span class="td">figures shown on the Model Info page</span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> research/</span><span class="td">training pipeline for Kaggle (not needed to run the app)</span></div><div class="tr" style="padding-left:18mm"><span class="tn "><svg class="ic " width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg> docs/guide/</span><span class="td">this guide</span></div></div>
+<div class="box warn"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg></div><div><b>Do not move the model:</b> the app looks for <span class="url">..\backup\original_model\best_skinlens_hybrid.pt</span> and <span class="url">..\backend\model\architecture.py</span> next to clinical_system. If you moved them, see &ldquo;Model file not found&rdquo; in Troubleshooting.</div></div>
+<div class="box note"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><div><b>Your data:</b> patients and scans are stored in <span class="url">clinical_system\instance\</span>. Back up this folder; delete it only if you want to start with an empty database.</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><div><div class="band-n">5</div><h1>Installation (Windows)</h1></div></div><div class="pb">
+<div class="side-wrap"><div class="main-col">
+<div class="step"><div class="sn">1</div><div class="sb"><h4>Install Python 3.12</h4><p>Download the Windows installer (64-bit) from python.org and run it. Check that it works:</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>py -3.12 --version</div></div><div class="cmd out"><div class="cmd-h">Output</div><pre>Python 3.12.6</pre></div></div></div>
+<div class="box tip"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div><div><b>Why “py” and not “python”?</b> on many Windows PCs, typing <span class="url">python</span> opens the Microsoft Store placeholder and prints <i>“Python was not found”</i> (it did on our laptop). The Python launcher <span class="url">py -3.12</span> always finds the real Python.</div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><h4>Get the project folder</h4><p>Copy or unzip the <b>SkinClass</b> folder, e.g. to your Desktop. Then open <b>PowerShell</b> (Start menu &rarr; type PowerShell) and go to the app folder:</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>cd C:\Users\&lt;you&gt;\Desktop\SkinClass\clinical_system</div></div></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><h4>Create a virtual environment</h4><p>A private place for SkinLens&#39; packages (takes about 20 s):</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>py -3.12 -m venv .venv</div></div></div></div>
+</div>
+<aside class="side"><h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg> macOS / Linux</h4>
+<p><b>Not tested on this project.</b> The steps are the same with these differences:</p>
+<ul><li>use <span class="url">python3.12</span> instead of <span class="url">py -3.12</span></li>
+<li>use <span class="url">.venv/bin/python</span> instead of <span class="url">.\.venv\Scripts\python.exe</span></li>
+<li>use <span class="url">/</span> instead of <span class="url">\</span> in paths</li>
+<li>find the IP address with <span class="url">ipconfig getifaddr en0</span> (macOS) or <span class="url">hostname -I</span> (Linux)</li></ul>
+<p>If something fails there, check the Troubleshooting section.</p></aside></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<div class="step"><div class="sn">4</div><div class="sb"><h4>Install PyTorch (CPU version)</h4><p>The CPU version is smaller and needs no graphics card (about 285 s on our laptop):</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install --upgrade pip</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu</div></div></div></div>
+<div class="step"><div class="sn">5</div><div class="sb"><h4>Install the other requirements</h4><p>FastAPI, timm, OpenCV and the rest (about 301 s):</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install -r requirements.txt</div></div><div class="cmd out"><div class="cmd-h">Output</div><pre>Successfully installed albucore-0.0.24 albumentations-2.0.8 ... (and the other packages)</pre></div></div></div>
+<div class="step"><div class="sn">6</div><div class="sb"><h4>Check that the model file is found</h4><p>The model must be at <span class="url">SkinClass\backup\original_model\best_skinlens_hybrid.pt</span>. This command loads it (takes about 25 s):</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -c "from webapp.ml.predictor import get_predictor; print(get_predictor().display_name)"</div></div><div class="cmd out"><div class="cmd-h">Output</div><pre>SkinLens hybrid (EfficientNetV2-S + Swin V2 + metadata) + prior correction (alpha=0.3)</pre></div></div></div>
+<div class="box ok"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><div><b>Done!</b> if you see the model name with &ldquo;prior correction (alpha=0.3)&rdquo;, the installation is complete. You do <b>not</b> need to “activate” the virtual environment: every command calls <span class="url">.\.venv\Scripts\python.exe</span> directly.</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg></div><div><div class="band-n">6</div><h1>Running the website</h1></div></div><div class="pb">
+<div class="step"><div class="sn">1</div><div class="sb"><h4>Start the server</h4><p>In PowerShell, inside <b>clinical_system</b>:</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m uvicorn webapp.main:app --host 0.0.0.0 --port 8080</div></div><div class="cmd out"><div class="cmd-h">The terminal shows</div><pre>INFO:     Waiting for application startup.
+INFO:skinlens:Model loaded: SkinLens hybrid (EfficientNetV2-S + Swin V2 + metadata) on cpu
+======================================================================
+   Open on your phone (same Wi-Fi): http://192.168.31.11:8080
+   On this computer:              http://127.0.0.1:8080
+======================================================================
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)</pre></div><p>The first start took about 21 s on our laptop (the model is loaded once). Keep this window open while you use SkinLens.</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><h4>Open the app</h4><p>On the same computer open <span class="url">http://127.0.0.1:8080</span>. You can check the server at <span class="url">http://127.0.0.1:8080/health</span>:</p><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>Invoke-RestMethod http://127.0.0.1:8080/health</div></div><div class="cmd out"><div class="cmd-h">Output</div><pre>status model                                                   device
+------ -----                                                   ------
+ok     SkinLens hybrid (EfficientNetV2-S + Swin V2 + metadata) cpu</pre></div></div></div>
+<div class="box note"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><div><b>Port:</b> 8080 is the port used everywhere in this guide. Without <span class="url">--port</span>, uvicorn uses its default port 8000.</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<div class="step"><div class="sn">3</div><div class="sb"><h4>Create the first account</h4><p>Choose <b>I&#39;m a doctor / clinic staff</b> &rarr; <b>Create an account</b>. <b>The first account becomes the Admin</b>; later accounts are doctors (the Admin can change roles).</p></div></div>
+<figure class="laptop" style="width:88%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d00_register.png"><div class="mk right" style="left:63.69%;top:76.16%"><span class="mk-n">1</span><span class="mk-l">Create account</span></div></div></div><div class="lp-base"></div><figcaption>Creating the first account (example account used in this guide: demo.doctor)</figcaption></figure>
+<div class="step"><div class="sn">4</div><div class="sb"><h4>Stop the server</h4><p>Click the PowerShell window and press <span class="key">Ctrl</span> + <span class="key">C</span>. Your data stays in <span class="url">instance\</span> and is there again next time.</p></div></div>
+<div class="box tip"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div><div><b>Practice data:</b> to try the app with made-up patients, run the command below (server running or not). DEMO patients get a yellow DEMO badge. <span class="url">--remove</span> deletes them again.<div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe seed_demo.py --patients 8 --lime 1</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe seed_demo.py --remove</div></div></div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v5a4 4 0 0 0 8 0V3M10 12v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="11" r="2"/></svg></div><div><div class="band-n">7</div><h1>Using Doctor mode</h1></div></div><div class="pb">
+<div class="intro-ill"><div class="ill " style="width:44%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-label="A doctor at a desk with a patient file and the SkinLens result on screen">
+  <defs>
+    <filter id="a4-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+    <radialGradient id="a4-heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E63946"/><stop offset=".4" stop-color="#f4a261"/><stop offset=".65" stop-color="#ffe66d" stop-opacity=".8"/><stop offset="1" stop-color="#00B4D8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <path d="M40 200c0-110 120-170 280-170s290 50 290 160-130 170-290 170S40 310 40 200z" fill="#e3f3fb"/>
+  <!-- monitor -->
+  <g filter="url(#a4-sh)">
+    <rect x="300" y="60" width="270" height="170" rx="14" fill="#1d2b36"/>
+    <rect x="312" y="72" width="246" height="146" rx="7" fill="#F5FAFD"/>
+    <rect x="312" y="72" width="246" height="26" rx="7" fill="#2A9D8F"/><rect x="312" y="90" width="246" height="8" fill="#2A9D8F"/>
+    <text x="326" y="90" font-family="Inter,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#fff">Likely benign · High confidence</text>
+    <rect x="324" y="108" width="64" height="64" rx="6" fill="#e8b49a"/>
+    <rect x="396" y="108" width="64" height="64" rx="6" fill="#e8b49a"/><ellipse cx="428" cy="140" rx="30" ry="28" fill="url(#a4-heat)"/>
+    <rect x="470" y="110" width="74" height="9" rx="4.5" fill="#0077B6"/><rect x="470" y="128" width="56" height="9" rx="4.5" fill="#00B4D8"/>
+    <rect x="470" y="146" width="30" height="9" rx="4.5" fill="#00B4D8" opacity=".6"/>
+    <rect x="324" y="182" width="220" height="7" rx="3.5" fill="#cfe3ef"/><rect x="324" y="196" width="170" height="7" rx="3.5" fill="#cfe3ef"/>
+    <rect x="420" y="230" width="30" height="34" fill="#aebdc8"/><rect x="390" y="262" width="90" height="10" rx="5" fill="#aebdc8"/>
+  </g>
+  <!-- desk -->
+  <rect x="60" y="272" width="540" height="18" rx="9" fill="#0077B6"/>
+  <rect x="90" y="290" width="16" height="70" rx="6" fill="#005f92"/><rect x="556" y="290" width="16" height="70" rx="6" fill="#005f92"/>
+  <!-- patient file -->
+  <g filter="url(#a4-sh)" transform="rotate(-6 250 262)">
+    <rect x="206" y="236" width="96" height="34" rx="5" fill="#f4c542"/>
+    <rect x="212" y="230" width="84" height="34" rx="4" fill="#fff"/>
+    <rect x="220" y="238" width="44" height="6" rx="3" fill="#0077B6"/><rect x="220" y="250" width="60" height="5" rx="2.5" fill="#cfe3ef"/>
+  </g>
+  <!-- mug + plant -->
+  <rect x="514" y="242" width="28" height="30" rx="6" fill="#E63946"/><path d="M542 250c10 0 10 14 0 14" stroke="#E63946" stroke-width="4" fill="none"/>
+  <rect x="108" y="236" width="30" height="36" rx="6" fill="#00B4D8"/>
+  <path d="M123 238c-16-14-18-34-6-44 4 14 8 26 6 44zM123 238c14-16 30-20 34-10-10 4-22 6-34 10zM123 238c-10-26 0-44 8-46 2 16-2 30-8 46z" fill="#2A9D8F"/>
+  <!-- doctor (seen from the side, sitting) -->
+  <g filter="url(#a4-sh)">
+    <path d="M168 196c0-26 20-44 46-44s46 18 46 44v86h-92z" fill="#fff"/>
+    <path d="M200 152l14 32 14-32" fill="#00B4D8"/>
+    <path d="M206 160c-8 28-4 50 10 58s24-6 22-22" fill="none" stroke="#2A9D8F" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="238" cy="194" r="6" fill="#2A9D8F"/>
+    <rect x="204" y="130" width="20" height="24" rx="8" fill="#8d5a3b"/>
+    <circle cx="214" cy="110" r="34" fill="#a86b45"/>
+    <path d="M180 108c-2-28 16-44 36-44 22 0 36 14 34 38-10-12-22-14-32-12-14 2-24 0-38 18z" fill="#1d2b36"/>
+    <circle cx="214" cy="86" r="10" fill="#1d2b36"/>
+    <circle cx="226" cy="112" r="3.8" fill="#1d2b36"/><circle cx="244" cy="112" r="3.6" fill="#1d2b36"/>
+    <path d="M228 126c5 5 12 5 17 0" stroke="#1d2b36" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M246 206c20 24 40 40 64 46" stroke="#fff" stroke-width="22" fill="none" stroke-linecap="round"/>
+    <circle cx="314" cy="254" r="11" fill="#a86b45"/>
+    <rect x="300" y="256" width="40" height="14" rx="4" fill="#cfe3ef"/>
+  </g>
+</svg>
+</div><p class="lead">Doctor mode is the full clinic app: patients, scans,
+explanations, feedback, reports and (for the Admin) research tools. Everything here works the same on a phone, with a
+bottom menu instead of the top bar.</p></div>
+<h3 class="hd">Log in</h3>
+<figure class="laptop" style="width:78%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d01_login.png"><div class="mk right" style="left:63.69%;top:48.86%"><span class="mk-n">1</span><span class="mk-l">Username</span></div><div class="mk right" style="left:63.69%;top:60.72%"><span class="mk-n">2</span><span class="mk-l">Password</span></div><div class="mk right" style="left:63.69%;top:68.69%"><span class="mk-n">3</span><span class="mk-l">Log in</span></div></div></div><div class="lp-base"></div><figcaption>Enter your username and password, then click Log in</figcaption></figure>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">The dashboard</h3>
+<p>Totals, possible disease findings, today&#39;s scans and the most recent scans. Start with <b>Add Patient</b> or
+<b>Upload &amp; Analyze</b>.</p>
+<figure class="laptop" style="width:86%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d02_dashboard.png"><div class="mk left" style="left:69.07%;top:26.39%"><span class="mk-n">1</span><span class="mk-l">Add Patient</span></div><div class="mk below" style="left:85.73%;top:29.33%"><span class="mk-n">2</span><span class="mk-l">Upload &amp; Analyze</span></div></div></div><div class="lp-base"></div><figcaption>Dashboard (DEMO data)</figcaption></figure>
+<h3 class="hd">Add a patient</h3>
+<p>Each patient gets an automatic ID such as <b>PAT-2026-0001</b>. Age and sex also help the model.</p>
+<figure class="laptop" style="width:74%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d03_add_patient.png"><div class="mk right" style="left:59.30%;top:33.19%"><span class="mk-n">1</span><span class="mk-l">Name</span></div><div class="mk right" style="left:19.18%;top:70.04%"><span class="mk-n">2</span><span class="mk-l">Save patient</span></div></div></div><div class="lp-base"></div><figcaption>Add Patient form</figcaption></figure>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">Upload and analyse a photo</h3>
+<p>Choose the patient and body site, then <b>Take photo</b> (camera on phones) or <b>Choose from gallery</b>. A preview and
+photo tips appear; the photo is shrunk to max 1024 px before it is sent.</p>
+<figure class="laptop" style="width:86%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d04_upload.png"><div class="mk below" style="left:28.81%;top:48.63%"><span class="mk-n">1</span><span class="mk-l">Choose patient</span></div><div class="mk below" style="left:80.80%;top:46.44%"><span class="mk-n">2</span><span class="mk-l">Choose photo</span></div></div></div><div class="lp-base"></div><figcaption>Upload & Analyze</figcaption></figure>
+<figure class="laptop" style="width:62%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d05_analysing.png"></div></div><div class="lp-base"></div><figcaption>While the model works: “Analysing… about 10–20 seconds”</figcaption></figure>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">Reading the result</h3>
+<figure class="laptop" style="width:86%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d06_result_top.png"><div class="mk left" style="left:67.97%;top:20.15%"><span class="mk-n">1</span><span class="mk-l">Download PDF</span></div><div class="mk left" style="left:81.24%;top:34.31%"><span class="mk-n">2</span><span class="mk-l">Confidence level</span></div></div></div><div class="lp-base"></div><figcaption>The coloured banner: the most likely lesion type, the confidence and its level</figcaption></figure>
+<table class="lv"><tr><th>Level</th><th>Meaning</th><th>What to do</th></tr>
+<tr><td><span class="bdg hi">High</span> &gt; 80%</td><td>the model is fairly sure</td><td>still check it yourself</td></tr>
+<tr><td><span class="bdg me">Medium</span> 50–80%</td><td>partly sure; a close 2nd class gets a warning</td><td>look at the top 3</td></tr>
+<tr><td><span class="bdg lo">Low</span> &lt; 50%</td><td>not sure (red warning)</td><td>do not rely on it; refer</td></tr></table>
+<p class="small">The percentages are prior-corrected probabilities (alpha = 0.3, set in <span class="url">webapp\model_settings.json</span>).
+In our tests, results marked High were correct 90.6% of the time.</p>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">Image, Grad-CAM and LIME</h3>
+<figure class="plainshot framed" style="width:100%"><div class="shot"><img src="screenshots/d07_result_images.png"></div><figcaption>Left: the photo. Middle: Grad-CAM – red/yellow = where the model looked most. Right: LIME – the regions that supported the answer (computed in the background, about about 70 s).</figcaption></figure>
+<div class="box tip"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div><div><b>Read the heat-map:</b> if most colour is <b>on the lesion</b>, the result is more trustworthy. If it is on hair, a ruler, ink or the image border, the written explanation warns you – treat that result with extra caution.</div></div>
+<h3 class="hd">Explanation and top 3</h3>
+<figure class="plainshot framed" style="width:100%"><div class="shot"><img src="screenshots/d08_result_explanation.png"></div><figcaption>Written explanation, “What this means”, the recommendation and the three most likely classes</figcaption></figure>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">Doctor feedback</h3>
+<p>At the bottom of every result: do you agree (Agree / Disagree + correct diagnosis / Unsure), how useful was the
+explanation (1–5 stars), and an optional comment. This is used for the clinician evaluation.</p>
+<figure class="plainshot framed" style="width:82%"><div class="shot"><img src="screenshots/d09_feedback.png"></div><figcaption>Feedback form</figcaption></figure>
+<h3 class="hd">Patient record and history</h3>
+<figure class="laptop" style="width:80%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d10_patient_record.png"><div class="mk below" style="left:83.14%;top:41.59%"><span class="mk-n">1</span><span class="mk-l">View scan</span></div><div class="mk right" style="left:90.04%;top:38.64%"><span class="mk-n">2</span><span class="mk-l">PDF</span></div></div></div><div class="lp-base"></div><figcaption>Every scan of a patient, newest first, with View and PDF buttons</figcaption></figure>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<div class="two-60">
+<div><h3 class="hd">PDF report</h3>
+<p>Click <b>Download Report (PDF)</b> on a result (or <b>PDF</b> in the history). The report contains patient details,
+the image, Grad-CAM and LIME, the result and confidence, the top 3, the explanation, the recommendation and the
+disclaimer.</p>
+<h3 class="hd">Find a patient</h3>
+<figure class="laptop" style="width:100%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d12_patient_list.png"><div class="mk right" style="left:82.95%;top:29.57%"><span class="mk-n">1</span><span class="mk-l">Search by ID or name</span></div></div></div><div class="lp-base"></div><figcaption>Patient Records: search by ID or name</figcaption></figure>
+</div>
+<div><figure class="plainshot paper" style="width:100%"><div class="shot"><img src="screenshots/d11_report_pdf.png"></div><figcaption>Page 1 of a PDF report (DEMO patient)</figcaption></figure></div>
+</div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">Admin: staff accounts</h3>
+<p>Only the Admin sees <b>Research</b> and <b>Admin</b>. The Admin can make another account Admin or Doctor. Doctors see
+only their own patients; the Admin sees all.</p>
+<figure class="laptop" style="width:78%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d13_admin_users.png"><div class="mk left" style="left:70.12%;top:36.36%"><span class="mk-n">1</span><span class="mk-l">Change role</span></div></div></div><div class="lp-base"></div><figcaption>Admin page</figcaption></figure>
+<h3 class="hd">Admin: research dashboard and export</h3>
+<figure class="laptop" style="width:86%"><div class="lp-screen"><div class="lp-cam"></div><div class="shot"><img src="screenshots/d14_research.png"><div class="mk left" style="left:67.41%;top:17.82%"><span class="mk-n">1</span><span class="mk-l">Export CSV</span></div></div></div><div class="lp-base"></div><figcaption>Scans per class, confidence levels, doctor agreement, timings, disagreements; anonymised CSV export (patient ID only)</figcaption></figure>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div><div><div class="band-n">8</div><h1>Using the mobile app</h1></div></div><div class="pb">
+<div class="intro-ill"><div class="ill " style="width:32%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-label="A phone home screen with the SkinLens app icon, linked by Wi-Fi and a cloud to a laptop">
+  <defs>
+    <filter id="a6-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+    <linearGradient id="a6-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ee0f2"/><stop offset="1" stop-color="#0077B6"/></linearGradient>
+  </defs>
+  <path d="M40 200c0-110 130-170 290-170s280 60 280 170-130 160-290 160S40 310 40 200z" fill="#e3f3fb"/>
+  <ellipse cx="320" cy="352" rx="260" ry="13" fill="#0b3a5b" opacity=".08"/>
+  <!-- laptop -->
+  <g filter="url(#a6-sh)">
+    <rect x="60" y="150" width="200" height="130" rx="12" fill="#1d2b36"/>
+    <rect x="71" y="161" width="178" height="108" rx="6" fill="#0f1b24"/>
+    <text x="82" y="190" font-family="Consolas,Menlo,monospace" font-size="11" fill="#7ee0f2">uvicorn ... --port 8080</text>
+    <text x="82" y="210" font-family="Consolas,Menlo,monospace" font-size="11" fill="#6fd3a6">Open on your phone:</text>
+    <text x="82" y="228" font-family="Consolas,Menlo,monospace" font-size="11" fill="#fff">http://192.168.x.x:8080</text>
+    <path d="M36 280h248l-18 24H54z" fill="#c9d6df"/>
+  </g>
+  <!-- link: wifi + cloud -->
+  <path d="M276 210c40-40 90-40 130 0" stroke="#00B4D8" stroke-width="4" stroke-dasharray="4 9" fill="none" stroke-linecap="round"/>
+  <g filter="url(#a6-sh)">
+    <path d="M316 132c-16 0-28-12-28-26s12-26 26-26c4-16 18-26 34-26 20 0 34 14 36 32 12 2 20 12 20 22 0 14-12 24-26 24z" fill="#fff"/>
+    <path d="M322 108a30 30 0 0 1 44 0M330 116a18 18 0 0 1 28 0" stroke="#0077B6" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="344" cy="124" r="4.5" fill="#0077B6"/>
+  </g>
+  <text x="346" y="160" font-family="Inter,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#0077B6" text-anchor="middle">Wi-Fi or HTTPS tunnel</text>
+  <!-- phone -->
+  <g filter="url(#a6-sh)">
+    <rect x="420" y="40" width="160" height="300" rx="26" fill="#1d2b36"/>
+    <rect x="430" y="54" width="140" height="272" rx="18" fill="url(#a6-wall)"/>
+    <rect x="478" y="58" width="44" height="8" rx="4" fill="#1d2b36"/>
+    <g fill="#fff" opacity=".85">
+      <rect x="446" y="84" width="30" height="30" rx="9"/><rect x="485" y="84" width="30" height="30" rx="9"/><rect x="524" y="84" width="30" height="30" rx="9"/>
+      <rect x="446" y="130" width="30" height="30" rx="9"/><rect x="524" y="130" width="30" height="30" rx="9"/>
+      <rect x="446" y="192" width="30" height="30" rx="9"/><rect x="485" y="192" width="30" height="30" rx="9"/><rect x="524" y="192" width="30" height="30" rx="9"/>
+    </g>
+    <g fill="#00B4D8" opacity=".5"><circle cx="461" cy="99" r="7"/><rect x="531" y="137" width="16" height="16" rx="4"/><path d="M492 200h16v14h-16z"/></g>
+    <!-- SkinLens icon -->
+    <rect x="481" y="126" width="38" height="38" rx="11" fill="#0077B6" stroke="#fff" stroke-width="3"/>
+    <circle cx="497" cy="142" r="9" fill="none" stroke="#fff" stroke-width="3.2"/>
+    <path d="M504 149l7 7" stroke="#00B4D8" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M497 137.5v9M492.5 142h9" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+    <text x="500" y="180" font-family="Inter,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">SkinLens</text>
+    <rect x="446" y="282" width="108" height="30" rx="15" fill="#fff" opacity=".35"/>
+  </g>
+  <!-- sparkle around icon -->
+  <path d="M532 112l4 4M466 116l-4 4M540 160h6" stroke="#ffe66d" stroke-width="3" stroke-linecap="round"/>
+</svg>
+</div><p class="lead">You can use SkinLens on a phone in two ways:
+quickly over the <b>same Wi-Fi</b> (a web page), or as an <b>installed app</b> with its own icon (needs HTTPS – we use a
+free Cloudflare tunnel).</p></div>
+<h3 class="hd">(a) Same Wi-Fi – the quick way</h3>
+<div class="two-60"><div>
+<div class="step"><div class="sn">1</div><div class="sb"><h4>Start the server for the network</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m uvicorn webapp.main:app --host 0.0.0.0 --port 8080</div></div><p>It prints the phone address, e.g. <span class="url">http://192.168.31.11:8080</span>.</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><h4>Or find the IP address yourself</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>ipconfig</div></div><div class="cmd out"><div class="cmd-h">Output</div><pre>Wireless LAN adapter Wi-Fi:
+   IPv4 Address. . . . . . . . . . . : 192.168.31.11</pre></div><p>Use the IPv4 address of your Wi-Fi adapter: <span class="url">http://&lt;laptop-IP&gt;:8080</span>.</p></div></div>
+<div class="box tip"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div><div><b>Firewall:</b> the first time, Windows asks if Python may use the network: tick <b>Private networks</b> &rarr; <b>Allow</b>.</div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><h4>Open it on the phone</h4><p>Phone on the <b>same Wi-Fi</b>, type the address in Chrome or Safari. To get an icon: browser menu &rarr; <b>Add to Home screen</b>.</p></div></div>
+</div><div><figure class="phone" style="width:92%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m01_start.png"><div class="mk left" style="left:95.90%;top:33.68%"><span class="mk-n">1</span><span class="mk-l">Doctor / staff</span></div><div class="mk left" style="left:95.90%;top:48.66%"><span class="mk-n">2</span><span class="mk-l">Check my skin</span></div><div class="mk right" style="left:70.31%;top:66.96%"><span class="mk-n">3</span><span class="mk-l">Install</span></div></div></div><figcaption>Start screen on a phone</figcaption></figure></div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">(b) Install as an app – HTTPS with a free Cloudflare quick tunnel</h3>
+<p>Phones only offer <b>Install</b> (and the offline page) on secure <b>https://</b> addresses. A Cloudflare quick tunnel
+gives your laptop a temporary https address – no account needed.</p>
+<div class="step"><div class="sn">1</div><div class="sb"><h4>Install cloudflared (once)</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>winget install --id Cloudflare.cloudflared</div></div><div class="box note"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><div><b>Then open a NEW PowerShell window.</b> In the old window you get <i>“cloudflared is not recognized”</i>. Without a new window you can use the full path:</div></div><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>&amp; "C:\Program Files (x86)\cloudflared\cloudflared.exe" --version</div></div><div class="cmd out"><div class="cmd-h">Output</div><pre>cloudflared version 2026.11.0 (built 2026-11-12T03:21 UTC)</pre></div></div></div>
+<div class="step"><div class="sn">2</div><div class="sb"><h4>Start the tunnel (server must be running)</h4><div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>cloudflared tunnel --url http://localhost:8080</div></div><div class="cmd out"><div class="cmd-h">It prints (address changes every time)</div><pre>INF Requesting new quick Tunnel on trycloudflare.com...
+INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+INF |  https://furniture-passage-substances-highway.trycloudflare.com                            |</pre></div></div></div>
+<div class="step"><div class="sn">3</div><div class="sb"><h4>Install on the phone</h4><p>Open the <b>https://…trycloudflare.com</b> address. <b>Android (Chrome):</b> tap <b>Install SkinLens</b> on the start screen (or menu &rarr; <i>Install app</i>). <b>iPhone (Safari):</b> <b>Share</b> &rarr; <b>Add to Home Screen</b>. SkinLens then opens full screen from its own icon.</p></div></div>
+<div class="box warn"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg></div><div><b>The tunnel is public:</b> anyone with the address can open the app while the tunnel runs. Create staff accounts first, then restart the server with <span class="url">$env:ALLOW_REGISTRATION="0"; $env:COOKIE_SECURE="1"</span> before the uvicorn command, and stop the tunnel with Ctrl + C when you are done.</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">(c) Patient mode – “Check my skin”</h3>
+<div class="intro-ill"><div class="ill " style="width:40%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-label="A person photographing a spot on their arm with a phone; a lock says nothing is stored">
+  <defs>
+    <filter id="a5-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+  </defs>
+  <path d="M40 210c0-110 130-170 290-170s280 60 280 170-130 160-290 160S40 320 40 210z" fill="#e0f7fb"/>
+  <ellipse cx="300" cy="356" rx="230" ry="13" fill="#0b3a5b" opacity=".08"/>
+  <!-- person -->
+  <g filter="url(#a5-sh)">
+    <path d="M150 230c0-40 30-66 70-66s70 26 70 66v120H150z" fill="#2A9D8F"/>
+    <path d="M196 166l24 22 24-22" fill="#228074"/>
+    <rect x="208" y="140" width="24" height="28" rx="9" fill="#c98b5e"/>
+    <circle cx="220" cy="112" r="40" fill="#d79a6a"/>
+    <path d="M178 116c-8-40 22-62 48-60 30 2 46 26 38 56-6-18-18-28-32-28-22 0-34 14-54 32z" fill="#5b3a29"/>
+    <path d="M182 112c-6 20-4 50 6 64M262 104c6 22 4 52-8 70" stroke="#5b3a29" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <circle cx="234" cy="118" r="4" fill="#1d2b36"/><circle cx="254" cy="118" r="3.8" fill="#1d2b36"/>
+    <path d="M236 134c6 4 12 4 18 0" stroke="#1d2b36" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="226" cy="128" r="5" fill="#f08c8c" opacity=".35"/>
+    <!-- left arm stretched out (with the spot) -->
+    <path d="M168 220c-30 30-40 60-20 70l170-10" stroke="#2A9D8F" stroke-width="30" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M250 282l110-6" stroke="#d79a6a" stroke-width="26" stroke-linecap="round"/>
+    <circle cx="372" cy="276" r="16" fill="#d79a6a"/>
+    <ellipse cx="318" cy="279" rx="7" ry="6" fill="#6b3a26"/>
+    <!-- right arm holding phone -->
+    <path d="M276 210c20 10 34 2 44-18" stroke="#2A9D8F" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <circle cx="322" cy="186" r="13" fill="#d79a6a"/>
+  </g>
+  <!-- phone -->
+  <g filter="url(#a5-sh)" transform="rotate(14 330 160)">
+    <rect x="300" y="100" width="64" height="116" rx="12" fill="#1d2b36"/>
+    <rect x="306" y="108" width="52" height="100" rx="8" fill="#e8b49a"/>
+    <path d="M314 122h8M314 122v8M350 122h-8M350 122v8M314 194h8M314 194v-8M350 194h-8M350 194v-8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="332" cy="158" rx="9" ry="8" fill="#6b3a26"/>
+    <circle cx="332" cy="200" r="5" fill="#fff"/>
+  </g>
+  <path d="M322 220l-6 46M342 226l-12 44" stroke="#00B4D8" stroke-width="2.5" stroke-dasharray="3 6" opacity=".8"/>
+  <!-- lock badge -->
+  <g filter="url(#a5-sh)">
+    <rect x="430" y="96" width="170" height="150" rx="22" fill="#fff"/>
+    <rect x="482" y="150" width="66" height="54" rx="10" fill="#0077B6"/>
+    <path d="M494 150v-14c0-12 9-20 21-20s21 8 21 20v14" stroke="#0077B6" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <circle cx="515" cy="173" r="7" fill="#fff"/><rect x="512" y="176" width="6" height="14" rx="3" fill="#fff"/>
+    <text x="515" y="228" font-family="Inter,Segoe UI,sans-serif" font-size="14" font-weight="800" fill="#1d2b36" text-anchor="middle">Nothing is stored</text>
+  </g>
+  <path d="M600 70v12M594 76h12" stroke="#00B4D8" stroke-width="3" stroke-linecap="round"/>
+</svg>
+</div><div><p><b>What it does:</b> no login; take or choose a photo, see the
+most likely type in plain words, the confidence level, the heat-map, clear advice, and download a one-page summary for a doctor.</p>
+<p><b>What it does not store:</b> nothing goes into the database. The photo is analysed in memory and the upload&#39;s
+temporary file is deleted immediately; the result exists only on the phone screen. Limit: 10 checks per hour per phone.</p></div></div>
+<div class="phones3">
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m03_check.png"><div class="mk below" style="left:28.85%;top:43.32%"><span class="mk-n">1</span><span class="mk-l">Take photo</span></div><div class="mk below" style="left:71.15%;top:43.32%"><span class="mk-n">2</span><span class="mk-l">Gallery</span></div></div></div><figcaption>1. Take photo or choose from gallery</figcaption></figure>
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m04_preview_tips.png"></div></div><figcaption>2. Preview, size and photo tips</figcaption></figure>
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m05_patient_result.png"><div class="mk left" style="left:95.90%;top:21.40%"><span class="mk-n">1</span><span class="mk-l">Advice</span></div></div></div><figcaption>3. Advice and result</figcaption></figure>
+</div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<div class="phones3">
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m06_patient_heatmap.png"><div class="mk below" style="left:70.38%;top:50.17%"><span class="mk-n">1</span><span class="mk-l">Heat-map tab</span></div></div></div><figcaption>Swipe or tap to see where the app looked</figcaption></figure>
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m07_patient_summary.png"><div class="mk left" style="left:95.90%;top:51.51%"><span class="mk-n">1</span><span class="mk-l">Download summary</span></div></div></div><figcaption>Download summary; the disclaimer is on every screen</figcaption></figure>
+<figure class="plainshot paper" style="width:100%"><div class="shot"><img src="screenshots/m08_patient_summary_pdf.png"></div><figcaption>The one-page summary PDF</figcaption></figure>
+</div>
+<table class="lv"><tr><th>The app found…</th><th>Advice shown to the patient</th></tr>
+<tr><td>melanoma, basal cell carcinoma, actinic keratosis (and SCC)</td><td>“This may need attention. Please see a dermatologist soon.”</td></tr>
+<tr><td>mole, benign keratosis, dermatofibroma, vascular lesion</td><td>“This looks less concerning, but only a doctor can confirm. See a doctor if it changes, bleeds, itches or grows.”</td></tr>
+<tr><td>any result with <b>Low</b> confidence</td><td>“The app is not sure. Please see a doctor.”</td></tr></table>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb">
+<h3 class="hd">Doctor mode on a phone</h3>
+<p>Same features as on the laptop. The bottom bar has <b>Home</b>, <b>Patients</b>, the big <b>Scan</b> button, <b>Info</b>
+and <b>More</b> (Add Patient, Research, Admin, start screen). On a result, swipe between Image, Grad-CAM and LIME.</p>
+<div class="phones3">
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m02_login.png"><div class="mk left" style="left:91.03%;top:61.59%"><span class="mk-n">1</span><span class="mk-l">Log in</span></div></div></div><figcaption>Doctor login</figcaption></figure>
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m09_dashboard.png"><div class="mk above" style="left:50.00%;top:93.13%"><span class="mk-n">1</span><span class="mk-l">New scan</span></div><div class="mk above" style="left:89.18%;top:93.13%"><span class="mk-n">2</span><span class="mk-l">More</span></div></div></div><figcaption>Dashboard with bottom bar</figcaption></figure>
+<figure class="phone" style="width:100%"><div class="ph-body"><div class="ph-notch"></div><div class="shot"><img src="screenshots/m10_doctor_gradcam.png"><div class="mk below" style="left:50.00%;top:71.60%"><span class="mk-n">1</span><span class="mk-l">Swipe or tap</span></div></div></div><figcaption>Result: Grad-CAM tab</figcaption></figure>
+</div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></div><div><div class="band-n">9</div><h1>Taking a good photo</h1></div></div><div class="pb">
+<p class="lead">The model was trained on clear, close-up (dermoscopic) images. A good photo gives a more reliable result.</p>
+<div class="ill " style="width:100%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-label="Taking a good photo: four good examples with green ticks and two wrong examples with red crosses">
+  <defs>
+    <filter id="a7-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#0b3a5b" flood-opacity=".14"/></filter>
+    <filter id="a7-blur"><feGaussianBlur stdDeviation="7"/></filter>
+    <radialGradient id="a7-skin" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#f1c3a6"/><stop offset="1" stop-color="#e2a989"/></radialGradient>
+    <g id="a7-tick"><circle r="17" fill="#2A9D8F"/><path d="M-8 0l6 6 11-12" stroke="#fff" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="a7-cross"><circle r="17" fill="#E63946"/><path d="M-6.5-6.5l13 13M6.5-6.5l-13 13" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></g>
+    <g id="a7-spot"><path d="M-22-6c4-14 22-20 34-10 12 8 12 26 0 32-12 8-30 4-34-8-2-6-2-10 0-14z" fill="#6b3a26"/><circle cx="-4" cy="2" r="5" fill="#4a2618" opacity=".6"/></g>
+  </defs>
+  <g font-family="Inter,Segoe UI,sans-serif" text-anchor="middle">
+    <!-- 1 good light -->
+    <g filter="url(#a7-sh)"><rect x="20" y="20" width="200" height="200" rx="18" fill="#fff"/></g>
+    <rect x="34" y="34" width="172" height="130" rx="12" fill="url(#a7-skin)"/>
+    <use href="#a7-spot" x="120" y="104"/>
+    <circle cx="70" cy="62" r="14" fill="#ffd34d"/><path d="M70 40v-6M70 90v-6M48 62h-6M98 62h-6M55 47l-4-4M85 47l4-4M55 77l-4 4M85 77l4 4" stroke="#ffd34d" stroke-width="3" stroke-linecap="round"/>
+    <use href="#a7-tick" x="196" y="40"/>
+    <text x="120" y="194" font-size="17" font-weight="700" fill="#1d2b36">Good light</text>
+    <!-- 2 in focus -->
+    <g filter="url(#a7-sh)"><rect x="240" y="20" width="200" height="200" rx="18" fill="#fff"/></g>
+    <rect x="254" y="34" width="172" height="130" rx="12" fill="url(#a7-skin)"/>
+    <use href="#a7-spot" x="340" y="100"/>
+    <path d="M300 64h-14v14M380 64h14v14M300 138h-14v-14M380 138h14v-14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <use href="#a7-tick" x="416" y="40"/>
+    <text x="340" y="194" font-size="17" font-weight="700" fill="#1d2b36">In focus</text>
+    <!-- 3 about 10 cm -->
+    <g filter="url(#a7-sh)"><rect x="460" y="20" width="200" height="200" rx="18" fill="#fff"/></g>
+    <rect x="474" y="34" width="172" height="130" rx="12" fill="#e3f3fb"/>
+    <rect x="490" y="132" width="140" height="22" rx="11" fill="#e2a989"/><ellipse cx="560" cy="140" rx="7" ry="5" fill="#6b3a26"/>
+    <rect x="540" y="48" width="40" height="30" rx="6" fill="#1d2b36"/><circle cx="560" cy="63" r="7" fill="#7ee0f2"/>
+    <path d="M600 82v44" stroke="#0077B6" stroke-width="3"/><path d="M594 88l6-8 6 8M594 120l6 8 6-8" stroke="#0077B6" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <text x="618" y="110" font-size="13" font-weight="800" fill="#0077B6" text-anchor="start">10 cm</text>
+    <use href="#a7-tick" x="636" y="40"/>
+    <text x="560" y="194" font-size="17" font-weight="700" fill="#1d2b36">About 10 cm away</text>
+    <!-- 4 centred -->
+    <g filter="url(#a7-sh)"><rect x="680" y="20" width="200" height="200" rx="18" fill="#fff"/></g>
+    <rect x="694" y="34" width="172" height="130" rx="12" fill="url(#a7-skin)"/>
+    <use href="#a7-spot" x="780" y="96"/>
+    <path d="M780 46v26M780 124v28M706 99h28M826 99h28" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+    <circle cx="780" cy="99" r="38" stroke="#fff" stroke-width="3" fill="none" opacity=".9"/>
+    <use href="#a7-tick" x="856" y="40"/>
+    <text x="780" y="194" font-size="17" font-weight="700" fill="#1d2b36">Lesion in the centre</text>
+
+    <!-- wrong 1 blurry -->
+    <g filter="url(#a7-sh)"><rect x="130" y="250" width="290" height="200" rx="18" fill="#fff"/></g>
+    <rect x="144" y="264" width="262" height="130" rx="12" fill="url(#a7-skin)"/>
+    <g filter="url(#a7-blur)"><use href="#a7-spot" x="275" y="326"/><use href="#a7-spot" x="290" y="330" opacity=".5"/></g>
+    <use href="#a7-cross" x="396" y="270"/>
+    <text x="275" y="424" font-size="17" font-weight="700" fill="#E63946">Blurry</text>
+    <!-- wrong 2 dark -->
+    <g filter="url(#a7-sh)"><rect x="480" y="250" width="290" height="200" rx="18" fill="#fff"/></g>
+    <rect x="494" y="264" width="262" height="130" rx="12" fill="#3b2a24"/>
+    <use href="#a7-spot" x="625" y="326" opacity=".45"/>
+    <rect x="494" y="264" width="262" height="130" rx="12" fill="#0f1b24" opacity=".45"/>
+    <use href="#a7-cross" x="746" y="270"/>
+    <text x="625" y="424" font-size="17" font-weight="700" fill="#E63946">Too dark</text>
+  </g>
+</svg>
+</div>
+<div class="cards4">
+<div class="ok-c"><svg class="ic " width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Good light</b><p>Daylight or a bright room. No flash glare or shadows.</p></div>
+<div class="ok-c"><svg class="ic " width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>In focus</b><p>Tap the screen on the spot to focus before you take the photo.</p></div>
+<div class="ok-c"><svg class="ic " width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>About 10 cm away</b><p>Close enough that the spot fills a good part of the picture.</p></div>
+<div class="ok-c"><svg class="ic " width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><b>Lesion in the centre</b><p>Keep hair, rulers and ink marks off the spot if you can.</p></div>
+</div>
+<div class="box warn"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg></div><div><b>Ask first:</b> always get the person&#39;s consent before photographing their skin.</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L22 14l-8 8-2.3-2.3a4 4 0 0 0-5-5L2 10l8-8z"/></svg></div><div><div class="band-n">10</div><h1>Troubleshooting</h1></div></div><div class="pb"><div class="intro-ill"><div class="ill " style="width:30%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380" role="img" aria-label="A friendly robot holding a wrench, with a question mark">
+  <defs>
+    <filter id="a8-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+  </defs>
+  <circle cx="260" cy="190" r="170" fill="#e3f3fb"/>
+  <ellipse cx="250" cy="352" rx="150" ry="12" fill="#0b3a5b" opacity=".09"/>
+  <g filter="url(#a8-sh)">
+    <!-- antenna -->
+    <path d="M250 70v-26" stroke="#0077B6" stroke-width="5" stroke-linecap="round"/><circle cx="250" cy="40" r="9" fill="#E63946"/>
+    <!-- head -->
+    <rect x="180" y="70" width="140" height="104" rx="28" fill="#fff"/>
+    <rect x="196" y="88" width="108" height="66" rx="18" fill="#1d2b36"/>
+    <circle cx="228" cy="116" r="10" fill="#7ee0f2"/><circle cx="272" cy="116" r="10" fill="#7ee0f2"/>
+    <circle cx="231" cy="113" r="3.5" fill="#fff"/><circle cx="275" cy="113" r="3.5" fill="#fff"/>
+    <path d="M236 136c8 6 20 6 28 0" stroke="#7ee0f2" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="168" y="104" width="14" height="34" rx="7" fill="#00B4D8"/><rect x="318" y="104" width="14" height="34" rx="7" fill="#00B4D8"/>
+    <!-- body -->
+    <rect x="196" y="180" width="108" height="112" rx="24" fill="#0077B6"/>
+    <rect x="216" y="202" width="68" height="44" rx="10" fill="#2a8fc6"/>
+    <path d="M232 224h8l4-10 8 20 4-10h12" stroke="#7ee0f2" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="232" cy="268" r="6" fill="#7ee0f2"/><circle cx="250" cy="268" r="6" fill="#2A9D8F"/><circle cx="268" cy="268" r="6" fill="#ffd34d"/>
+    <!-- legs -->
+    <rect x="214" y="290" width="26" height="50" rx="10" fill="#005f92"/><rect x="262" y="290" width="26" height="50" rx="10" fill="#005f92"/>
+    <!-- left arm waving -->
+    <path d="M200 200c-30 0-46-20-50-46" stroke="#00B4D8" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <circle cx="150" cy="148" r="14" fill="#fff"/>
+    <!-- right arm with wrench -->
+    <path d="M300 214c30 6 48 20 54 40" stroke="#00B4D8" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <g transform="rotate(-40 368 262)">
+      <rect x="360" y="230" width="16" height="78" rx="7" fill="#aebdc8"/>
+      <path d="M352 222a20 20 0 1 0 32 0l-8 0v14h-16v-14z" fill="#aebdc8"/>
+    </g>
+    <circle cx="356" cy="258" r="14" fill="#fff"/>
+  </g>
+  <!-- question bubble -->
+  <g filter="url(#a8-sh)">
+    <path d="M382 52h80c12 0 20 8 20 20v42c0 12-8 20-20 20h-46l-20 18 4-18h-18c-12 0-20-8-20-20V72c0-12 8-20 20-20z" fill="#fff"/>
+    <text x="422" y="114" font-family="Inter,Segoe UI,sans-serif" font-size="58" font-weight="800" fill="#E63946" text-anchor="middle">?</text>
+  </g>
+  <path d="M110 90v12M104 96h12" stroke="#00B4D8" stroke-width="3" stroke-linecap="round"/>
+</svg>
+</div><p class="lead">Common problems and fixes.
+<span class="tested">tested</span> means we saw the problem and checked the fix on our laptop; the others are marked
+“if this happens”.</p></div>
+<table class="ts"><tr><th style="width:40%">Problem</th><th>Fix</th></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>“Python was not found”</b><div class='small'>Typing <span class='url'>python</span> opens the Microsoft Store placeholder.</div></td><td>Use the launcher: <span class='url'>py -3.12 …</span> (as in this guide). <span class='tested'>tested</span></td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>Install fails: [WinError 206] filename too long</b><div class='small'>The project is in a very deep folder.</div></td><td>Move SkinClass to a short path, e.g. the Desktop, and repeat the installation. <span class='tested'>tested</span></td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>Port already in use</b><div class='small'>Error: <i>[Errno 10048] error while attempting to bind on address ('0.0.0.0', 8080): only one usage of each socket address (protocol/network address/port) is normally permitted</i></div></td><td>Another server is still running. Close it (Ctrl + C), or find it with <span class='url'>netstat -ano | findstr :8080</span>, or use <span class='url'>--port 8081</span>. <span class='tested'>tested</span></td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>Requirements install fails</b><div class='small'>Network or proxy problem, or a wrong Python version.</div></td><td>If this happens: check the internet connection, run the pip upgrade command again, and make sure <span class='url'>py -3.12 --version</span> shows 3.12.</td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>Model file not found</b><div class='small'>The server log says the model could not be loaded.</div></td><td>If this happens: check that <span class='url'>SkinClass\backup\original_model\best_skinlens_hybrid.pt</span> and <span class='url'>SkinClass\backend\model\architecture.py</span> exist next to clinical_system, then run the model check command (section 5).</td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>LIME is slow</b><div class='small'>LIME took about about 70 s on our CPU.</div></td><td>Normal – it runs in the background and the page shows it when ready. To make it faster, start the server with fewer samples: <span class='url'>$env:LIME_SAMPLES="30"</span> before the uvicorn command (if this happens).</td></tr></table>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="pb nb"><h3 class="hd">Troubleshooting (continued)</h3>
+<table class="ts"><tr><th style="width:40%">Problem</th><th>Fix</th></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>Phone cannot open the link</b><div class='small'>Different network, firewall or wrong address.</div></td><td>Same Wi-Fi on both devices; use the address printed at start-up; allow Python on <b>Private networks</b> in Windows Firewall; or use the Cloudflare tunnel (section 8b). (if this happens)</td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>Camera does not open</b><div class='small'>Some browsers only allow the camera on secure pages.</div></td><td>If this happens: use <b>Choose from gallery</b> (take the photo with the camera app first), or open the app through the https tunnel.</td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>No “Install SkinLens” button</b><div class='small'>Installing needs HTTPS (or the laptop itself).</div></td><td>Use the Cloudflare tunnel. On iPhone there is never a button: use Share &rarr; Add to Home Screen.</td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>“cloudflared is not recognized”</b><div class='small'>The PowerShell window was opened before the install.</div></td><td>Open a new PowerShell window, or use the full path <span class='url'>C:\Program Files (x86)\cloudflared\cloudflared.exe</span>. <span class='tested'>tested</span></td></tr><tr><td class='tsp'><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg><b>Login problems / reset demo data</b><div class='small'>Wrong password, or you want to start again.</div></td><td>Usernames are lower-case. The Admin can change roles; there is no password reset page (if a password is lost, create a new account). Remove practice data with <span class='url'>seed_demo.py --remove</span>. To start completely fresh: stop the server and delete the <span class='url'>instance</span> folder (deletes ALL patients).</td></tr></table>
+<div class="box tip"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></div><div><b>Still stuck?</b> read the last lines printed in the server window – they usually name the problem – and check that you ran every command inside the <b>clinical_system</b> folder.</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><div><div class="band-n">11</div><h1>Model and results</h1></div></div><div class="pb">
+<div class="two">
+<div><h4>Model</h4><p>Hybrid of <b>EfficientNetV2-S</b> + <b>Swin Transformer V2-Base</b> + a small network for
+age, sex and body site (108 million parameters, input 384 × 384). Prior correction (alpha = 0.3) adjusts the
+probabilities for how common each lesion type is.</p></div>
+<div><h4>Data</h4><p><b>HAM10000</b>: 10,015 dermoscopic images of 7,470 lesions, 7 classes. <b>Lesion-grouped split</b>:
+photos of the same lesion never appear in both training and test (test set: 2,014 images).</p></div>
+</div>
+<div class="metrics">
+<div><b>85.80%</b><span>test accuracy<br><small>85.45% before prior correction</small></span></div>
+<div><b>0.763</b><span>macro-F1</span></div>
+<div><b>78.8%</b><span>melanoma recall</span></div>
+<div><b>90.6%</b><span>of High-confidence results were correct</span></div>
+</div>
+<div class="figs"><figure class="fig"><img src="figures/fig0_training_curves.png"><figcaption>Training curves</figcaption></figure><figure class="fig"><img src="figures/fig1_confusion_matrix.png"><figcaption>Confusion matrix</figcaption></figure><figure class="fig"><img src="figures/fig2_roc_curves.png"><figcaption>Roc curves</figcaption></figure><figure class="fig"><img src="figures/fig3_reliability_diagram.png"><figcaption>Reliability diagram</figcaption></figure></div>
+<p class="small" style="margin-top:2mm">Figures from <span class="url">clinical_system\paper_figures</span> (Kaggle evaluation on the test set). Some curves also show other settings that were compared (e.g. test-time augmentation); the app uses prior correction with alpha = 0.3 and no augmentation.</p>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div><div><div class="band-n">12</div><h1>Safety and privacy</h1></div></div><div class="pb">
+<div class="intro-ill"><div class="ill " style="width:42%"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="A shield with a heart: decision support, not a diagnosis">
+  <defs>
+    <filter id="a9-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b3a5b" flood-opacity=".18"/></filter>
+    <linearGradient id="a9-shield" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00B4D8"/><stop offset="1" stop-color="#0077B6"/></linearGradient>
+  </defs>
+  <circle cx="260" cy="160" r="150" fill="#e3f3fb"/>
+  <circle cx="110" cy="80" r="16" fill="#2A9D8F" opacity=".2"/><circle cx="420" cy="110" r="22" fill="#00B4D8" opacity=".18"/>
+  <g filter="url(#a9-sh)">
+    <path d="M260 30l110 40v74c0 74-48 126-110 152-62-26-110-78-110-152V70z" fill="url(#a9-shield)"/>
+    <path d="M260 52l90 32v60c0 62-40 106-90 128-50-22-90-66-90-128V84z" fill="#fff" opacity=".14"/>
+    <path d="M260 214c-36-22-58-44-58-70 0-18 13-30 29-30 13 0 23 7 29 17 6-10 16-17 29-17 16 0 29 12 29 30 0 26-22 48-58 70z" fill="#fff"/>
+    <path d="M232 156h14l8-16 12 30 8-14h18" stroke="#E63946" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g filter="url(#a9-sh)">
+    <rect x="70" y="276" width="380" height="54" rx="27" fill="#fff"/>
+    <text x="260" y="310" font-family="Inter,Segoe UI,sans-serif" font-size="20" font-weight="800" fill="#1d2b36" text-anchor="middle">Decision support, <tspan fill="#E63946">not a diagnosis</tspan></text>
+  </g>
+  <path d="M440 60v14M433 67h14M80 200v12M74 206h12" stroke="#2A9D8F" stroke-width="3" stroke-linecap="round"/>
+</svg>
+</div><div>
+<ul class="safe">
+<li><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><div><b>Decision support only.</b> SkinLens is a research project, not a certified medical device and not a diagnosis.
+A qualified clinician makes every decision; suspicious lesions need a dermatologist.</div></li>
+<li><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div><b>Patient mode stores nothing.</b> No database entry, no saved photo; the upload&#39;s temporary file is deleted immediately.</div></li>
+<li><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.2-8.2M17 6l2 2M15 8l2 2"/></svg><div><b>Passwords are hashed</b> (bcrypt), sessions are signed cookies, every form has a CSRF check; images are shown only to logged-in staff allowed to see that patient.</div></li>
+<li><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg><div><b>Get consent</b> before photographing anyone, and follow your institution&#39;s rules for patient data.</div></li>
+</ul></div></div>
+<div class="box warn"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg></div><div><b>Known limits:</b> the model sometimes looks outside the lesion; it was trained mostly on light skin (limited data for darker skin tones); phone photos are not dermoscopy images; results on other clinics&#39; images may be lower.</div></div>
+<div class="box note"><div class="bx-i"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><div><b>Public tunnel:</b> the Cloudflare quick tunnel makes the app reachable from the internet while it runs – turn off registration, use secure cookies and stop it when done (section 8b).</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><section class="page "><div class="band"><div class="band-i"><svg class="ic " width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div><div><div class="band-n">13</div><h1>Quick-reference card</h1></div></div><div class="pb">
+<div class="qr">
+<div class="qr-col">
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Install (once)</h4>
+<div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>cd C:\Users\&lt;you&gt;\Desktop\SkinClass\clinical_system</div><div class="cl"><span class="pr">&gt;</span>py -3.12 -m venv .venv</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install --upgrade pip</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m pip install -r requirements.txt</div></div>
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg> Start / stop</h4>
+<div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe -m uvicorn webapp.main:app --host 0.0.0.0 --port 8080</div><div class="cl cm"># stop: Ctrl + C in that window</div></div>
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg> HTTPS for installing on a phone</h4>
+<div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>winget install --id Cloudflare.cloudflared</div><div class="cl cm"># open a NEW PowerShell window, then:</div><div class="cl"><span class="pr">&gt;</span>cloudflared tunnel --url http://localhost:8080</div></div>
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg> Practice data</h4>
+<div class="cmd"><div class="cmd-h">PowerShell</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe seed_demo.py --patients 8 --lime 1</div><div class="cl"><span class="pr">&gt;</span>.\.venv\Scripts\python.exe seed_demo.py --remove</div></div>
+</div>
+<div class="qr-col">
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg> Addresses</h4>
+<table class="qt"><tr><td>This computer</td><td><span class="url">http://127.0.0.1:8080</span></td></tr>
+<tr><td>Phone, same Wi-Fi</td><td><span class="url">http://&lt;laptop-IP&gt;:8080</span><br><small>IP: printed at start-up, or <span class="url">ipconfig</span></small></td></tr>
+<tr><td>Phone, install</td><td><span class="url">https://….trycloudflare.com</span></td></tr>
+<tr><td>Server check</td><td><span class="url">/health</span></td></tr>
+<tr><td>Patient mode</td><td><span class="url">/check</span></td></tr></table>
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.2-8.2M17 6l2 2M15 8l2 2"/></svg> Example login (this guide)</h4>
+<table class="qt"><tr><td>Username</td><td><b>demo.doctor</b></td></tr><tr><td>Password</td><td><b>Demo@1234</b></td></tr></table>
+<p class="small">Only for practice on a test database: it does not exist until you create it with <b>Create an account</b>. Use your own strong password for real use.</p>
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg> Confidence levels</h4>
+<table class="qt"><tr><td><span class="bdg hi">High</span></td><td>&gt; 80%</td></tr><tr><td><span class="bdg me">Medium</span></td><td>50–80%</td></tr><tr><td><span class="bdg lo">Low</span></td><td>&lt; 50% – see a doctor</td></tr></table>
+<h4><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Important files</h4>
+<p class="small"><span class="url">backup\original_model\best_skinlens_hybrid.pt</span> – model<br>
+<span class="url">clinical_system\instance\</span> – database and images (back up!)<br>
+<span class="url">webapp\model_settings.json</span> – alpha, confidence limits</p>
+</div></div>
+</div><footer class="pf"><span>SkinLens – For research and decision-support only. Not a medical diagnosis.</span><span class="pn"></span></footer></section><script>document.querySelectorAll(".page").forEach((p,i)=>{const n=p.querySelector(".pn");if(n)n.textContent=(i+1);});</script></body></html>

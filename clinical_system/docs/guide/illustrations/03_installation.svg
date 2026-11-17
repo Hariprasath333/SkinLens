@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-label="A laptop with a terminal window and an open box labelled Python 3.12">
+  <defs>
+    <filter id="a3-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+  </defs>
+  <path d="M60 220c-10-110 90-180 240-180s290 60 290 170-120 150-280 150S68 320 60 220z" fill="#e3f3fb"/>
+  <ellipse cx="320" cy="352" rx="260" ry="14" fill="#0b3a5b" opacity=".08"/>
+  <!-- laptop with terminal -->
+  <g filter="url(#a3-sh)">
+    <rect x="80" y="70" width="300" height="200" rx="14" fill="#1d2b36"/>
+    <rect x="94" y="84" width="272" height="172" rx="7" fill="#0f1b24"/>
+    <rect x="94" y="84" width="272" height="22" rx="7" fill="#22313d"/>
+    <circle cx="108" cy="95" r="4.5" fill="#E63946"/><circle cx="122" cy="95" r="4.5" fill="#f4c542"/><circle cx="136" cy="95" r="4.5" fill="#2A9D8F"/>
+    <g font-family="Consolas,Menlo,monospace" font-size="12.5">
+      <text x="106" y="128" fill="#7ee0f2">&gt; py -3.12 -m venv .venv</text>
+      <text x="106" y="150" fill="#7ee0f2">&gt; pip install -r requirements.txt</text>
+      <text x="106" y="172" fill="#9fb3c2">  Installing torch, fastapi ...</text>
+      <rect x="106" y="184" width="200" height="10" rx="5" fill="#22313d"/><rect x="106" y="184" width="150" height="10" rx="5" fill="#2A9D8F"/>
+      <text x="106" y="216" fill="#6fd3a6">  Successfully installed</text>
+      <rect x="106" y="230" width="9" height="15" fill="#7ee0f2"/>
+    </g>
+    <path d="M50 270h360l-22 28H72z" fill="#c9d6df"/><rect x="190" y="270" width="80" height="8" rx="4" fill="#aebdc8"/>
+  </g>
+  <!-- open box -->
+  <g filter="url(#a3-sh)">
+    <path d="M430 220l90-30 90 30-90 30z" fill="#00B4D8"/>
+    <path d="M430 220v90l90 34v-94z" fill="#0077B6"/>
+    <path d="M610 220v90l-90 34v-94z" fill="#0a8ad0"/>
+    <path d="M430 220l-26-34 90-28 26 32z" fill="#2a8fc6"/>
+    <path d="M610 220l26-34-90-28-26 32z" fill="#4fb3e0"/>
+    <text x="474" y="292" font-family="Inter,Segoe UI,sans-serif" font-size="16" font-weight="800" fill="#fff" transform="rotate(20 474 292)">Python</text>
+    <text x="474" y="312" font-family="Inter,Segoe UI,sans-serif" font-size="13" font-weight="700" fill="#cfe9f7" transform="rotate(20 474 312)">3.12</text>
+  </g>
+  <!-- items flying out -->
+  <g filter="url(#a3-sh)">
+    <rect x="482" y="96" width="38" height="38" rx="7" fill="#fff"/><path d="M490 108h22M490 116h16M490 124h20" stroke="#0077B6" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="566" cy="104" r="22" fill="#fff"/>
+    <path d="M566 90l3 6 7-1 1 7 6 3-4 6 4 6-6 3-1 7-7-1-3 6-3-6-7 1-1-7-6-3 4-6-4-6 6-3 1-7 7 1z" fill="#2A9D8F"/><circle cx="566" cy="111" r="6" fill="#fff"/>
+    <rect x="532" y="140" width="32" height="32" rx="7" fill="#fff"/><path d="M540 150l8-4 8 4v10l-8 4-8-4z" fill="#00B4D8"/>
+  </g>
+  <path d="M500 150c4-10 6-16 6-24M548 170c2-8 0-14-4-22M560 150c4-6 6-10 6-18" stroke="#00B4D8" stroke-width="2.5" stroke-dasharray="3 6" fill="none" stroke-linecap="round"/>
+  <path d="M600 60v12M594 66h12" stroke="#0077B6" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+</svg>

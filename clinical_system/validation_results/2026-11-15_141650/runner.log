@@ -1,0 +1,36 @@
+14:17:34 T1 started
+14:35:53 T1 done: REPORTED - sample accuracy 87.00% (95% CI 82.7–90.3%); the reference 85.80% is inside the interval. Pass/fail needs the full 2,014-image run.
+14:35:53 T2 started
+15:31:02 T2 done: FAIL - 96.92% identical class (62 of 2014 differ); largest probability difference 0.8271
+15:31:02 T3 started
+15:31:14 T2: earlier result kept as T2_metrics_attempt1.json; running T2 again
+15:31:14 T2 started
+15:31:24 T2 FAILED to run:
+Traceback (most recent call last):
+  File "C:\Users\harip\Desktop\SkinClass\clinical_system\webapp\validation\runner.py", line 714, in execute
+    res = TESTS[test](run, cache)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harip\Desktop\SkinClass\clinical_system\webapp\validation\runner.py", line 211, in t2
+    ensure_predictions(run, cache, m, "T2")
+  File "C:\Users\harip\Desktop\SkinClass\clinical_system\webapp\validation\runner.py", line 167, in ensure_predictions
+    run.progress(test, done, total, f"{cond}: {done}/{total}")
+  File "C:\Users\harip\Desktop\SkinClass\clinical_system\webapp\validation\runner.py", line 70, in progress
+    self.update(test, done=done, total=total, note=note)
+  File "C:\Users\harip\Desktop\SkinClass\clinical_system\webapp\validation\runner.py", line 67, in update
+    self._write_state(st)
+  File "C:\Users\harip\Desktop\SkinClass\clinical_system\webapp\validation\runner.py", line 61, in _write_state
+    os.replace(tmp, self.dir / "state.json")
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'validation_results\\2026-11-15_141650\\state.json.tmp' -> 'validation_results\\2026-11-15_141650\\state.json'
+
+15:31:25 report written: validation_results\2026-11-15_141650\SkinLens_TRL4_Lab_Validation_Report.pdf
+15:44:18 T2 started
+15:44:28 T2 done: FAIL - 96.92% identical class (62 of 2014 differ); largest probability difference 0.8271
+15:44:29 report written: validation_results\2026-11-15_141650\SkinLens_TRL4_Lab_Validation_Report.pdf
+16:09:09 T3 done: PASS - average stability 91.8% over 8 conditions
+16:09:10 T4 started
+17:53:24 T4 done: PASS - 95th percentile of prediction + Grad-CAM = 13.27 s (limit 30 s)
+17:53:24 T5 started
+18:20:40 T5 done: PASS - 120 requests, 0 failed, server stayed up; peak memory 4668 MB
+18:20:40 T6 started
+18:20:52 T6 done: FAIL - blurred 49/50, dark 50/50, tiny 50/50, non_skin 40/50; unchanged test images without a warning 47/50
+18:20:52 T7 started

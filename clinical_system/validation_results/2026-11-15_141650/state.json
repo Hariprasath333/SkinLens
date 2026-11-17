@@ -1,0 +1,83 @@
+{
+  "T1": {
+    "status": "done",
+    "done": 300,
+    "total": 300,
+    "started": "2026-11-15T14:17:34",
+    "error": "",
+    "updated": "2026-11-15T14:35:53",
+    "note": "original: 300/300",
+    "verdict": "REPORTED",
+    "summary": "sample accuracy 87.00% (95% CI 82.7\u201390.3%); the reference 85.80% is inside the interval. Pass/fail needs the full 2,014-image run.",
+    "finished": "2026-11-15T14:35:53"
+  },
+  "T2": {
+    "status": "done",
+    "done": 2014,
+    "total": 2014,
+    "started": "2026-11-15T15:44:18",
+    "error": "",
+    "updated": "2026-11-15T15:44:43",
+    "note": "",
+    "verdict": "FAIL",
+    "summary": "96.92% identical class (62 of 2014 differ); largest probability difference 0.8271",
+    "finished": "2026-11-15T15:44:28"
+  },
+  "T3": {
+    "status": "done",
+    "done": 1800,
+    "total": 1800,
+    "started": "2026-11-15T15:31:02",
+    "error": "",
+    "updated": "2026-11-15T16:09:09",
+    "note": "crop90: 1800/1800",
+    "verdict": "PASS",
+    "summary": "average stability 91.8% over 8 conditions",
+    "finished": "2026-11-15T16:09:09"
+  },
+  "T4": {
+    "status": "done",
+    "done": 50,
+    "total": 50,
+    "started": "2026-11-15T16:09:10",
+    "error": "",
+    "updated": "2026-11-15T17:53:24",
+    "note": "image 50/50 (LIME takes about a minute each)",
+    "verdict": "PASS",
+    "summary": "95th percentile of prediction + Grad-CAM = 13.27 s (limit 30 s)",
+    "finished": "2026-11-15T17:53:24"
+  },
+  "T5": {
+    "status": "done",
+    "done": 120,
+    "total": 120,
+    "started": "2026-11-15T17:53:24",
+    "error": "",
+    "updated": "2026-11-15T18:20:40",
+    "note": "5 users at once: 20 requests done",
+    "verdict": "PASS",
+    "summary": "120 requests, 0 failed, server stayed up; peak memory 4668 MB",
+    "finished": "2026-11-15T18:20:40"
+  },
+  "T6": {
+    "status": "done",
+    "done": 250,
+    "total": 250,
+    "started": "2026-11-15T18:20:40",
+    "error": "",
+    "updated": "2026-11-15T18:20:52",
+    "note": "",
+    "verdict": "FAIL",
+    "summary": "blurred 49/50, dark 50/50, tiny 50/50, non_skin 40/50; unchanged test images without a warning 47/50",
+    "finished": "2026-11-15T18:20:52"
+  },
+  "T7": {
+    "status": "stopped",
+    "done": 0,
+    "total": 1,
+    "started": "2026-11-15T18:20:52",
+    "error": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\harip\\\\Desktop\\\\SkinClass\\\\clinical_system\\\\validation_results\\\\2026-11-15_141650\\\\T7_junit.xml'",
+    "updated": "2026-11-15T18:23:27",
+    "note": "stopped on request: the app's resize was changed to match training (v1.5.1); superseded by the next run"
+  }
+}

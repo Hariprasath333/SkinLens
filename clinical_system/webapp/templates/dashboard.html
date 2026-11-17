@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% from "_macros.html" import risk_badge, icon %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Dashboard</h1><p class="muted">{{ 'All records (Admin view)' if user.is_admin else 'Your patients and scans' }}</p></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <a class="btn secondary" href="/patients/new">+ Add Patient</a>
+    <a class="btn" href="/analyze">Upload &amp; Analyze</a>
+  </div>
+</div>
+{% if model.is_dummy %}<div class="alert warn"><b>Test mode:</b> the app is running with an untrained dummy model. Results are meaningless.</div>{% endif %}
+<div class="grid grid-4">
+  <div class="card stat"><div class="icon">{{ icon('users') }}</div><div><div class="num">{{ stats.patients }}</div><div class="lbl">Total patients</div></div></div>
+  <div class="card stat"><div class="icon teal">{{ icon('scan') }}</div><div><div class="num">{{ stats.scans }}</div><div class="lbl">Total scans</div></div></div>
+  <div class="card stat"><div class="icon red">{{ icon('alert') }}</div><div><div class="num">{{ stats.disease }}</div><div class="lbl">Possible disease findings</div></div></div>
+  <div class="card stat"><div class="icon green">{{ icon('today') }}</div><div><div class="num">{{ stats.today }}</div><div class="lbl">Scans today</div></div></div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>Recent scans</h2><a href="/patients" class="small">All patient records →</a></div>
+  {% if recent %}
+  <div class="table-wrap"><table class="table-stack with-thumb">
+    <thead><tr><th></th><th>Patient</th><th>Result</th><th class="hide-sm">Confidence</th><th class="hide-sm">Doctor</th><th>Date</th><th></th></tr></thead>
+    <tbody>
+    {% for s in recent %}
+      <tr>
+        <td class="thumb-cell"><img class="thumb" src="/media/{{ s.id }}/original" alt="" loading="lazy"></td>
+        <td><a href="/patients/{{ s.patient.patient_code }}">{{ s.patient.name }}</a>{% if s.patient.is_demo %} <span class="badge demo">DEMO</span>{% endif %}<div class="code">{{ s.patient.patient_code }}</div></td>
+        <td>{{ s.predicted_name }}<div>{{ risk_badge(s) }}</div></td>
+        <td class="hide-sm"><span class="badge {{ s.confidence_level }}">{{ s.confidence_level }} · {{ '%.0f'|format(100*s.confidence) }}%</span></td>
+        <td class="hide-sm">{{ s.doctor.full_name }}</td>
+        <td class="small">{{ s.created_at.strftime('%d %b %Y, %H:%M') }}</td>
+        <td class="row-action"><a class="btn secondary" href="/scans/{{ s.id }}">View</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}
+  <div class="empty">No scans yet. <a href="/patients/new">Add a patient</a>, then upload an image.</div>
+  {% endif %}
+</div>
+<p class="small muted" style="margin-top:14px">Model in use: {{ model.name }} ({{ model.device }})</p>
+{% endblock %}

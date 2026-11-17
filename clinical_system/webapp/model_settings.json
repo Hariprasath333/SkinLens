@@ -1,0 +1,17 @@
+{
+  "prior_correction": {
+    "enabled": true,
+    "alpha": 0.3,
+    "epsilon": 1e-8,
+    "class_order": ["akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"],
+    "log_prior": [-3.417477006112173, -2.970580951876587, -2.1683464426278123, -4.481173029674054,
+                  -2.1800596072914655, -0.4108901516685172, -4.258029478359845],
+    "formula": "p = softmax(model logits) (no temperature scaling); score = log(p + epsilon) + alpha * log_prior; corrected probabilities = softmax(score); prediction = argmax(score)",
+    "source": "Validated on Kaggle (boost_settings.json; paper table1_method_comparison.csv, row 'prior correction only (alpha=0.3, no TTA)')"
+  },
+  "confidence_levels": {
+    "high_above": 0.80,
+    "medium_from": 0.50,
+    "description": "High > 80%, Medium 50-80%, Low < 50% (of the corrected top-class probability)"
+  }
+}

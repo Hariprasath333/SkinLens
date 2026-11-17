@@ -1,0 +1,111 @@
+{
+  "name": "SkinLens hybrid model",
+  "architecture": [
+    "Image branch 1: EfficientNetV2-S (convolutional network, good at fine texture) - 1,280 features",
+    "Image branch 2: Swin Transformer V2-Base (vision transformer, good at overall shape) - 1,024 features",
+    "Patient-data branch: small neural network on age, sex and body site (21 inputs) - 32 features",
+    "Fusion: the 2,336 features are joined and passed to a classifier (512 units) that outputs 7 classes",
+    "Input image size 384 x 384 pixels; 108.3 million parameters",
+    "Prior correction: the model's probabilities are adjusted for how common each lesion type is (score = log p + 0.3 x log prior); the app shows these corrected probabilities. Settings: webapp/model_settings.json",
+    "Explanations: Grad-CAM (on the EfficientNetV2-S branch) and LIME"
+  ],
+  "dataset": [
+    "HAM10000 (Tschandl et al., Scientific Data 2018): 10,015 dermoscopic images of 7,470 lesions",
+    "7 classes: actinic keratosis, basal cell carcinoma, benign keratosis, dermatofibroma, melanoma, melanocytic nevus, vascular lesion",
+    "Lesion-grouped split: photos of the same lesion are never in both training and test (train 6,007 / validation 1,994 / test 2,014 images)",
+    "Very unbalanced: 67% of images are melanocytic nevi (moles); dermatofibroma and vascular lesions are rare"
+  ],
+  "test_set_size": 2014,
+  "summary_metrics": [
+    {
+      "name": "Test accuracy",
+      "value": "85.80%"
+    },
+    {
+      "name": "Macro-F1",
+      "value": "0.7628"
+    },
+    {
+      "name": "Melanoma recall (sensitivity)",
+      "value": "78.8%"
+    },
+    {
+      "name": "Calibration error (ECE)",
+      "value": "0.070"
+    }
+  ],
+  "per_class": [
+    {
+      "code": "AK",
+      "name": "Actinic keratosis / intraepithelial carcinoma",
+      "precision": 0.71,
+      "recall": 0.81,
+      "f1": 0.76,
+      "support": 68
+    },
+    {
+      "code": "BCC",
+      "name": "Basal cell carcinoma",
+      "precision": 0.8,
+      "recall": 0.86,
+      "f1": 0.83,
+      "support": 100
+    },
+    {
+      "code": "BKL",
+      "name": "Benign keratosis",
+      "precision": 0.76,
+      "recall": 0.81,
+      "f1": 0.78,
+      "support": 205
+    },
+    {
+      "code": "DF",
+      "name": "Dermatofibroma",
+      "precision": 0.82,
+      "recall": 0.41,
+      "f1": 0.55,
+      "support": 22
+    },
+    {
+      "code": "MEL",
+      "name": "Melanoma",
+      "precision": 0.54,
+      "recall": 0.79,
+      "f1": 0.64,
+      "support": 222
+    },
+    {
+      "code": "NV",
+      "name": "Melanocytic nevus",
+      "precision": 0.97,
+      "recall": 0.88,
+      "f1": 0.92,
+      "support": 1363
+    },
+    {
+      "code": "VASC",
+      "name": "Vascular lesion",
+      "precision": 0.9,
+      "recall": 0.79,
+      "f1": 0.84,
+      "support": 34
+    }
+  ],
+  "intended_use": [
+    "A research and decision-support tool for doctors and trained staff looking at dermoscopic images of skin lesions.",
+    "It suggests the most likely lesion type, shows how confident it is, and explains where it looked.",
+    "The final decision always belongs to a qualified clinician (dermoscopy examination and, when needed, biopsy)."
+  ],
+  "limitations": [
+    "It does not make a diagnosis. It is not a certified medical device and has not been clinically validated.",
+    "It sometimes looks outside the lesion (e.g. at hair, rulers, ink marks or the image border); the heat-map shows when this happens, and such results deserve extra caution.",
+    "Limited data for darker skin tones: HAM10000 comes mostly from light-skinned patients (Fitzpatrick I-III), so performance on darker skin is unknown.",
+    "Rare classes have few training and test images (e.g. 22 dermatofibroma test images), so their results are less certain; about half of the 'melanoma' answers were false alarms in testing (precision 54% before prior correction).",
+    "Trained on dermoscopic images: ordinary phone photos may give unreliable results.",
+    "Numbers come from one test split of one dataset; results on images from other clinics may be lower."
+  ],
+  "summary_title": "With prior correction (alpha = 0.3), as used by this app",
+  "summary_note": "Without prior correction the original model had accuracy 85.45%, macro-F1 0.7603 (76.03%), melanoma recall 78.8% and ECE 0.159.",
+  "per_class_title": "Per-class results of the original model (before prior correction)"
+}

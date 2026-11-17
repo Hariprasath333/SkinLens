@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% from "_macros.html" import risk_badge %}
+{% block title %}{{ patient.patient_code }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><p class="small muted" style="margin:0"><a href="/patients">Patient records</a> / {{ patient.patient_code }}</p>
+    <h1>{{ patient.name }}{% if patient.is_demo %} <span class="badge demo">DEMO</span>{% endif %}</h1></div>
+  <a class="btn" href="/analyze?patient={{ patient.patient_code }}">Upload new scan</a>
+</div>
+<div class="grid" style="grid-template-columns: minmax(0, 320px) minmax(0, 1fr); align-items:start" id="pd-grid">
+  <div class="card">
+    <h2>Patient details</h2>
+    <dl class="kv">
+      <dt>Patient ID</dt><dd class="code">{{ patient.patient_code }}</dd>
+      <dt>Name</dt><dd>{{ patient.name }}</dd>
+      <dt>Age</dt><dd>{{ patient.age if patient.age is not none else '–' }}</dd>
+      <dt>Gender</dt><dd>{{ patient.gender|capitalize }}</dd>
+      <dt>Contact</dt><dd>{{ patient.contact or '–' }}</dd>
+      <dt>Date</dt><dd>{{ patient.visit_date.strftime('%d %b %Y') }}</dd>
+      <dt>Registered by</dt><dd>{{ patient.created_by.full_name }}</dd>
+      <dt>Total scans</dt><dd>{{ patient.scans|length }}</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h2>Scan history</h2>
+    {% if patient.scans %}
+    <div class="timeline">
+      {% for s in patient.scans %}
+      <div class="scan">
+        <a href="/scans/{{ s.id }}"><img src="/media/{{ s.id }}/original" alt="Uploaded image" loading="lazy"></a>
+        <img class="gc" src="/media/{{ s.id }}/gradcam" alt="Grad-CAM" loading="lazy">
+        <div>
+          <div style="font-weight:600">{{ s.predicted_name }}</div>
+          <div style="margin:4px 0">{{ risk_badge(s) }} <span class="badge {{ s.confidence_level }}">{{ s.confidence_level }} · {{ '%.0f'|format(100*s.confidence) }}%</span></div>
+          <div class="small muted">{{ s.created_at.strftime('%d %b %Y, %H:%M') }} · {{ s.body_site }} · by {{ s.doctor.full_name }}</div>
+        </div>
+        <div class="actions" style="display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn secondary" href="/scans/{{ s.id }}">View</a>
+          <a class="btn ghost" href="/scans/{{ s.id }}/report.pdf">PDF</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">No scans yet for this patient. <a href="/analyze?patient={{ patient.patient_code }}">Upload an image</a>.</div>
+    {% endif %}
+  </div>
+</div>
+<style>@media (max-width: 760px) { #pd-grid { grid-template-columns: 1fr !important; } }</style>
+{% endblock %}

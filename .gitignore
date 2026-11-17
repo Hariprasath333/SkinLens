@@ -1,0 +1,41 @@
+# ---- environments and build output ----
+.venv/
+venv/
+node_modules/
+frontend/dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---- secrets: never publish ----
+.env
+*.key
+instance/
+**/instance/
+
+# ---- model weights (too big for git: download from the GitHub Release) ----
+*.pt
+*.pth
+*.ckpt
+*.onnx
+clinical_system/models/
+
+# ---- datasets (download them yourself; see DATASETS.md) ----
+clinical_system/validation_data/HAM10000 dataset/
+/data/
+/datasets/
+clinical_system/data/
+
+# ---- large or private files ----
+deliverables/
+kaggle_upload.zip
+*.mp4
+*.zip
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-label="A friendly doctor with a tablet showing a skin heat-map, next to a laptop and a phone with the SkinLens logo">
+  <defs>
+    <filter id="a1-sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b3a5b" flood-opacity=".16"/></filter>
+    <radialGradient id="a1-heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E63946"/><stop offset=".35" stop-color="#f4a261"/><stop offset=".6" stop-color="#ffe66d" stop-opacity=".85"/><stop offset=".8" stop-color="#00B4D8" stop-opacity=".5"/><stop offset="1" stop-color="#00B4D8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="a1-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3f3fb"/><stop offset="1" stop-color="#d4f1f7"/></linearGradient>
+  </defs>
+  <!-- background blobs -->
+  <path d="M120 300c-40-120 60-230 200-240s230 10 300 80 110 180 40 260-230 90-330 70S150 390 120 300z" fill="url(#a1-bg)"/>
+  <circle cx="680" cy="110" r="46" fill="#00B4D8" opacity=".12"/>
+  <circle cx="90" cy="150" r="30" fill="#0077B6" opacity=".10"/>
+  <ellipse cx="400" cy="478" rx="330" ry="18" fill="#0b3a5b" opacity=".08"/>
+
+  <!-- laptop (right, back) -->
+  <g filter="url(#a1-sh)">
+    <rect x="470" y="200" width="250" height="160" rx="12" fill="#1d2b36"/>
+    <rect x="482" y="212" width="226" height="136" rx="6" fill="#F5FAFD"/>
+    <rect x="482" y="212" width="226" height="22" rx="6" fill="#0077B6"/>
+    <circle cx="496" cy="223" r="4" fill="#fff" opacity=".7"/><circle cx="508" cy="223" r="4" fill="#fff" opacity=".5"/>
+    <rect x="496" y="246" width="96" height="90" rx="8" fill="#fff" stroke="#e3edf3"/>
+    <circle cx="544" cy="291" r="30" fill="#e8b49a"/><circle cx="544" cy="291" r="28" fill="url(#a1-heat)" opacity=".9"/>
+    <rect x="604" y="248" width="92" height="12" rx="6" fill="#2A9D8F" opacity=".85"/>
+    <rect x="604" y="270" width="80" height="8" rx="4" fill="#cfe3ef"/><rect x="604" y="286" width="62" height="8" rx="4" fill="#cfe3ef"/>
+    <rect x="604" y="302" width="86" height="8" rx="4" fill="#cfe3ef"/><rect x="604" y="318" width="50" height="8" rx="4" fill="#cfe3ef"/>
+    <path d="M440 360h310l-18 26H458z" fill="#c9d6df"/><rect x="560" y="360" width="70" height="7" rx="3" fill="#aebdc8"/>
+  </g>
+
+  <!-- phone (front right) -->
+  <g filter="url(#a1-sh)" transform="rotate(8 650 380)">
+    <rect x="600" y="300" width="104" height="190" rx="18" fill="#1d2b36"/>
+    <rect x="608" y="312" width="88" height="166" rx="12" fill="#F5FAFD"/>
+    <rect x="636" y="332" width="32" height="32" rx="9" fill="#0077B6"/>
+    <circle cx="650" cy="346" r="8" fill="none" stroke="#fff" stroke-width="3"/><path d="M656 352l6 6" stroke="#00B4D8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M650 342v8M646 346h8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+    <rect x="620" y="376" width="64" height="8" rx="4" fill="#0077B6" opacity=".8"/>
+    <rect x="620" y="392" width="64" height="40" rx="8" fill="#e7f5f3"/>
+    <path d="M630 412l8 8 16-16" stroke="#2A9D8F" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="620" y="442" width="64" height="18" rx="9" fill="#0077B6"/>
+  </g>
+
+  <!-- doctor -->
+  <g filter="url(#a1-sh)">
+    <!-- legs -->
+    <rect x="232" y="380" width="30" height="88" rx="12" fill="#1d4e6b"/><rect x="272" y="380" width="30" height="88" rx="12" fill="#1d4e6b"/>
+    <ellipse cx="246" cy="470" rx="22" ry="9" fill="#1d2b36"/><ellipse cx="288" cy="470" rx="22" ry="9" fill="#1d2b36"/>
+    <!-- coat -->
+    <path d="M200 250c0-36 30-62 67-62s67 26 67 62v150c0 8-6 14-14 14H214c-8 0-14-6-14-14z" fill="#ffffff"/>
+    <path d="M247 192l20 46 20-46" fill="#00B4D8"/>
+    <path d="M247 192l-14 60 34-14zM287 192l14 60-34-14z" fill="#eef5f9"/>
+    <path d="M267 238v170" stroke="#e3edf3" stroke-width="3"/>
+    <circle cx="267" cy="300" r="3.5" fill="#cfe3ef"/><circle cx="267" cy="330" r="3.5" fill="#cfe3ef"/>
+    <rect x="292" y="262" width="26" height="30" rx="4" fill="#e6f3fa"/><rect x="298" y="256" width="4" height="14" rx="2" fill="#0077B6"/>
+    <!-- stethoscope -->
+    <path d="M240 205c-12 40-8 70 12 82s34-10 30-30" fill="none" stroke="#2A9D8F" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="282" cy="254" r="8" fill="#2A9D8F"/><circle cx="282" cy="254" r="3.5" fill="#bfe8e2"/>
+    <!-- head -->
+    <rect x="256" y="168" width="22" height="26" rx="8" fill="#d99a6c"/>
+    <circle cx="267" cy="146" r="38" fill="#e5a97c"/>
+    <path d="M229 144c-2-30 18-50 40-50 26 0 42 18 40 44-8-16-22-22-34-20-14 2-28 2-46 26z" fill="#2b2f3a"/>
+    <circle cx="254" cy="150" r="4" fill="#1d2b36"/><circle cx="282" cy="150" r="4" fill="#1d2b36"/>
+    <path d="M256 166c7 7 17 7 24 0" stroke="#1d2b36" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="246" cy="162" r="6" fill="#f08c8c" opacity=".35"/><circle cx="290" cy="162" r="6" fill="#f08c8c" opacity=".35"/>
+    <!-- arms holding the tablet -->
+    <path d="M208 240c-24 40-20 80 10 92l60-6" stroke="#ffffff" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M330 240c20 34 18 66-6 84" stroke="#ffffff" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <!-- tablet -->
+    <g transform="rotate(-8 300 320)">
+      <rect x="240" y="262" width="126" height="92" rx="12" fill="#1d2b36"/>
+      <rect x="248" y="270" width="110" height="76" rx="7" fill="#fff"/>
+      <rect x="254" y="276" width="56" height="64" rx="6" fill="#e8b49a"/>
+      <ellipse cx="282" cy="308" rx="26" ry="24" fill="url(#a1-heat)"/>
+      <circle cx="283" cy="309" r="7" fill="#7a3f2a" opacity=".55"/>
+      <rect x="316" y="280" width="36" height="8" rx="4" fill="#0077B6"/>
+      <rect x="316" y="296" width="30" height="6" rx="3" fill="#cfe3ef"/><rect x="316" y="308" width="24" height="6" rx="3" fill="#cfe3ef"/>
+      <rect x="316" y="322" width="36" height="12" rx="6" fill="#2A9D8F"/>
+    </g>
+    <circle cx="232" cy="330" r="13" fill="#e5a97c"/><circle cx="326" cy="320" r="13" fill="#e5a97c"/>
+  </g>
+
+  <!-- floating icons -->
+  <g filter="url(#a1-sh)">
+    <circle cx="130" cy="230" r="34" fill="#fff"/>
+    <path d="M130 208l20 8v14c0 14-9 24-20 28-11-4-20-14-20-28v-14z" fill="#2A9D8F"/>
+    <path d="M121 232l7 7 12-13" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g filter="url(#a1-sh)">
+    <circle cx="420" cy="110" r="30" fill="#fff"/>
+    <path d="M420 128c-14-9-22-17-22-27 0-7 5-12 11-12 5 0 9 3 11 7 2-4 6-7 11-7 6 0 11 5 11 12 0 10-8 18-22 27z" fill="#E63946"/>
+  </g>
+  <g filter="url(#a1-sh)">
+    <circle cx="560" cy="120" r="32" fill="#fff"/>
+    <circle cx="555" cy="115" r="12" fill="none" stroke="#0077B6" stroke-width="5"/>
+    <path d="M564 124l11 11" stroke="#00B4D8" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#a1-sh)">
+    <circle cx="150" cy="380" r="30" fill="#fff"/>
+    <rect x="136" y="366" width="28" height="28" rx="6" fill="#00B4D8"/>
+    <rect x="143" y="373" width="14" height="14" rx="3" fill="#fff"/>
+    <path d="M140 362v4M150 362v4M160 362v4M140 394v4M150 394v4M160 394v4M132 370h4M132 380h4M132 390h4M164 370h4M164 380h4M164 390h4" stroke="#00B4D8" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="150" y="384" font-family="Inter,Segoe UI,sans-serif" font-size="9" font-weight="700" text-anchor="middle" fill="#0077B6">AI</text>
+  </g>
+  <!-- sparkles -->
+  <path d="M370 60v14M363 67h14" stroke="#00B4D8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M720 250v12M714 256h12" stroke="#0077B6" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+  <path d="M60 300v10M55 305h10" stroke="#2A9D8F" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+</svg>

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Error {{ code }}{% endblock %}
+{% block content %}
+<div class="card empty" style="max-width:520px;margin:40px auto">
+  <h1 style="color:var(--blue)">{{ code }}</h1>
+  <p>{{ detail }}</p>
+  <a class="btn" href="{{ '/dashboard' if user else '/login' }}">{{ 'Back to dashboard' if user else 'Go to login' }}</a>
+</div>
+{% endblock %}

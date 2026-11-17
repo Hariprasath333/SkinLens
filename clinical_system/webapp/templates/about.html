@@ -1,0 +1,36 @@
+{% extends layout %}
+{% block title %}About{% endblock %}
+{% block content %}
+<div class="learn">
+  <div class="about-head"><img src="/static/img/logo.svg" alt="SkinLens logo" width="64" height="64">
+    <div><h1 style="margin:0">SkinLens</h1><p class="muted" style="margin:0">Skin lesion decision support with explanations</p></div></div>
+  {% if latest and latest.trl4 %}
+  <div class="alert success"><b>Validated: TRL 4 (laboratory) – {{ latest.date }}</b> · validation run {{ latest.run }}</div>
+  {% elif latest %}
+  <div class="alert warn"><b>Laboratory validation (TRL 4): not yet complete</b> – latest run {{ latest.run }} ({{ latest.date }}):
+    {% for t, v in latest.verdicts.items() %}{{ t }} {{ v }}{{ ', ' if not loop.last }}{% endfor %}.</div>
+  {% else %}
+  <div class="alert info">No laboratory validation run has been completed yet.</div>
+  {% endif %}
+  <div class="card">
+    <h2>Version</h2>
+    <dl class="kv about-kv">
+      <dt>App version</dt><dd>{{ version }} (released {{ release }})</dd>
+      <dt>Model</dt><dd>{{ model.name }}</dd>
+      {% for f in model.files %}
+      <dt>Model file</dt><dd>{{ f.file }} · {{ f.size_mb }} MB</dd>
+      <dt>SHA-256</dt><dd class="code hash">{{ f.sha256 }}</dd>
+      {% endfor %}
+      <dt>Prior correction</dt><dd>alpha = {{ model.prior_alpha }}</dd>
+      <dt>Confidence levels</dt><dd>High &gt; {{ '%.0f'|format(100*model.confidence_levels.high_above) }}%, Medium {{ '%.0f'|format(100*model.confidence_levels.medium_from) }}–{{ '%.0f'|format(100*model.confidence_levels.high_above) }}%, Low below</dd>
+      <dt>Classes</dt><dd>{{ model.classes|join(', ') }}</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h2>Team</h2>
+    <p style="margin:0">Hari Prasath M (23BCE8999) · Kodela Kailash Nadh (23BCE7748) · Dharun Raj B (23BCE9271)<br>
+      Guide: Dr. B V Gokulnath · School of Computer Science and Engineering (SCOPE), VIT-AP University</p>
+  </div>
+  <p class="small muted">SkinLens is a research project, not a medical diagnosis. <a href="/learn">Skin spot types</a> · <a href="/learn/abcde">ABCDE self-check</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+Level,Images,Accuracy
+Low (<50%),21,0.4286
+Medium (50-80%),178,0.5112
+High (>80%),1815,0.9063

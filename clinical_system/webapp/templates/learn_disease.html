@@ -1,0 +1,22 @@
+{% extends layout %}
+{% block title %}{{ d.name }}{% endblock %}
+{% block content %}
+<article class="learn">
+  <p class="small"><a href="/learn">&larr; All skin spot types</a></p>
+  <span class="badge {{ 'disease' if d.level == 'attention' else 'normal' }}">{{ 'Needs attention' if d.level == 'attention' else 'Usually harmless' }}</span>
+  <h1 style="margin-top:8px">{{ d.name }}</h1>
+  <p class="muted small" style="margin-top:-4px">Also called: {{ d.also }} · dataset code: {{ abbr }}</p>
+  <div class="card">
+    <h2>What it is</h2>
+    <p>{{ d.what }}</p>
+    <h2>Common signs</h2>
+    <ul class="learn-ul">{% for s in d.signs %}<li>{{ s }}</li>{% endfor %}</ul>
+    <h2>How serious is it?</h2>
+    <p>{{ d.serious }}</p>
+    <h2>When to see a doctor</h2>
+    <ul class="learn-ul doctor">{% for s in d.doctor %}<li>{{ s }}</li>{% endfor %}</ul>
+  </div>
+  <div class="alert info" style="margin-top:16px"><b>General information, not a diagnosis.</b> Skin spots can look alike, and only a doctor who examines the spot can say what it is. If a spot worries you, see a doctor.</div>
+  <p><a href="/learn/abcde">ABCDE self-check for moles &rarr;</a></p>
+</article>
+{% endblock %}

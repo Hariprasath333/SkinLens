@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% block title %}SkinLens Clinical{% endblock %} · SkinLens</title>
+  <meta name="description" content="SkinLens - skin lesion check with explanations. A research project, not a medical diagnosis.">
+  <meta name="theme-color" content="#0077B6">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/static/icons/favicon.ico" sizes="any">
+  <link rel="icon" href="/static/img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="/static/icons/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/static/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/static/icons/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png" sizes="180x180">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SkinLens">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="{% block body_class %}{{ 'has-bottom-nav' if user }}{% endblock %}">
+{% set path = request.url.path %}
+{% if user %}
+<header class="topbar">
+  <div class="inner">
+    <a class="brand" href="/dashboard"><img src="/static/img/logo.svg" alt="SkinLens logo" width="34" height="34">
+      <div>SkinLens Clinical<small>Skin lesion decision support</small></div></a>
+    <nav class="nav" id="main-nav">
+      <a href="/dashboard" class="{{ 'active' if path == '/dashboard' }}">Dashboard</a>
+      <a href="/patients/new" class="{{ 'active' if path == '/patients/new' }}">Add Patient</a>
+      <a href="/analyze" class="{{ 'active' if path == '/analyze' }}">Upload &amp; Analyze</a>
+      <a href="/patients" class="{{ 'active' if path.startswith('/patients') and path != '/patients/new' }}">Patient Records</a>
+      <a href="/model-info" class="{{ 'active' if path == '/model-info' }}">Model Info</a>
+      {% if user.is_admin %}<a href="/admin/research" class="{{ 'active' if path == '/admin/research' }}">Research</a>
+      <a href="/admin/users" class="{{ 'active' if path == '/admin/users' }}">Admin</a>
+      <a href="/admin/validation" class="{{ 'active' if path.startswith('/admin/validation') }}">Validation Lab</a>{% endif %}
+      <a href="/about" class="{{ 'active' if path == '/about' }} mobile-only">About</a>
+      <a href="/" class="mobile-only">Start screen</a>
+    </nav>
+    <div class="userbox">
+      <button class="btn secondary install-btn" type="button" hidden title="Install SkinLens as an app">Install</button>
+      <div class="who">{{ user.full_name }}<span>{{ user.role|capitalize }}</span></div>
+      <form method="post" action="/logout" style="margin:0">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button class="btn ghost" type="submit" title="Log out" aria-label="Log out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          <span class="hide-sm">Logout</span></button>
+      </form>
+    </div>
+    <button class="menu-btn" aria-label="Menu" aria-controls="main-nav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+{% endif %}
+{% block body %}
+<main>
+  {% if flash %}<div class="alert {{ flash.kind }}">{{ flash.msg }}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+{% endblock %}
+<footer>
+  <div class="inner">
+    <div class="disclaimer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      {% block disclaimer %}For research and decision-support only. Not a substitute for professional medical diagnosis.{% endblock %}
+    </div>
+    <div><a href="/about">About &amp; version</a> · <a href="/learn">Skin spot types</a> · SkinLens · {{ now().year }}</div>
+  </div>
+</footer>
+{% block bottom_nav %}
+{% if user %}
+<nav class="bottom-nav" aria-label="Main">
+  <a href="/dashboard" class="{{ 'active' if path == '/dashboard' }}">
+    <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+  <a href="/patients" class="{{ 'active' if path.startswith('/patients') }}">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1M17 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6"/></svg><span>Patients</span></a>
+  <a href="/analyze" class="scan-btn {{ 'active' if path == '/analyze' }}" aria-label="New scan">
+    <span class="scan-circle"><svg viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.5"/></svg></span><span>Scan</span></a>
+  <a href="/model-info" class="{{ 'active' if path == '/model-info' }}">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>Info</span></a>
+  <button type="button" class="menu-btn-bottom" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>More</span></button>
+</nav>
+{% endif %}
+{% endblock %}
+<div class="busy-overlay" hidden><div class="busy-box"><div class="spinner big"></div>
+  <b>Analysing…</b><span>about 10–20 seconds</span></div></div>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "verdicts": {
+    "T1": {
+      "verdict": "REPORTED",
+      "text": "sample accuracy 87.00% (95% CI 82.7\u201390.3%); the reference 85.80% is inside the interval. Pass/fail needs the full 2,014-image run."
+    },
+    "T2": {
+      "verdict": "FAIL",
+      "text": "96.92% identical class (62 of 2014 differ); largest probability difference 0.8271"
+    },
+    "T3": {
+      "verdict": "NOT RUN",
+      "text": "running"
+    },
+    "T4": {
+      "verdict": "NOT RUN",
+      "text": "pending"
+    },
+    "T5": {
+      "verdict": "NOT RUN",
+      "text": "pending"
+    },
+    "T6": {
+      "verdict": "NOT RUN",
+      "text": "pending"
+    },
+    "T7": {
+      "verdict": "NOT RUN",
+      "text": "pending"
+    }
+  },
+  "trl4": false,
+  "conclusion": "TRL 4 is NOT yet demonstrated by this run, because criteria not met: T2 (Integration agreement); not yet decided: T1 (full 2,014-image run needed), T3 (not run), T4 (not run), T5 (not run), T6 (not run), T7 (not run). The tests that passed show that the integrated system works in the laboratory, but the TRL-4 claim requires every criterion to pass.",
+  "generated": "2026-11-15T15:45:01"
+}

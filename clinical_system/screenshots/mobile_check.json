@@ -1,0 +1,136 @@
+{
+  "viewport": "390x844 (mobile, touch)",
+  "pages": {
+    "/ (start)": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/check": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/check (result)": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/login": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/dashboard": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/patients": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/patients/new": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/analyze": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/model-info": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/admin/research": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/admin/users": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/patients/<id>": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    },
+    "/scans/<id>": {
+      "overflow": {
+        "390px": "ok",
+        "360px": "ok"
+      },
+      "small_tap_targets": 0
+    }
+  },
+  "pwa": {
+    "service_worker_scope": "http://127.0.0.1:8080/",
+    "installability_errors": [],
+    "installable": true,
+    "manifest_name": "SkinLens",
+    "cached_files": [
+      "/manifest.webmanifest",
+      "/offline",
+      "/static/css/style.css",
+      "/static/icons/apple-touch-icon.png",
+      "/static/icons/favicon-32.png",
+      "/static/icons/icon-192.png",
+      "/static/icons/icon-512.png",
+      "/static/icons/icon-maskable-512.png",
+      "/static/img/logo.svg",
+      "/static/js/app.js"
+    ]
+  },
+  "patient_mode": {
+    "photo_file_bytes": 1337255,
+    "preview": "Ready: made smaller from 4032\u00d73024 to 1024\u00d7768 px (123 KB)",
+    "spinner_shown_on_submit": "Analysing\u2026 about 10\u201320 seconds",
+    "advice": "This looks less concerning, but only a doctor can confirm. See a doctor if it changes, bleeds, itches or grows.",
+    "level": "High",
+    "swipe_tab_heatmap": true,
+    "summary_pdf_bytes": 184010
+  },
+  "doctor_mode": {
+    "more_menu_opens": true,
+    "preview": "Ready: 600\u00d7450 px (66 KB)",
+    "spinner_shown_on_submit": true,
+    "swipe_tab_gradcam": true,
+    "report_pdf_bytes": 124671,
+    "scan_url": "/scans/22"
+  },
+  "summary": {
+    "pages_checked": 13,
+    "pages_with_horizontal_scroll": [],
+    "installable": true
+  }
+}

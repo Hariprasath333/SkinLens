@@ -1,0 +1,4 @@
+# Only for tools/mobile_check.py (phone screenshots + PWA check). Not needed to run the app.
+# Uses the Edge/Chrome already installed on the computer (no browser download needed).
+playwright>=1.45
+pypdfium2>=4.30

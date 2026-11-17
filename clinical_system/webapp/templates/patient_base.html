@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block body_class %}patient-mode has-bottom-nav{% endblock %}
+{% block body %}
+<header class="topbar patient-top">
+  <div class="inner">
+    <a class="brand" href="/"><img src="/static/img/logo.svg" alt="SkinLens logo" width="34" height="34">
+      <div>SkinLens<small>Check my skin</small></div></a>
+    <button class="btn secondary install-btn" type="button" hidden style="margin-left:auto">Install</button>
+  </div>
+</header>
+<div class="patient-disclaimer" role="note">SkinLens is a research project, not a medical diagnosis.</div>
+<main class="patient-main">
+  {% block content %}{% endblock %}
+</main>
+{% endblock %}
+{% block disclaimer %}SkinLens is a research project, not a medical diagnosis.{% endblock %}
+{% block bottom_nav %}
+<nav class="bottom-nav" aria-label="Main">
+  <a href="/"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Start</span></a>
+  <a href="/check" class="scan-btn {{ 'active' if request.url.path == '/check' }}" aria-label="New check">
+    <span class="scan-circle"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></span><span>New check</span></a>
+  <a href="/login"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg><span>Staff</span></a>
+</nav>
+{% endblock %}

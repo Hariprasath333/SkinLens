@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Model information{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Model information</h1>
+    <p class="muted">What the AI is, how it was built and tested, and what it should and should not be used for.</p></div>
+</div>
+{% if model.is_dummy or 'SkinLens' not in model.name %}
+<div class="alert info">This page describes the <b>{{ info.name }}</b>. The app is currently running <b>{{ model.name }}</b>,
+  whose results may differ. See that model's own evaluation report.</div>
+{% endif %}
+
+<div class="grid grid-2" style="align-items:start">
+  <div class="card">
+    <h2>Model architecture</h2>
+    <p class="small muted" style="margin-top:-4px">EfficientNetV2-S + Swin Transformer V2 + patient-data fusion</p>
+    <ul class="info-list">{% for x in info.architecture %}<li>{{ x }}</li>{% endfor %}</ul>
+  </div>
+  <div class="card">
+    <h2>Training data</h2>
+    <ul class="info-list">{% for x in info.dataset %}<li>{{ x }}</li>{% endfor %}</ul>
+  </div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <h2>Test results</h2>
+  <p class="small muted" style="margin-top:-4px">Held-out test set of {{ '{:,}'.format(info.test_set_size) }} images. None of these lesions was used in training.</p>
+  {% if info.summary_title %}<h3 style="margin:14px 0 0">{{ info.summary_title }}</h3>{% endif %}
+  <div class="metric-tiles" style="margin:12px 0 10px">
+    {% for m in info.summary_metrics %}<div><b>{{ m.value }}</b><span class="small muted">{{ m.name }}</span></div>{% endfor %}
+  </div>
+  {% if info.summary_note %}<p class="small muted">{{ info.summary_note }}</p>{% endif %}
+  {% if model.prior_correction is not none %}<p class="small muted">Prior correction is <b>on</b> in this app (alpha = {{ model.prior_correction }}).
+    Confidence levels: High &gt; {{ '%.0f'|format(100*conf_high) }}%, Medium {{ '%.0f'|format(100*conf_medium) }}–{{ '%.0f'|format(100*conf_high) }}%, Low &lt; {{ '%.0f'|format(100*conf_medium) }}%.</p>
+  {% elif model.prior_note %}<p class="small muted">Note: {{ model.prior_note }}.</p>{% endif %}
+  {% if info.per_class_title %}<h3 style="margin:18px 0 8px">{{ info.per_class_title }}</h3>{% endif %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>Class</th><th>Precision</th><th>Recall (sensitivity)</th><th>F1-score</th><th>Test images</th></tr></thead>
+    <tbody>{% for c in info.per_class %}
+      <tr><td>{{ c.name }} <span class="muted">({{ c.code }})</span></td><td>{{ '%.2f'|format(c.precision) }}</td>
+        <td>{{ '%.2f'|format(c.recall) }}</td><td>{{ '%.2f'|format(c.f1) }}</td><td>{{ '{:,}'.format(c.support) }}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+</div>
+
+<div class="grid grid-2" style="margin-top:18px;align-items:start">
+  <div class="card">
+    <h2>Intended use</h2>
+    <ul class="info-list">{% for x in info.intended_use %}<li>{{ x }}</li>{% endfor %}</ul>
+  </div>
+  <div class="card">
+    <h2>Limitations</h2>
+    <ul class="info-list">{% for x in info.limitations %}<li>{{ x }}</li>{% endfor %}</ul>
+  </div>
+</div>
+
+{% if figures %}
+<div class="card" style="margin-top:18px">
+  <h2>Figures from the paper</h2>
+  <div class="figure-grid" style="margin-top:12px">
+    {% for f in figures %}<figure class="figure" style="margin:0"><a href="/paper-figures/{{ f.file }}" target="_blank" rel="noopener">
+      <img src="/paper-figures/{{ f.file }}" alt="{{ f.title }}" loading="lazy" style="aspect-ratio:auto;object-fit:contain"></a>
+      <figcaption>{{ f.title }}</figcaption></figure>{% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="alert error" style="margin-top:18px"><b>Disclaimer:</b> For research and decision-support only. Not a substitute for
+  professional medical diagnosis. SkinLens is not a certified medical device. Every result must be checked by a qualified
+  clinician, and suspicious lesions should be examined by a dermatologist.</div>
+{% endblock %}

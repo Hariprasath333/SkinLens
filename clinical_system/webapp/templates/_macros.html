@@ -1,0 +1,99 @@
+{% macro risk_badge(scan) -%}
+{% if scan.is_disease %}<span class="badge disease">● {{ 'Pre-cancerous' if scan.risk == 'premalignant' else 'Disease detected' }}</span>
+{% else %}<span class="badge normal">● Normal / benign</span>{% endif %}
+{%- endmacro %}
+
+{% macro photo_picker(max_mb) -%}
+<div class="photo-picker" data-max-side="1024">
+  <div class="pick-buttons">
+    <label class="btn pick-btn">
+      <input type="file" name="image" accept="image/*" capture="environment" class="pick-input">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
+      Take photo</label>
+    <label class="btn secondary pick-btn">
+      <input type="file" name="image_gallery" accept="image/*" class="pick-input">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>
+      Choose from gallery</label>
+  </div>
+  <div class="photo-preview" hidden>
+    <img alt="Photo preview">
+    <div class="small muted preview-info"></div>
+  </div>
+  <div class="quality-box" hidden role="alert">
+    <b class="quality-title">Check your photo</b>
+    <ul class="quality-list"></ul>
+    <div class="quality-actions">
+      <button type="button" class="btn quality-retake">Retake photo</button>
+      <button type="button" class="btn secondary quality-ignore">Use anyway</button>
+    </div>
+  </div>
+  <ul class="tips">
+    <li><b>Good light</b> – daylight or a bright room, no flash glare</li>
+    <li><b>Lesion in the centre</b> of the picture</li>
+    <li><b>In focus</b> – tap the screen to focus before taking the photo</li>
+    <li><b>About 10 cm away</b> from the skin</li>
+  </ul>
+  <p class="hint">JPG or PNG. The photo is made smaller on your phone (max 1024 px) before it is sent, so it uploads quickly.</p>
+</div>
+{%- endmacro %}
+
+{% macro icon(name) -%}
+{% if name == 'users' %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+{% elif name == 'scan' %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.5"/></svg>
+{% elif name == 'alert' %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg>
+{% elif name == 'today' %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+{% endif %}
+{%- endmacro %}
+
+{# ------------------------------------------------------------------ all class probabilities as bars #}
+{% macro prob_bars(rows, mode='patient') -%}
+<ul class="pbars {{ mode }}">
+  {% for c in rows %}
+  <li class="pbar {{ c.group }}">
+    <div class="pbar-label">
+      {% if mode == 'patient' %}<span class="pbar-name">{{ c.plain }}</span><span class="pbar-med">{{ c.medical }}</span>
+      {% else %}<span class="pbar-name">{{ c.name }} <span class="muted">({{ c.abbr }})</span></span>{% endif %}
+      <a class="pbar-info" href="/learn/{{ c.code|lower }}">What is this?</a>
+    </div>
+    <div class="pbar-track" role="img" aria-label="{{ c.pct1 if mode == 'doctor' else c.pct }} percent">
+      <span class="pbar-bg"><span class="pbar-fill" style="width: {{ '%.1f'|format(100*c.prob) }}%"></span></span>
+      <span class="pbar-pct">{% if mode == 'doctor' %}{{ '%.1f'|format(c.pct1) }}{% else %}{{ c.pct }}{% endif %}%</span>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+<div class="pbar-legend small"><span class="dot attention"></span>needs attention (cancer or pre-cancer)
+  <span class="dot harmless"></span>usually harmless</div>
+{%- endmacro %}
+
+{# ------------------------------------------------------------------ photo quality notice (after analysis) #}
+{% macro quality_notice(q, retake_url) -%}
+{% if q and q.issues %}
+<div class="alert warn quality-notice">
+  <b>Photo quality check:</b> the result may be less reliable.
+  <ul>{% for i in q.issues %}<li><b>{{ i.title }}.</b> {{ i.fix }}</li>{% endfor %}</ul>
+  {% if retake_url %}<a class="btn secondary" href="{{ retake_url }}">Retake photo</a>{% endif %}
+</div>
+{% endif %}
+{%- endmacro %}
+
+{# ------------------------------------------------------------------ full doctor-level explanation #}
+{% macro explain_details(x, mode='doctor') -%}
+<div class="explain-details">
+  <h3>Clinical summary</h3>
+  <div class="note clinical-summary">{{ x.summary }}</div>
+  <h3>Image measurements</h3>
+  <div class="table-wrap"><table class="meas-table">
+    <thead><tr><th>Measurement</th><th>Value</th><th>How to read it</th></tr></thead>
+    <tbody>{% for name, val, how in x.table %}<tr><td>{{ name }}<div class="small muted how-m">{{ how }}</div></td><td class="val">{{ val }}</td><td class="small muted how">{{ how }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  <p class="small muted">{{ x.honest_note }}</p>
+  <h3>{{ 'Top 3 possible classes' if mode == 'doctor' else 'The 3 most likely answers' }}</h3>
+  <ol class="top3-list">{% for c in x.top3 %}<li>{{ c.name }} ({{ c.abbr }}) – {{ '%.1f'|format(c.pct1) }}%</li>{% endfor %}</ol>
+  <h3>Confidence level</h3>
+  <p><span class="badge {{ x.level }}">{{ x.level }}</span> {{ x.level_meaning }}</p>
+  <h3>Patient information used by the model</h3>
+  <dl class="kv">{% for k, v in x.metadata %}<dt>{{ k }}</dt><dd>{{ v }}</dd>{% endfor %}</dl>
+  <p class="small muted" style="margin-top:12px">Note: {{ x.gradcam_note }}</p>
+</div>
+{%- endmacro %}

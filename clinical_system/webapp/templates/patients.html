@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% from "_macros.html" import risk_badge %}
+{% block title %}Patient Records{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Patient records</h1><p class="muted">{{ patients|length }} patient{{ '' if patients|length == 1 else 's' }}{% if q %} matching “{{ q }}”{% endif %}</p></div>
+  <a class="btn" href="/patients/new">+ Add Patient</a>
+</div>
+<div class="card">
+  <form class="searchbar" method="get" action="/patients" style="margin-bottom:16px">
+    <input type="search" name="q" value="{{ q }}" placeholder="Search by patient ID (e.g. PAT-YYYY-0001) or name" aria-label="Search">
+    <button class="btn" type="submit">Search</button>
+    {% if q %}<a class="btn secondary" href="/patients">Clear</a>{% endif %}
+  </form>
+  {% if patients %}
+  <div class="table-wrap"><table class="table-stack">
+    <thead><tr><th>Patient ID</th><th>Name</th><th class="hide-sm">Age / Gender</th><th class="hide-sm">Contact</th><th>Scans</th><th>Last result</th><th></th></tr></thead>
+    <tbody>
+    {% for p in patients %}
+      {% set last = p.scans[0] if p.scans else None %}
+      <tr>
+        <td class="code">{{ p.patient_code }}</td>
+        <td><a href="/patients/{{ p.patient_code }}">{{ p.name }}</a>{% if p.is_demo %} <span class="badge demo">DEMO</span>{% endif %}</td>
+        <td class="hide-sm">{{ p.age if p.age is not none else '–' }} / {{ p.gender }}</td>
+        <td class="hide-sm">{{ p.contact or '–' }}</td>
+        <td data-label="Scans">{{ p.scans|length }}</td>
+        <td>{% if last %}{{ risk_badge(last) }}{% else %}<span class="muted small">No scans</span>{% endif %}</td>
+        <td class="row-action"><a class="btn secondary" href="/patients/{{ p.patient_code }}">Open</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}
+  <div class="empty">{% if q %}No patient matches “{{ q }}”.{% else %}No patients yet. <a href="/patients/new">Add the first patient</a>.{% endif %}</div>
+  {% endif %}
+</div>
+{% endblock %}

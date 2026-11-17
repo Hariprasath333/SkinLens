@@ -1,0 +1,19 @@
+18:25:37 T1 started
+19:10:58 T1 done: PASS - accuracy 85.80% vs reference 85.80% (difference -0.00 points)
+19:10:58 T2 started
+19:11:07 T2 done: PASS - 100.00% identical class (0 of 2014 differ); largest probability difference 0.0174
+19:11:07 T3 started
+20:12:17 T3 done: PASS - average stability 92.1% over 8 conditions
+20:12:17 T4 started
+09:25:56 runner process ended during T4 (session ended overnight); resumed on 16 Nov with app 1.5.2; T4 restarted from the beginning
+09:26:19 T4 started
+10:35:21 T4 stopped and restarted from the beginning: Windows was running the window-less runner on efficiency cores (about 3 of 12 threads busy; prediction + Grad-CAM about 24 s). The runner now raises its priority to above-normal (6-7 threads busy). Throttled timings kept in T4_timings_throttled.csv
+10:35:34 T4 started
+14:00:38 T4 done: PASS - 95th percentile of prediction + Grad-CAM = 28.51 s (limit 30 s)
+14:00:38 T5 started
+14:49:23 T5 done: PASS - 120 requests, 0 failed, server stayed up; peak memory 4783 MB
+14:49:23 T6 started
+14:49:35 T6 done: PASS - blurred 49/50, dark 50/50, tiny 50/50, non_skin 50/50; unchanged test images without a warning 47/50
+14:49:35 T7 started
+15:40:48 T7 done: PASS - 44 passed, 0 failed, 0 errors, 1 skipped
+15:40:50 report written: validation_results\2026-11-15_182522\SkinLens_TRL4_Lab_Validation_Report.pdf

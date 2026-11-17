@@ -1,0 +1,14 @@
+{
+  "type": "post-hoc root-cause analysis (diagnostic only; not part of the acceptance criterion; the app was not changed)",
+  "date": "2026-11-15",
+  "images": "30 test images: the first 20 images where app and notebook disagree + 10 random images where they agree",
+  "method": "the app's model and metadata encoding, only the image resize to 384 x 384 swapped in a separate diagnostic process; raw (uncorrected) probabilities compared with probs_raw in test_predictions.npz",
+  "results": [
+    {"resize": "cv2 INTER_AREA (used by the app)", "class_agreement": "13/30", "median_max_abs_diff": 0.3754, "max_abs_diff": 0.7797},
+    {"resize": "cv2 INTER_LINEAR", "class_agreement": "30/30", "median_max_abs_diff": 0.0004, "max_abs_diff": 0.0048},
+    {"resize": "cv2 INTER_CUBIC", "class_agreement": "28/30", "median_max_abs_diff": 0.0818, "max_abs_diff": 0.9299},
+    {"resize": "PIL BILINEAR", "class_agreement": "9/30", "median_max_abs_diff": 0.5780, "max_abs_diff": 0.9237},
+    {"resize": "PIL BICUBIC", "class_agreement": "29/30", "median_max_abs_diff": 0.0549, "max_abs_diff": 0.4864}
+  ],
+  "conclusion": "The training notebook resized images with cv2 INTER_LINEAR; the app resizes with cv2 INTER_AREA. With INTER_LINEAR the app reproduces the notebook's probabilities (max difference 0.005 on all 30 images). The weights, metadata encoding and prior correction are identical (80% of all 2,014 images already differ by less than 0.01). On the 62 images with a different class the app was correct 35 times and the notebook 18 times; overall accuracy on the full test set: app 86.64%, notebook 85.80%."
+}

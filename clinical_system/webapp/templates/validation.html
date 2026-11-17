@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block title %}Validation Lab{% endblock %}
+{% macro pct(v, d=1) %}{% if v is none or v != v %}–{% else %}{{ ('%.' ~ d ~ 'f')|format(100*v) }}%{% endif %}{% endmacro %}
+{% macro vbadge(v) %}<span class="vbadge {{ v|lower|replace(' ', '-') }}">{{ v }}</span>{% endmacro %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Validation Lab</h1>
+    <p class="muted">Laboratory validation (TRL 4) of the integrated system. Every test uses the app's own inference, API and PDF code. Test images are never saved as patient records.</p></div>
+  {% if sel and has_report %}<a class="btn" href="/admin/validation/{{ sel }}/files/SkinLens_TRL4_Lab_Validation_Report.pdf">Download report</a>{% endif %}
+</div>
+
+{% if check.missing %}
+<div class="alert error"><b>Test data missing in {{ check.root }}:</b> {{ check.missing|join(', ') }}. Put HAM10000 images, test_manifest.csv and test_predictions.npz there.</div>
+{% else %}
+<div class="alert info">Test data found: {{ check.n_test }} test images listed in test_manifest.csv, all images present, test_predictions.npz present.</div>
+{% endif %}
+
+<div class="grid grid-2" style="align-items:start">
+  <div class="card">
+    <h2>Run tests</h2>
+    <p class="small muted">Tests run in the background in a separate process; you can leave this page. An interrupted run can be resumed without losing finished images.</p>
+    <form method="post" action="/admin/validation/start" class="vl-buttons">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button class="btn block" name="preset" value="all" {{ 'disabled' if any_running or check.missing }}>Run all: T1 (300 sample) + T2–T7</button>
+      <button class="btn secondary block" name="preset" value="t1_full" {{ 'disabled' if any_running or check.missing }}>T1 on all 2,014 images (40–100 minutes)</button>
+      <div class="vl-single">
+        {% for t in ['T1','T2','T3','T4','T5','T6','T7'] %}
+        <button class="btn secondary" name="preset" value="{{ t }}" title="{{ criteria[t].name }}" {{ 'disabled' if any_running or check.missing }}>{{ t }}</button>
+        {% endfor %}
+      </div>
+    </form>
+    {% if any_running %}<p class="small" style="margin-bottom:0"><span class="spinner inline"></span> A run is in progress.</p>{% endif %}
+  </div>
+  <div class="card">
+    <h2>Runs</h2>
+    {% if runs %}
+    <ul class="vl-runs">{% for name, tests, mode, running in runs %}
+      <li class="{{ 'active' if name == sel }}"><a href="/admin/validation?run={{ name }}">{{ name }}</a>
+        <span class="small muted">{{ tests|join(', ') }}{{ ' · T1 full' if mode == 'full' and 'T1' in tests }}</span>
+        {% if running %}<span class="badge Medium">running</span>{% endif %}</li>{% endfor %}</ul>
+    {% else %}<p class="muted">No runs yet.</p>{% endif %}
+  </div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>Acceptance criteria (fixed before running)</h2></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Test</th><th>Name</th><th>Criterion</th></tr></thead>
+    <tbody>{% for t, c in criteria.items() %}<tr><td><b>{{ t }}</b></td><td>{{ c.name }}</td><td class="small">{{ c.criterion }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</div>
+
+{% if sel %}
+<div class="card" style="margin-top:18px" id="run-card" data-run="{{ sel }}" data-running="{{ 1 if running else 0 }}">
+  <div class="card-title"><h2>Run {{ sel }}</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      {% if not running and (state.values()|selectattr('status', 'ne', 'done')|list) %}
+      <form method="post" action="/admin/validation/{{ sel }}/resume" style="margin:0"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn secondary" {{ 'disabled' if any_running }}>Resume</button></form>{% endif %}
+      {% if not running %}<form method="post" action="/admin/validation/{{ sel }}/report" style="margin:0"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn secondary">Rebuild report</button></form>{% endif %}
+      {% if has_report %}<a class="btn" href="/admin/validation/{{ sel }}/files/SkinLens_TRL4_Lab_Validation_Report.pdf">Download report</a>{% endif %}
+    </div></div>
+  <p class="small muted" style="margin-top:-6px">Created {{ info.created }} · app {{ versions }} · {{ info.identity.model.name }} · criteria SHA-256 {{ info.criteria.sha256[:16] }}…</p>
+  <div class="vl-progress">
+    {% for t, s in state.items() %}
+    <div class="vl-row" data-test="{{ t }}">
+      <b>{{ t }}</b><span class="vl-name">{{ criteria[t].name }}</span>
+      <div class="bar vl-bar"><span style="width: {{ (100 * s.done / s.total) if s.total else (100 if s.status == 'done' else 0) }}%"></span></div>
+      <span class="vl-status small">{% if s.status == 'done' %}{{ vbadge(s.verdict or 'done') }}{% elif s.status == 'failed' %}{{ vbadge('ERROR') }}{% else %}{{ s.status }}{% if s.total %} · {{ s.done }}/{{ s.total }}{% endif %}{% endif %}</span>
+      <span class="vl-note small muted">{{ s.summary or s.note or s.error or '' }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% set r1 = res.T1 %}{% if r1 %}
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>T1 · Clinical accuracy <span class="muted small">({{ 'all ' ~ r1.n ~ ' images' if r1.mode == 'full' else r1.n ~ '-image stratified sample' }})</span></h2>{{ vbadge(r1.verdict) }}</div>
+  <p class="small">{{ r1.verdict_text }}</p>
+  <div class="metric-tiles">
+    <div><b>{{ pct(r1.accuracy, 2) }}</b>accuracy<br><span class="small muted">95% CI {{ pct(r1.ci95.accuracy[0]) }}–{{ pct(r1.ci95.accuracy[1]) }} · ref. 85.80%</span></div>
+    <div><b>{{ '%.3f'|format(r1.macro_f1) }}</b>macro-F1<br><span class="small muted">ref. 0.763</span></div>
+    <div><b>{{ pct(r1.mel_recall) }}</b>melanoma recall<br><span class="small muted">ref. 78.8%</span></div>
+    <div><b>{{ '%.3f'|format(r1.ece) }}</b>ECE<br><span class="small muted">ref. 0.070 · balanced acc. {{ pct(r1.balanced_accuracy) }}</span></div>
+  </div>
+  <div class="grid grid-2" style="margin-top:14px">
+    <div class="table-wrap"><table class="vl-table"><thead><tr><th>Class</th><th>n</th><th>Prec.</th><th>Recall</th><th>Spec.</th><th>F1</th><th>AUC</th></tr></thead>
+      <tbody>{% for p in r1.per_class %}<tr><td>{{ p.cls }}</td><td>{{ p.support }}</td><td>{{ '%.2f'|format(p.precision) }}</td><td>{{ '%.2f'|format(p.recall) }}</td><td>{{ '%.2f'|format(p.specificity) }}</td><td>{{ '%.2f'|format(p.f1) }}</td><td>{{ '–' if p.auc != p.auc else '%.3f'|format(p.auc) }}</td></tr>{% endfor %}</tbody></table>
+      <table class="vl-table" style="margin-top:10px"><thead><tr><th>Level</th><th>Images</th><th>Accuracy</th></tr></thead>
+      <tbody>{% for lv, d in r1.by_level.items() %}<tr><td>{{ lv }}</td><td>{{ d.n }} ({{ pct(d.share, 0) }})</td><td>{{ pct(d.accuracy) }}</td></tr>{% endfor %}</tbody></table></div>
+    <div><img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T1_confusion.png" alt="Confusion matrix"></div>
+  </div>
+  <div class="grid grid-2"><img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T1_per_class.png" alt="Per-class metrics"><img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T1_reliability.png" alt="Reliability diagram"></div>
+</div>{% endif %}
+
+{% set r2 = res.T2 %}{% if r2 %}
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>T2 · Integration agreement</h2>{{ vbadge(r2.verdict) }}</div>
+  <p class="small">{{ r2.verdict_text }}. {{ r2.compared }}</p>
+  <div class="grid grid-2">
+    <table class="vl-table"><tbody>
+      <tr><td>Matched images</td><td>{{ r2.n_matched }}</td></tr>
+      <tr><td>Identical class</td><td>{{ pct(r2.agreement, 2) }}</td></tr>
+      <tr><td>Largest / mean probability difference</td><td>{{ '%.4f'|format(r2.max_prob_diff) }} / {{ '%.4f'|format(r2.mean_prob_diff) }}</td></tr>
+      <tr><td>Accuracy: app / npz</td><td>{{ pct(r2.accuracy_app) }} / {{ pct(r2.accuracy_npz) }}</td></tr>
+      <tr><td>Mean top probability: app / npz</td><td>{{ '%.3f'|format(r2.app_mean_top_prob) }} / {{ '%.3f'|format(r2.npz_mean_top_prob) }}</td></tr>
+      <tr><td>npz internal consistency</td><td>{{ '%.1e'|format(r2.npz_correction_self_consistency) }}</td></tr>
+    </tbody></table>
+    <img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T2_classes.png" alt="Predicted classes">
+  </div>
+  {% if r2.verdict == 'FAIL' and r2.accuracy_npz < r2.accuracy_app - 0.1 %}<div class="alert warn" style="margin:12px 0 0">The npz file scores {{ pct(r2.accuracy_npz) }} and its probabilities are almost flat, while the app reaches {{ pct(r2.accuracy_app) }}. The file does not seem to contain the trained model's outputs; export them again from the trained checkpoint and re-run T2.</div>{% endif %}
+</div>{% endif %}
+
+{% set r3 = res.T3 %}{% if r3 %}
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>T3 · Robustness</h2>{{ vbadge(r3.verdict) }}</div>
+  <p class="small">{{ r3.verdict_text }} ({{ r3.n }} images).</p>
+  <div class="grid grid-2">
+    <table class="vl-table"><thead><tr><th>Condition</th><th>Accuracy</th><th>Same as original</th></tr></thead>
+      <tbody>{% for k, d in r3.conditions.items() %}<tr><td>{{ k }}</td><td>{{ pct(d.accuracy) }}</td><td>{{ pct(d.stability) }}</td></tr>{% endfor %}</tbody></table>
+    <img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T3_robustness.png" alt="Robustness chart">
+  </div>
+</div>{% endif %}
+
+{% set r4 = res.T4 %}{% if r4 %}
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>T4 · Speed</h2>{{ vbadge(r4.verdict) }}</div>
+  <p class="small">{{ r4.verdict_text }} ({{ r4.n }} images, LIME {{ r4.lime_samples }} samples).</p>
+  <div class="grid grid-2">
+    <table class="vl-table"><thead><tr><th>Stage</th><th>Mean</th><th>Median</th><th>p95</th></tr></thead>
+      <tbody>{% for k, d in r4.stats.items() %}<tr><td>{{ k|replace('_ms', '')|replace('_', ' ') }}</td><td>{{ '%.2f'|format(d.mean) }} s</td><td>{{ '%.2f'|format(d.median) }} s</td><td>{{ '%.2f'|format(d.p95) }} s</td></tr>{% endfor %}</tbody></table>
+    <img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T4_timing.png" alt="Timing chart">
+  </div>
+</div>{% endif %}
+
+{% set r5 = res.T5 %}{% if r5 %}
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>T5 · Reliability and load</h2>{{ vbadge(r5.verdict) }}</div>
+  <p class="small">{{ r5.verdict_text }}. {{ r5.endpoint }}.</p>
+  <div class="grid grid-2">
+    <table class="vl-table"><tbody>
+      <tr><td>Requests / failed</td><td>{{ r5.requests }} / {{ r5.failed }}</td></tr>
+      <tr><td>Errors</td><td>{{ r5.errors|join(', ') or 'none' }}</td></tr>
+      <tr><td>In a row: median / p95</td><td>{{ '%.2f'|format(r5.sequential.median) }} / {{ '%.2f'|format(r5.sequential.p95) }} s</td></tr>
+      <tr><td>{{ r5.users }} users at once: median / max</td><td>{{ '%.2f'|format(r5.concurrent.median) }} / {{ '%.2f'|format(r5.concurrent.max) }} s</td></tr>
+      <tr><td>Queue waiting: mean / max</td><td>{{ '%.2f'|format(r5.queue_wait_s.mean) }} / {{ '%.2f'|format(r5.queue_wait_s.max) }} s</td></tr>
+      <tr><td>Memory: start / peak</td><td>{{ '%.0f'|format(r5.memory_mb.start) }} / {{ '%.0f'|format(r5.memory_mb.peak) }} MB</td></tr>
+      <tr><td>Stored on test server</td><td>{{ r5.stored_after_test.database_rows }} · files {{ r5.stored_after_test.files }}</td></tr>
+    </tbody></table>
+    <img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T5_load.png" alt="Load test chart">
+  </div>
+</div>{% endif %}
+
+{% set r6 = res.T6 %}{% if r6 %}
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>T6 · Photo quality check</h2>{{ vbadge(r6.verdict) }}</div>
+  <p class="small">{{ r6.verdict_text }}.</p>
+  <div class="grid grid-2">
+    <table class="vl-table"><thead><tr><th>Group</th><th>Correct</th><th>Rate</th></tr></thead>
+      <tbody>{% for g, d in r6.groups.items() %}<tr><td>{{ g }}</td><td>{{ d.correct }}/{{ d.n }}</td><td>{{ pct(d.rate, 0) }}</td></tr>{% endfor %}</tbody></table>
+    <img class="vl-chart" src="/admin/validation/{{ sel }}/chart/T6_quality.png" alt="Quality check chart">
+  </div>
+</div>{% endif %}
+
+{% set r7 = res.T7 %}{% if r7 %}
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>T7 · Functional and security tests</h2>{{ vbadge(r7.verdict) }}</div>
+  <p class="small">{{ r7.verdict_text }} in {{ '%.1f'|format(r7.duration_s / 60) }} minutes.</p>
+  <table class="vl-table"><thead><tr><th>Test file</th><th>Tests</th><th>Failed</th><th>Skipped</th></tr></thead>
+    <tbody>{% for f, d in r7.by_file|dictsort %}<tr><td>{{ f }}</td><td>{{ d.tests }}</td><td>{{ d.failed }}</td><td>{{ d.skipped }}</td></tr>{% endfor %}</tbody></table>
+  {% if r7.failed %}<p class="small" style="color:var(--red)">Failed: {{ r7.failed|join(', ') }}</p>{% endif %}
+</div>{% endif %}
+
+<div class="card" style="margin-top:18px">
+  <h2>Raw results</h2>
+  <p class="small muted">validation_results/{{ sel }}/</p>
+  <div class="vl-files">{% for f in files %}<a class="btn ghost" href="/admin/validation/{{ sel }}/files/{{ f }}">{{ f }}</a>{% endfor %}</div>
+</div>
+{% endif %}
+<script>
+(() => {
+  const card = document.getElementById("run-card");
+  if (!card || card.dataset.running !== "1") return;
+  let last = null;
+  const poll = async () => {
+    try {
+      const r = await fetch(`/admin/validation/${card.dataset.run}/status`, { cache: "no-store" });
+      const d = await r.json();
+      for (const [t, s] of Object.entries(d.state)) {
+        const row = card.querySelector(`.vl-row[data-test="${t}"]`);
+        if (!row) continue;
+        const pc = s.total ? (100 * s.done / s.total) : (s.status === "done" ? 100 : 0);
+        row.querySelector(".vl-bar span").style.width = pc + "%";
+        if (s.status !== "done") row.querySelector(".vl-status").textContent = s.status + (s.total ? ` · ${s.done}/${s.total}` : "");
+        row.querySelector(".vl-note").textContent = s.summary || s.note || s.error || "";
+      }
+      const sig = Object.values(d.state).map((s) => s.status).join();
+      if ((last !== null && sig !== last) || !d.running) { location.reload(); return; }
+      last = sig;
+    } catch (e) { /* retry */ }
+    setTimeout(poll, 3000);
+  };
+  poll();
+})();
+</script>
+{% endblock %}

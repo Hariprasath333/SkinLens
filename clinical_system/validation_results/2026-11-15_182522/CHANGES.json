@@ -1,0 +1,18 @@
+[
+  {
+    "time": "2026-11-15T18:56:01",
+    "from_version": "1.5.1",
+    "to_version": "1.5.2",
+    "change": "Photo quality check: 'not skin' also when the whole picture has strong one-direction stripes AND very saturated colour (e.g. wood). Prediction code unchanged.",
+    "developed_on": "400 HAM10000 training images + generated non-skin images (seed 12345); confirmed on 1,000 other training images (warnings before 127, after 127, 0 added) and generated non-skin images (seed 777: 50/50). T6 images (seed 2092) were not used.",
+    "affects": "T1-T3 ran on 15 Nov in the original process with the 1.5.1 code (prediction code identical in 1.5.2; the quality check is not used by T1-T3). The runner stopped during T4 when the computer session ended; the run was resumed on 16 Nov in a new process with 1.5.2: T4 was measured again from the start (the partial timings are kept in T4_timings_interrupted.csv), and T5, T6 and T7 ran on 1.5.2."
+  },
+  {
+    "time": "2026-11-16T10:35:21",
+    "from_version": "1.5.2",
+    "to_version": "1.5.2",
+    "change": "Validation runner only (not the app): the runner and the T5 test server run at above-normal process priority, because Windows 11 ran the window-less runner on efficiency cores (CPU use about 3 of 12 threads, 2-4x slower).",
+    "developed_on": "Observed during T4 on 16 Nov: CPU load 29% -> 100% after raising the priority.",
+    "affects": "T4 restarted from the beginning (partial throttled timings kept in T4_timings_throttled.csv and T4_timings_interrupted.csv); T5-T7 run after this change. T1-T3 measure accuracy only, not speed."
+  }
+]

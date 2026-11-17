@@ -1,0 +1,2 @@
+This run tested app v1.5.0 (image resize cv2 INTER_AREA). T7 was stopped on 15 Nov 2026 at about 18:25 when the resize was
+changed to match training (v1.5.1, cv2 INTER_LINEAR). It is kept as a record; see the next run for the final validation.

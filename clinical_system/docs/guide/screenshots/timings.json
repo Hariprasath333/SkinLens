@@ -1,0 +1,5 @@
+{
+  "analysis_to_result_s": 7.8,
+  "lime_extra_s": 72.3,
+  "result_timing_text": "Analysis time: prediction 1.73 s \u00b7 Grad-CAM 5.56 s \u00b7 LIME 70.6 s"
+}

@@ -1,0 +1,19 @@
+{% extends layout %}
+{% block title %}Skin spot types{% endblock %}
+{% block content %}
+<div class="learn">
+  <h1>Skin spot types</h1>
+  <p class="muted">Short, general information about each type of skin spot the app can recognise. This is not a diagnosis: only a doctor can tell what a spot is.</p>
+  <a class="abcde-banner" href="/learn/abcde"><b>ABCDE self-check</b><span>Five warning signs of melanoma to look for in a mole &rarr;</span></a>
+  <div class="learn-list">
+    {% for c in codes %}{% set d = diseases[c] %}
+    <a class="learn-item {{ d.level }}" href="/learn/{{ c|lower }}">
+      <span class="dot {{ d.level }}"></span>
+      <span class="learn-item-text"><b>{{ d.name }}</b> <span class="muted small">({{ abbr[c] }})</span><br>
+        <span class="small muted">{{ 'Needs attention' if d.level == 'attention' else 'Usually harmless' }}</span></span>
+      <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

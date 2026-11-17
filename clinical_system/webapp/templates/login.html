@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block body %}
+<div class="auth-wrap">
+  <div class="card auth-card">
+    <a class="back-link small" href="/">&larr; Back to start</a>
+    <div class="brand"><img src="/static/img/logo.svg" alt="SkinLens logo" width="40" height="40"> SkinLens Clinical</div>
+    <h1>Staff login</h1>
+    <p class="sub">Sign in to analyse skin lesion images and manage patient records.</p>
+    {% if flash %}<div class="alert {{ flash.kind }}">{{ flash.msg }}</div>{% endif %}
+    {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+    <form method="post" action="/login">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="field"><label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required autofocus></div>
+      <div class="field"><label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required></div>
+      <button class="btn block" type="submit">Log in</button>
+    </form>
+    {% if allow_register %}
+    <p class="small muted" style="text-align:center;margin:18px 0 0">New doctor or staff member? <a href="/register">Create an account</a></p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

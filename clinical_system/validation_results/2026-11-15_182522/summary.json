@@ -1,0 +1,35 @@
+{
+  "verdicts": {
+    "T1": {
+      "verdict": "PASS",
+      "text": "accuracy 85.80% vs reference 85.80% (difference -0.00 points)"
+    },
+    "T2": {
+      "verdict": "PASS",
+      "text": "100.00% identical class (0 of 2014 differ); largest probability difference 0.0174"
+    },
+    "T3": {
+      "verdict": "PASS",
+      "text": "average stability 92.1% over 8 conditions"
+    },
+    "T4": {
+      "verdict": "PASS",
+      "text": "95th percentile of prediction + Grad-CAM = 28.51 s (limit 30 s)"
+    },
+    "T5": {
+      "verdict": "PASS",
+      "text": "120 requests, 0 failed, server stayed up; peak memory 4783 MB"
+    },
+    "T6": {
+      "verdict": "PASS",
+      "text": "blurred 49/50, dark 50/50, tiny 50/50, non_skin 50/50; unchanged test images without a warning 47/50"
+    },
+    "T7": {
+      "verdict": "PASS",
+      "text": "44 passed, 0 failed, 0 errors, 1 skipped"
+    }
+  },
+  "trl4": true,
+  "conclusion": "All acceptance criteria were met in the laboratory. The integrated SkinLens system (model, web application, phone app, explanations, reports) is validated at TRL 4.",
+  "generated": "2026-11-16T15:41:57"
+}

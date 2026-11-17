@@ -1,0 +1,69 @@
+{% extends "patient_base.html" %}
+{% from "_macros.html" import prob_bars, quality_notice, explain_details %}
+{% block title %}Your result{% endblock %}
+{% block content %}
+<h1>Your result</h1>
+
+<div class="advice advice-{{ r.tone }}">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    {% if r.tone == 'calm' %}<path d="M20 6 9 17l-5-5"/>{% else %}<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>{% endif %}</svg>
+  <p>{{ r.advice }}</p>
+</div>
+{{ quality_notice(quality, '/check') }}
+
+<div class="card">
+  <div class="tabs" role="tablist" data-swipe="#p-swipe">
+    <button role="tab" class="tab active" data-i="0">Your photo</button>
+    <button role="tab" class="tab" data-i="1">Where the app looked</button>
+  </div>
+  <div class="swipe" id="p-swipe">
+    <figure class="figure"><img src="{{ photo }}" alt="Your photo"><figcaption>Your photo</figcaption></figure>
+    <figure class="figure"><img src="{{ heat }}" alt="Heat-map of where the app looked"><figcaption>Where the app looked</figcaption>
+      <div class="legend">less <span class="scale"></span> more</div></figure>
+  </div>
+  <p class="small" style="margin:12px 0 0">{{ r.heatmap_line }}</p>
+</div>
+
+<div class="card">
+  <h2>What the app found</h2>
+  <p style="font-size:1.05rem">{{ r.plain }}</p>
+  <div class="sure">
+    <span>How sure the app is:</span>
+    <span class="badge {{ r.level }} big-badge">{{ r.level }}</span>
+  </div>
+  <p class="small muted">{{ level_words }}</p>
+  <p class="small" style="margin:0"><a href="/learn/abcde">ABCDE self-check: warning signs of melanoma &rarr;</a></p>
+</div>
+
+<div class="card" id="all-probs">
+  <h2>How well your photo matches each type</h2>
+  {{ prob_bars(x.rows, 'patient') }}
+  <p class="calm-note">{{ x.calm_note }}</p>
+</div>
+
+<div class="card why-card" id="why">
+  <h2>Why the app gave this result</h2>
+  <p class="small muted">{{ x.honest_note }}</p>
+  <ul class="reasons">{% for s in x.reasons %}<li>{{ s }}</li>{% endfor %}</ul>
+  <div class="xai-pair">
+    <figure class="figure"><img src="{{ heat }}" alt="Heat-map (Grad-CAM)">
+      <figcaption><b>Heat-map</b><br>Red areas influenced the result most.</figcaption></figure>
+    <figure class="figure">
+      <div class="lime-wait" id="p-lime" data-photo-src="#p-swipe img" data-token="{{ lime_token }}">
+        <div><div class="spinner"></div>Making the second picture…<br>(about a minute)</div></div>
+      <figcaption><b>Highlighted areas</b><br>Highlighted areas pushed the app towards this result.</figcaption></figure>
+  </div>
+  <details class="full-details">
+    <summary class="btn secondary block">Show full details</summary>
+    {{ explain_details(x, 'patient') }}
+  </details>
+</div>
+
+<div class="result-actions">
+  <a class="btn block big" href="data:application/pdf;base64,{{ pdf_b64 }}" download="{{ pdf_name }}">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+    Download summary</a>
+  <a class="btn secondary block big" href="/check">Check another spot</a>
+</div>
+<p class="small muted" style="text-align:center;margin-top:14px">This result was not saved. If you leave this page it is gone, so download the summary if you want to show it to a doctor.</p>
+{% endblock %}

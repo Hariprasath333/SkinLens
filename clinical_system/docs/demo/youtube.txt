@@ -1,0 +1,10 @@
+TITLE
+SkinLens – Explainable AI for Skin Lesion Analysis (Doctor + Patient App, TRL 4 Validated) | VIT-AP University
+
+DESCRIPTION
+SkinLens is an explainable AI decision-support tool that analyses skin-lesion images into 7 classes and shows why: Grad-CAM heat-maps, LIME, all class probabilities and measured features (colour, border, symmetry).
+Doctors get patient records and PDF reports; on a phone anyone can check a spot without an account, with photo-quality warnings and calm advice. Validated in the laboratory at TRL 4 (7/7 tests passed).
+Decision support only – not a medical diagnosis. Team: Hari Prasath M, Kodela Kailash Nadh, Dharun Raj B · Guide: Dr. B V Gokulnath · SCOPE, VIT-AP University.
+
+TAGS
+SkinLens, explainable AI, XAI, skin lesion, dermatology AI, skin cancer detection, melanoma, dermoscopy, HAM10000, Grad-CAM, LIME, deep learning, EfficientNetV2, Swin Transformer, medical imaging, decision support, FastAPI, PWA, TRL 4, YUKTI, VIT-AP University

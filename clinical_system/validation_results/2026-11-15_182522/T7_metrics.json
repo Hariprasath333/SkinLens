@@ -1,0 +1,60 @@
+{
+  "tests": 45,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "passed": 44,
+  "duration_s": 3072.7907704000027,
+  "by_file": {
+    "test_experiment_stages": {
+      "tests": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_kaggle_stages": {
+      "tests": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_mobile_pwa": {
+      "tests": 9,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_pipeline": {
+      "tests": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_prior_correction": {
+      "tests": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_real_model": {
+      "tests": 1,
+      "failed": 0,
+      "skipped": 1
+    },
+    "test_webapp": {
+      "tests": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_webapp_explain": {
+      "tests": 12,
+      "failed": 0,
+      "skipped": 0
+    },
+    "test_webapp_features": {
+      "tests": 3,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "failed": [],
+  "last_line": "44 passed, 1 skipped in 3066.95s (0:51:06)",
+  "verdict": "PASS",
+  "verdict_text": "44 passed, 0 failed, 0 errors, 1 skipped",
+  "app_version": "1.5.2"
+}

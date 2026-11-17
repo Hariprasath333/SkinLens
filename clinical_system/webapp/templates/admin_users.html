@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Staff accounts</h1><p class="muted">Admins can see every patient and scan. Doctors see the patients they registered.</p></div></div>
+<div class="card">
+  <div class="table-wrap"><table>
+    <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Patients</th><th class="hide-sm">Created</th><th>Change role</th></tr></thead>
+    <tbody>
+    {% for u, n in rows %}
+      <tr>
+        <td>{{ u.full_name }}</td><td class="code">{{ u.username }}</td>
+        <td><span class="badge role">{{ u.role }}</span></td><td>{{ n }}</td>
+        <td class="hide-sm small">{{ u.created_at.strftime('%d %b %Y') }}</td>
+        <td><form method="post" action="/admin/users/{{ u.id }}/role" style="display:flex;gap:8px;margin:0">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <select name="role" style="width:auto;padding:7px 10px">
+            <option value="doctor" {{ 'selected' if u.role == 'doctor' }}>doctor</option>
+            <option value="admin" {{ 'selected' if u.role == 'admin' }}>admin</option></select>
+          <button class="btn secondary" type="submit">Save</button></form></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+</div>
+{% endblock %}

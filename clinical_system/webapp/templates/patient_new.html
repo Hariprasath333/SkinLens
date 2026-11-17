@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Add Patient{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Add patient</h1><p class="muted">A patient ID (PAT-YYYY-NNNN) is created automatically.</p></div></div>
+<div class="card" style="max-width:720px">
+  {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+  <form method="post" action="/patients/new">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="field"><label for="name">Full name *</label>
+      <input id="name" name="name" type="text" value="{{ form.name if form else '' }}" required maxlength="120"></div>
+    <div class="form-row">
+      <div class="field"><label for="age">Age</label>
+        <input id="age" name="age" type="number" min="0" max="120" placeholder="years"></div>
+      <div class="field"><label for="gender">Gender</label>
+        <select id="gender" name="gender">{% for g in genders %}<option value="{{ g }}">{{ 'Not specified' if g == 'unknown' else g|capitalize }}</option>{% endfor %}</select></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label for="contact">Contact (phone / email)</label>
+        <input id="contact" name="contact" type="text" value="{{ form.contact if form else '' }}" maxlength="120"></div>
+      <div class="field"><label for="visit_date">Date</label>
+        <input id="visit_date" name="visit_date" type="date" value="{{ today }}"></div>
+    </div>
+    <p class="hint">Age and gender are also given to the model when it uses patient information.</p>
+    <div style="display:flex;gap:10px;margin-top:8px"><button class="btn" type="submit">Save patient</button>
+      <a class="btn secondary" href="/patients">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}

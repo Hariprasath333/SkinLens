@@ -1,0 +1,42 @@
+{
+  "npz_sha256": "8cf31a1eb881ca762c3a775a7a3b228ca451fda901345b1b8d543ed66c05de3d",
+  "npz_modified": "2026-11-15T14:35:32",
+  "run_at": "2026-11-15T15:44:26",
+  "n_matched": 2014,
+  "n_manifest": 2014,
+  "n_npz": 2014,
+  "agreement": 0.9692154915590864,
+  "n_disagree": 62,
+  "max_prob_diff": 0.82707817769145,
+  "mean_prob_diff": 0.008954067669005465,
+  "max_raw_prob_diff": 0.7928205874015808,
+  "npz_alpha": 0.3,
+  "app_alpha": 0.3,
+  "log_prior_max_diff": 0.0,
+  "npz_correction_self_consistency": 2.800578674522214e-08,
+  "accuracy_app": 0.8664349553128103,
+  "accuracy_npz": 0.8579940417080437,
+  "npz_mean_top_prob": 0.9077326670181238,
+  "app_mean_top_prob": 0.90708378540715,
+  "npz_pred_counts": {
+    "AK": 74,
+    "BCC": 105,
+    "BKL": 219,
+    "DF": 11,
+    "MEL": 318,
+    "NV": 1258,
+    "VASC": 29
+  },
+  "app_pred_counts": {
+    "AK": 79,
+    "BCC": 107,
+    "BKL": 209,
+    "DF": 12,
+    "MEL": 272,
+    "NV": 1305,
+    "VASC": 30
+  },
+  "compared": "For every test image (matched by image_id) the app's predicted class (argmax of its prior-corrected probabilities, alpha 0.3) was compared with y_pred_corrected in the npz, and the app's corrected probabilities with probs_corrected. The npz already contains corrected values; re-applying the app's prior correction to probs_raw was used only to check that the file is internally consistent.",
+  "verdict": "FAIL",
+  "verdict_text": "96.92% identical class (62 of 2014 differ); largest probability difference 0.8271"
+}

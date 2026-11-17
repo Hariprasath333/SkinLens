@@ -1,0 +1,251 @@
+group,image,codes,warned,correct
+original,ISIC_0030768,,False,True
+blurred,ISIC_0030768,blurry,True,True
+dark,ISIC_0030768,dark,True,True
+tiny,ISIC_0030768,small,True,True
+original,ISIC_0034189,,False,True
+blurred,ISIC_0034189,blurry,True,True
+dark,ISIC_0034189,dark,True,True
+tiny,ISIC_0034189,small blurry,True,True
+original,ISIC_0029100,,False,True
+blurred,ISIC_0029100,blurry,True,True
+dark,ISIC_0029100,dark,True,True
+tiny,ISIC_0029100,small blurry,True,True
+original,ISIC_0025292,,False,True
+blurred,ISIC_0025292,blurry,True,True
+dark,ISIC_0025292,dark,True,True
+tiny,ISIC_0025292,small blurry,True,True
+original,ISIC_0026262,,False,True
+blurred,ISIC_0026262,blurry,True,True
+dark,ISIC_0026262,dark,True,True
+tiny,ISIC_0026262,small blurry,True,True
+original,ISIC_0027598,,False,True
+blurred,ISIC_0027598,blurry,True,True
+dark,ISIC_0027598,dark,True,True
+tiny,ISIC_0027598,small blurry,True,True
+original,ISIC_0030119,not_skin,True,False
+blurred,ISIC_0030119,not_skin,True,False
+dark,ISIC_0030119,dark,True,True
+tiny,ISIC_0030119,small not_skin,True,True
+original,ISIC_0029017,,False,True
+blurred,ISIC_0029017,blurry,True,True
+dark,ISIC_0029017,dark,True,True
+tiny,ISIC_0029017,small blurry,True,True
+original,ISIC_0027721,off_centre,True,False
+blurred,ISIC_0027721,blurry off_centre,True,True
+dark,ISIC_0027721,dark off_centre,True,True
+tiny,ISIC_0027721,small blurry off_centre,True,True
+original,ISIC_0030031,,False,True
+blurred,ISIC_0030031,blurry,True,True
+dark,ISIC_0030031,dark,True,True
+tiny,ISIC_0030031,small blurry,True,True
+original,ISIC_0025550,,False,True
+blurred,ISIC_0025550,blurry,True,True
+dark,ISIC_0025550,dark,True,True
+tiny,ISIC_0025550,small blurry,True,True
+original,ISIC_0032538,,False,True
+blurred,ISIC_0032538,blurry,True,True
+dark,ISIC_0032538,dark,True,True
+tiny,ISIC_0032538,small blurry,True,True
+original,ISIC_0026393,,False,True
+blurred,ISIC_0026393,blurry,True,True
+dark,ISIC_0026393,dark,True,True
+tiny,ISIC_0026393,small blurry,True,True
+original,ISIC_0027337,,False,True
+blurred,ISIC_0027337,blurry,True,True
+dark,ISIC_0027337,dark,True,True
+tiny,ISIC_0027337,small,True,True
+original,ISIC_0031062,,False,True
+blurred,ISIC_0031062,blurry,True,True
+dark,ISIC_0031062,dark,True,True
+tiny,ISIC_0031062,small blurry,True,True
+original,ISIC_0026256,,False,True
+blurred,ISIC_0026256,blurry,True,True
+dark,ISIC_0026256,dark,True,True
+tiny,ISIC_0026256,small blurry,True,True
+original,ISIC_0026659,,False,True
+blurred,ISIC_0026659,blurry,True,True
+dark,ISIC_0026659,dark,True,True
+tiny,ISIC_0026659,small blurry,True,True
+original,ISIC_0031865,,False,True
+blurred,ISIC_0031865,blurry,True,True
+dark,ISIC_0031865,dark,True,True
+tiny,ISIC_0031865,small blurry,True,True
+original,ISIC_0026170,,False,True
+blurred,ISIC_0026170,blurry,True,True
+dark,ISIC_0026170,dark,True,True
+tiny,ISIC_0026170,small blurry,True,True
+original,ISIC_0027941,,False,True
+blurred,ISIC_0027941,blurry,True,True
+dark,ISIC_0027941,dark,True,True
+tiny,ISIC_0027941,small blurry,True,True
+original,ISIC_0025200,,False,True
+blurred,ISIC_0025200,blurry,True,True
+dark,ISIC_0025200,dark,True,True
+tiny,ISIC_0025200,small blurry,True,True
+original,ISIC_0024414,,False,True
+blurred,ISIC_0024414,blurry,True,True
+dark,ISIC_0024414,dark,True,True
+tiny,ISIC_0024414,small blurry,True,True
+original,ISIC_0028248,,False,True
+blurred,ISIC_0028248,blurry,True,True
+dark,ISIC_0028248,dark,True,True
+tiny,ISIC_0028248,small blurry,True,True
+original,ISIC_0024779,,False,True
+blurred,ISIC_0024779,blurry,True,True
+dark,ISIC_0024779,dark,True,True
+tiny,ISIC_0024779,small,True,True
+original,ISIC_0029866,,False,True
+blurred,ISIC_0029866,blurry,True,True
+dark,ISIC_0029866,dark,True,True
+tiny,ISIC_0029866,small blurry,True,True
+original,ISIC_0032171,,False,True
+blurred,ISIC_0032171,blurry,True,True
+dark,ISIC_0032171,dark,True,True
+tiny,ISIC_0032171,small blurry,True,True
+original,ISIC_0024766,,False,True
+blurred,ISIC_0024766,blurry,True,True
+dark,ISIC_0024766,dark,True,True
+tiny,ISIC_0024766,small blurry,True,True
+original,ISIC_0027906,,False,True
+blurred,ISIC_0027906,blurry,True,True
+dark,ISIC_0027906,dark,True,True
+tiny,ISIC_0027906,small blurry,True,True
+original,ISIC_0029987,,False,True
+blurred,ISIC_0029987,blurry,True,True
+dark,ISIC_0029987,dark,True,True
+tiny,ISIC_0029987,small blurry,True,True
+original,ISIC_0025841,,False,True
+blurred,ISIC_0025841,blurry,True,True
+dark,ISIC_0025841,dark,True,True
+tiny,ISIC_0025841,small,True,True
+original,ISIC_0027329,,False,True
+blurred,ISIC_0027329,blurry,True,True
+dark,ISIC_0027329,dark,True,True
+tiny,ISIC_0027329,small blurry,True,True
+original,ISIC_0028802,,False,True
+blurred,ISIC_0028802,blurry,True,True
+dark,ISIC_0028802,dark,True,True
+tiny,ISIC_0028802,small blurry,True,True
+original,ISIC_0028532,,False,True
+blurred,ISIC_0028532,blurry,True,True
+dark,ISIC_0028532,dark,True,True
+tiny,ISIC_0028532,small blurry,True,True
+original,ISIC_0028049,,False,True
+blurred,ISIC_0028049,blurry,True,True
+dark,ISIC_0028049,dark,True,True
+tiny,ISIC_0028049,small blurry,True,True
+original,ISIC_0025367,,False,True
+blurred,ISIC_0025367,blurry,True,True
+dark,ISIC_0025367,dark,True,True
+tiny,ISIC_0025367,small blurry,True,True
+original,ISIC_0027408,,False,True
+blurred,ISIC_0027408,blurry,True,True
+dark,ISIC_0027408,dark,True,True
+tiny,ISIC_0027408,small blurry,True,True
+original,ISIC_0032345,,False,True
+blurred,ISIC_0032345,blurry,True,True
+dark,ISIC_0032345,dark,True,True
+tiny,ISIC_0032345,small blurry,True,True
+original,ISIC_0032961,,False,True
+blurred,ISIC_0032961,blurry,True,True
+dark,ISIC_0032961,dark,True,True
+tiny,ISIC_0032961,small blurry,True,True
+original,ISIC_0034215,,False,True
+blurred,ISIC_0034215,blurry,True,True
+dark,ISIC_0034215,dark,True,True
+tiny,ISIC_0034215,small blurry,True,True
+original,ISIC_0033266,,False,True
+blurred,ISIC_0033266,blurry,True,True
+dark,ISIC_0033266,dark,True,True
+tiny,ISIC_0033266,small blurry,True,True
+original,ISIC_0026370,,False,True
+blurred,ISIC_0026370,blurry,True,True
+dark,ISIC_0026370,dark,True,True
+tiny,ISIC_0026370,small blurry,True,True
+original,ISIC_0027933,,False,True
+blurred,ISIC_0027933,blurry,True,True
+dark,ISIC_0027933,dark,True,True
+tiny,ISIC_0027933,small blurry,True,True
+original,ISIC_0028960,no_spot,True,False
+blurred,ISIC_0028960,blurry no_spot,True,True
+dark,ISIC_0028960,dark,True,True
+tiny,ISIC_0028960,small blurry no_spot,True,True
+original,ISIC_0032474,,False,True
+blurred,ISIC_0032474,blurry,True,True
+dark,ISIC_0032474,dark,True,True
+tiny,ISIC_0032474,small blurry,True,True
+original,ISIC_0029438,,False,True
+blurred,ISIC_0029438,blurry,True,True
+dark,ISIC_0029438,dark,True,True
+tiny,ISIC_0029438,small blurry,True,True
+original,ISIC_0030796,,False,True
+blurred,ISIC_0030796,blurry,True,True
+dark,ISIC_0030796,dark,True,True
+tiny,ISIC_0030796,small blurry,True,True
+original,ISIC_0025983,,False,True
+blurred,ISIC_0025983,blurry,True,True
+dark,ISIC_0025983,dark,True,True
+tiny,ISIC_0025983,small blurry,True,True
+original,ISIC_0027197,,False,True
+blurred,ISIC_0027197,blurry,True,True
+dark,ISIC_0027197,dark,True,True
+tiny,ISIC_0027197,small blurry,True,True
+original,ISIC_0031131,,False,True
+blurred,ISIC_0031131,blurry,True,True
+dark,ISIC_0031131,dark,True,True
+tiny,ISIC_0031131,small blurry,True,True
+original,ISIC_0024468,,False,True
+blurred,ISIC_0024468,blurry,True,True
+dark,ISIC_0024468,dark,True,True
+tiny,ISIC_0024468,small blurry,True,True
+non_skin,nonskin_sky_00,not_skin,True,True
+non_skin,nonskin_leaves_01,not_skin,True,True
+non_skin,nonskin_text_02,not_skin,True,True
+non_skin,nonskin_wood_03,,False,False
+non_skin,nonskin_wall_04,not_skin,True,True
+non_skin,nonskin_sky_05,not_skin,True,True
+non_skin,nonskin_leaves_06,not_skin,True,True
+non_skin,nonskin_text_07,not_skin,True,True
+non_skin,nonskin_wood_08,,False,False
+non_skin,nonskin_wall_09,not_skin,True,True
+non_skin,nonskin_sky_10,not_skin,True,True
+non_skin,nonskin_leaves_11,not_skin,True,True
+non_skin,nonskin_text_12,not_skin,True,True
+non_skin,nonskin_wood_13,,False,False
+non_skin,nonskin_wall_14,not_skin,True,True
+non_skin,nonskin_sky_15,not_skin,True,True
+non_skin,nonskin_leaves_16,not_skin,True,True
+non_skin,nonskin_text_17,not_skin,True,True
+non_skin,nonskin_wood_18,,False,False
+non_skin,nonskin_wall_19,not_skin,True,True
+non_skin,nonskin_sky_20,not_skin,True,True
+non_skin,nonskin_leaves_21,not_skin,True,True
+non_skin,nonskin_text_22,not_skin,True,True
+non_skin,nonskin_wood_23,,False,False
+non_skin,nonskin_wall_24,not_skin,True,True
+non_skin,nonskin_sky_25,not_skin,True,True
+non_skin,nonskin_leaves_26,not_skin,True,True
+non_skin,nonskin_text_27,not_skin,True,True
+non_skin,nonskin_wood_28,,False,False
+non_skin,nonskin_wall_29,not_skin,True,True
+non_skin,nonskin_sky_30,not_skin,True,True
+non_skin,nonskin_leaves_31,not_skin,True,True
+non_skin,nonskin_text_32,not_skin,True,True
+non_skin,nonskin_wood_33,,False,False
+non_skin,nonskin_wall_34,not_skin,True,True
+non_skin,nonskin_sky_35,not_skin,True,True
+non_skin,nonskin_leaves_36,not_skin,True,True
+non_skin,nonskin_text_37,not_skin,True,True
+non_skin,nonskin_wood_38,,False,False
+non_skin,nonskin_wall_39,not_skin,True,True
+non_skin,nonskin_sky_40,not_skin,True,True
+non_skin,nonskin_leaves_41,not_skin,True,True
+non_skin,nonskin_text_42,not_skin,True,True
+non_skin,nonskin_wood_43,,False,False
+non_skin,nonskin_wall_44,not_skin,True,True
+non_skin,nonskin_sky_45,not_skin,True,True
+non_skin,nonskin_leaves_46,not_skin,True,True
+non_skin,nonskin_text_47,not_skin,True,True
+non_skin,nonskin_wood_48,,False,False
+non_skin,nonskin_wall_49,not_skin,True,True

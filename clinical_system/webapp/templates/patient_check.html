@@ -1,0 +1,27 @@
+{% extends "patient_base.html" %}
+{% from "_macros.html" import photo_picker %}
+{% block title %}Check my skin{% endblock %}
+{% block content %}
+<h1>Check a skin spot</h1>
+<p class="muted">Take a clear photo of the spot. The app shows what it looks most like and where it looked.
+  <b>Your photo and result are not saved.</b></p>
+{% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+<form method="post" action="/check" enctype="multipart/form-data" class="upload-form">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <div class="card">{{ photo_picker(max_mb) }}</div>
+  <section class="card about-you" aria-labelledby="about-you-h">
+    <h2 id="about-you-h">About you (optional)</h2>
+    <div class="form-row">
+      <div class="field"><label for="age">Age</label><input id="age" name="age" type="number" min="0" max="120" inputmode="numeric"></div>
+      <div class="field"><label for="sex">Sex</label>
+        <select id="sex" name="sex"><option value="">Prefer not to say</option><option value="female">Female</option><option value="male">Male</option></select></div>
+    </div>
+    <div class="field"><label for="body_site">Where on the body?</label>
+      <select id="body_site" name="body_site">{% for s in sites %}<option value="{{ s }}">{{ 'Not sure / prefer not to say' if s == 'unknown' else s|capitalize }}</option>{% endfor %}</select></div>
+    <p class="hint">Not saved. Only used for this one check.{% if not model.uses_metadata %} The current model looks at the photo only.{% endif %}</p>
+  </section>
+  <button class="btn block big submit-btn" type="submit">Check this spot</button>
+  <p class="hint" style="text-align:center">Analysing takes about 10–20 seconds. Up to 10 checks per hour.</p>
+  <p class="small" style="text-align:center"><a href="/learn/abcde">ABCDE self-check: warning signs of melanoma</a></p>
+</form>
+{% endblock %}

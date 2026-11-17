@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Research dashboard{% endblock %}
+{% block content %}
+{% macro secs(ms, digits=2) -%}{{ ('%.' ~ digits ~ 'f s')|format(ms / 1000) if ms is not none else '–' }}{%- endmacro %}
+<div class="page-head">
+  <div><h1>Research dashboard</h1>
+    <p class="muted">Model use and clinician evaluation. Admin only.</p></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <a class="btn" href="/admin/export.csv">Export CSV (anonymised)</a>
+    <a class="btn ghost small" href="/admin/export.csv?include_demo=1" title="Same export including DEMO scans">incl. DEMO</a>
+  </div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+  <div class="filter-tabs">
+    {% for key, label in filters.items() %}<a href="?data={{ key }}" class="{{ 'active' if data == key }}">{{ label }}</a>{% endfor %}
+  </div>
+  <span class="small muted">The export never contains patient names, only patient IDs. It leaves out DEMO data unless you choose "incl. DEMO".</span>
+</div>
+{% if s.demo_scans and data != 'real' %}
+<div class="alert warn"><b>Includes DEMO data:</b> {{ s.demo_scans }} of {{ s.total_scans }} scans were made by <code>seed_demo.py</code>
+  and their doctor feedback is simulated. Use “Real scans only” for any numbers in the paper.</div>
+{% endif %}
+
+<div class="grid grid-4">
+  <div class="card"><div class="kpi">{{ s.total_scans }}<small>Total scans</small></div></div>
+  <div class="card"><div class="kpi">{{ '%.0f%%'|format(s.agree_rate) if s.agree_rate is not none else '–' }}
+    <small>Doctor agreement ({{ s.agree.agree }} of {{ s.feedback_count }} responses)</small></div></div>
+  <div class="card"><div class="kpi">{{ '%.2f'|format(s.usefulness_avg) if s.usefulness_avg is not none else '–' }} <span style="color:#f2b01e">★</span>
+    <small>Average explanation usefulness (1–5)</small></div></div>
+  <div class="card"><div class="kpi">{{ secs(s.time_to_result, 1) }}<small>Average analysis time per scan (time to result)</small></div></div>
+</div>
+
+<div class="grid grid-2" style="margin-top:18px">
+  <div class="card"><h2>Scans per predicted class</h2><div class="chart-box"><canvas id="chartClass" aria-label="Scans per predicted class"></canvas></div></div>
+  <div class="card"><h2>Confidence level</h2><div class="chart-box"><canvas id="chartLevel" aria-label="Confidence level split"></canvas></div></div>
+</div>
+
+<div class="grid grid-2" style="margin-top:18px">
+  <div class="card">
+    <h2>Doctor feedback</h2>
+    <div class="chart-box" style="height:220px"><canvas id="chartAgree" aria-label="Agreement"></canvas></div>
+    <table style="margin-top:10px">
+      <thead><tr><th>AI confidence level</th><th>Doctor agreement</th></tr></thead>
+      <tbody>{% for lv, rate in s.agree_by_level.items() %}
+        <tr><td><span class="badge {{ lv }}">{{ lv }}</span></td><td>{{ '%.0f%%'|format(rate) if rate is not none else '–' }}</td></tr>{% endfor %}</tbody>
+    </table>
+    <p class="small muted">{{ s.scans_with_feedback }} of {{ s.total_scans }} scans have feedback.</p>
+  </div>
+  <div class="card">
+    <h2>Analysis time (average per scan)</h2>
+    <table>
+      <tbody>
+        <tr><td>Prediction</td><td><b>{{ secs(s.time_predict) }}</b></td></tr>
+        <tr><td>Grad-CAM heat-map</td><td><b>{{ secs(s.time_gradcam) }}</b></td></tr>
+        <tr><td>LIME explanation (runs in the background)</td><td><b>{{ secs(s.time_lime, 1) }}</b></td></tr>
+        <tr><td>Time to result (prediction + Grad-CAM)</td><td><b>{{ secs(s.time_to_result) }}</b></td></tr>
+        <tr><td>Total incl. LIME (scans where LIME ran)</td><td><b>{{ secs(s.time_total, 1) }}</b></td></tr>
+      </tbody>
+    </table>
+    <p class="small muted">Based on {{ s.timed_scans }} timed scans. Scans made before timing was added are not counted. The doctor sees the result after prediction + Grad-CAM, while LIME is still running.</p>
+    <h3 style="margin-top:14px">Explanation usefulness ratings</h3>
+    <div class="chart-box" style="height:150px"><canvas id="chartStars" aria-label="Usefulness ratings"></canvas></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <div class="card-title"><h2>Cases where the doctor disagreed</h2><span class="small muted">{{ s.disagreements|length }} case{{ '' if s.disagreements|length == 1 else 's' }}</span></div>
+  {% if s.disagreements %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>Scan</th><th>Patient ID</th><th>AI result</th><th class="hide-sm">AI confidence</th><th>Doctor's diagnosis</th><th class="hide-sm">Usefulness</th><th>Comment</th><th class="hide-sm">Doctor</th><th class="hide-sm">Date</th></tr></thead>
+    <tbody>
+    {% for d in s.disagreements %}
+      <tr>
+        <td><a href="/scans/{{ d.scan.id }}">#{{ d.scan.id }}</a> {% if d.scan.patient.is_demo %}<span class="badge demo">DEMO</span>{% endif %}</td>
+        <td class="code">{{ d.scan.patient.patient_code }}</td>
+        <td>{{ d.ai.name }} <span class="muted">({{ d.ai.code }})</span></td>
+        <td class="hide-sm"><span class="badge {{ d.scan.confidence_level }}">{{ d.scan.confidence_level }} · {{ '%.0f'|format(100*d.scan.confidence) }}%</span></td>
+        <td>{% if d.doctor_dx %}{{ d.doctor_dx.name }} <span class="muted">({{ d.doctor_dx.code }})</span>{% else %}Other{% endif %}</td>
+        <td class="hide-sm">{{ d.fb.usefulness }}★</td>
+        <td class="small">{{ d.fb.comment or '–' }}</td>
+        <td class="hide-sm small">{{ d.fb.doctor.full_name }}</td>
+        <td class="hide-sm small">{{ d.fb.updated_at.strftime('%d %b %Y') }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}<div class="empty">No disagreements recorded yet.</div>{% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(() => {
+  const S = {{ {'classes': s.per_class, 'levels': s.levels, 'agree': s.agree, 'stars': s.usefulness_dist}|tojson }};
+  if (typeof Chart === "undefined") {
+    document.querySelectorAll(".chart-box").forEach(b => b.innerHTML = '<p class="small muted">Charts need an internet connection (Chart.js is loaded from a CDN).</p>');
+    return;
+  }
+  Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+  Chart.defaults.color = "#5f7383";
+  const grid = { color: "#e3edf3" };
+  new Chart(document.getElementById("chartClass"), {
+    type: "bar",
+    data: { labels: S.classes.map(c => c.code), datasets: [{ label: "Scans", data: S.classes.map(c => c.n),
+      backgroundColor: "#0077B6", borderRadius: 6, maxBarThickness: 46 }] },
+    options: { maintainAspectRatio: false, plugins: { legend: { display: false },
+      tooltip: { callbacks: { title: (i) => S.classes[i[0].dataIndex].name } } },
+      scales: { y: { beginAtZero: true, ticks: { precision: 0 }, grid }, x: { grid: { display: false } } } }
+  });
+  new Chart(document.getElementById("chartLevel"), {
+    type: "doughnut",
+    data: { labels: ["High", "Medium", "Low"], datasets: [{ data: [S.levels.High, S.levels.Medium, S.levels.Low],
+      backgroundColor: ["#2A9D8F", "#e9a23b", "#E63946"], borderWidth: 2, borderColor: "#fff" }] },
+    options: { maintainAspectRatio: false, cutout: "62%", plugins: { legend: { position: "right" } } }
+  });
+  new Chart(document.getElementById("chartAgree"), {
+    type: "bar",
+    data: { labels: ["Agree", "Disagree", "Unsure"], datasets: [{ data: [S.agree.agree, S.agree.disagree, S.agree.unsure],
+      backgroundColor: ["#2A9D8F", "#E63946", "#e9a23b"], borderRadius: 6, maxBarThickness: 40 }] },
+    options: { indexAxis: "y", maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true, ticks: { precision: 0 }, grid }, y: { grid: { display: false } } } }
+  });
+  new Chart(document.getElementById("chartStars"), {
+    type: "bar",
+    data: { labels: ["1★", "2★", "3★", "4★", "5★"], datasets: [{ data: [1, 2, 3, 4, 5].map(k => S.stars[k]),
+      backgroundColor: "#00B4D8", borderRadius: 5, maxBarThickness: 34 }] },
+    options: { maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { precision: 0 }, grid }, x: { grid: { display: false } } } }
+  });
+})();
+</script>
+{% endblock %}
